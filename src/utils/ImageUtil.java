@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
+import src.img.Pixel;
 
 
 /**
@@ -21,9 +22,9 @@ public class ImageUtil {
    *
    * @param filename the path of the file.
    */
-  public static Map<List<Integer>, List<Integer>> readPPM(String filename) {
+  public static List<Pixel> readPPM(String filename) {
     Scanner sc;
-    Map<List<Integer>, List<Integer>> pix = new HashMap<>();
+    List<Pixel> pix = new ArrayList<>();
 
     try {
       sc = new Scanner(new FileInputStream(filename));
@@ -61,8 +62,8 @@ public class ImageUtil {
         int r = sc.nextInt();
         int g = sc.nextInt();
         int b = sc.nextInt();
-        pix.put(new ArrayList<>(Arrays.asList(j, i)), new ArrayList<>(Arrays.asList(r, g, b)));
-        //System.out.println("Color of pixel (" + j + "," + i + "): " + r + "," + g + "," + b);
+
+        pix.add(new Pixel(j, i, r, g, b));
       }
     }
 

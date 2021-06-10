@@ -6,7 +6,7 @@ import src.filter.IFilter;
 
 public class KoalaImage extends AImage{
 
-  public KoalaImage(Map<List<Integer>, List<Integer>> pixels) {
+  public KoalaImage(List<Pixel> pixels) {
     super(pixels);
   }
 
