@@ -1,6 +1,7 @@
 package src.img;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,6 +13,14 @@ public class Pixel {
   public int r;
   public int g;
   public int b;
+
+  public Pixel(int x, int y, List<Float> rgb) {
+    this.x = x;
+    this.y = y;
+    this.setR(rgb.get(0));
+    this.setG(rgb.get(1));
+    this.setB(rgb.get(2));
+  }
 
   public Pixel(int x, int y) {
     this.x = x;
@@ -47,8 +56,7 @@ public class Pixel {
 
   @Override
   public String toString() {
-    return "I am pixel at: " + x + ", " + y + " with color: (" + r + ", " + g + ", " + b + ") and"
-        + " I am so pretty!";
+    return r + " " + g + " " + b + "  ";
   }
 
   @Override
@@ -70,17 +78,32 @@ public class Pixel {
 
   public List<Pixel> getNeighbours(List<Pixel> pixels, int scope) {
     List<Pixel> neighbours = new ArrayList<>();
-    List<Integer> map = new ArrayList<>();
     int key = (scope - 1) / 2;
 
     for (int i = -1 * key; i <= key; i++) {
       for (int j = -1 * key; j <= key; j++) {
-        int idx = (pixels.indexOf(new Pixel(this.x - j, this.y - i))); //if weird results swap
-        // these indices
+        int idx = (pixels.indexOf(new Pixel(this.x + j, this.y + i)));
         neighbours.add(idx < 0 ? null : pixels.get(idx));
       }
     }
 
     return neighbours;
+  }
+
+  public float applyToR(float modifier) {
+    return this.r * modifier;
+  }
+
+  public float applyToG(float modifier) {
+    return this.g * modifier;
+  }
+
+  public float applyToB(float modifier) {
+    return this.b * modifier;
+  }
+
+  public List<Float> applyToAllChannels(float modifier) {
+    return new ArrayList<>(Arrays.asList(this.applyToR(modifier), this.applyToG(modifier),
+        this.applyToB(modifier)));
   }
 }
