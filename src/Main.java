@@ -1,7 +1,9 @@
 package src;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import src.filter.Blur;
 import src.img.IImage;
-import src.img.KoalaImage;
 import src.utils.ImageUtil;
 
 public class Main {
@@ -9,7 +11,7 @@ public class Main {
   static IImage koala;
 
   //demo main
-  public static void main(String []args) {
+  public static void main(String []args) throws IOException {
     String filename;
 
     if (args.length>0) {
@@ -19,8 +21,9 @@ public class Main {
       filename = "src/img/Koala.ppm";
     }
 
-    koala = new KoalaImage(ImageUtil.readPPM(filename));
-    koala.print();
+    koala = ImageUtil.readPPM(filename);
+    koala.applyFilter(new Blur());
+    koala.save();
   }
 
 }

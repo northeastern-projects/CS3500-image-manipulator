@@ -1,13 +1,15 @@
 package src.utils;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
+import src.img.IImage;
+import src.img.Image;
 import src.img.Pixel;
 
 
@@ -22,22 +24,21 @@ public class ImageUtil {
    *
    * @param filename the path of the file.
    */
-  public static List<Pixel> readPPM(String filename) {
+  public static IImage readPPM(String filename) throws FileNotFoundException {
     Scanner sc;
     List<Pixel> pix = new ArrayList<>();
 
     try {
       sc = new Scanner(new FileInputStream(filename));
     } catch (FileNotFoundException e) {
-      System.out.println("File " + filename + " not found!"); //TODO throw exception
-      return null;
+      throw new FileNotFoundException("File " + filename + " not found!");
     }
     StringBuilder builder = new StringBuilder();
     //read the file line by line, and populate a string. This will throw away any comment lines
     while (sc.hasNextLine()) {
       String s = sc.nextLine();
       if (s.charAt(0) != '#') {
-        builder.append(s + System.lineSeparator());
+        builder.append(s).append(System.lineSeparator());
       }
     }
 
@@ -48,7 +49,7 @@ public class ImageUtil {
 
     token = sc.next();
     if (!token.equals("P3")) {
-      System.out.println("Invalid PPM file: plain RAW file should begin with P3");
+      throw new FileNotFoundException("Invalid PPM file: plain RAW file should begin with P3");
     }
     int width = sc.nextInt();
     System.out.println("Width of image: " + width);
@@ -67,7 +68,13 @@ public class ImageUtil {
       }
     }
 
-    return pix;
+    return new Image(pix, width, height, maxValue);
+  }
+
+  public static void writePPM(String fileName, String contents) throws IOException {
+    FileOutputStream out = new FileOutputStream(fileName);
+    out.write(contents.getBytes(StandardCharsets.UTF_8));
+    out.close();
   }
 }
 
