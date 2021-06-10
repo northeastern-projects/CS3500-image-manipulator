@@ -1,12 +1,12 @@
 package src.filter;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import src.img.Pixel;
 
 public abstract class AFilter implements IFilter {
 
-  protected Map<List<Integer>, List<Integer>> pixels;
+  protected List<Pixel> pixels;
   protected Number[][] kernel;
 
   public AFilter(Number[][] kernel) {
@@ -15,7 +15,7 @@ public abstract class AFilter implements IFilter {
       throw new IllegalArgumentException("Invalid kernel");
     }
 
-    this.pixels = new HashMap<>();
+    this.pixels = new ArrayList<>();
     this.kernel = kernel;
 
   }
@@ -34,20 +34,22 @@ public abstract class AFilter implements IFilter {
     return true;
   }
 
-  private List<Integer> applyToPixel(Map<List<Integer>, List<Integer>> pixels, List<Integer> rgb) {
-    for(Integer color: rgb) {
-      //get neighbours etc...
-      //do some matrix stuff here.
+  private Pixel applyToPixel(List<Pixel> pixels, Pixel pixel) {
+    //get neighbours
+    List<Pixel> neighbours = pixel.getNeighbours(pixels, kernel.length);
+    //for every true neighbour do math
+    for(int i = 0; i < neighbours.size(); i++) {
+      if (neighbours.get(i) != null) {
+
+      }
     }
+    //then make new pixel and return it.
   }
 
   @Override
-  public Map<List<Integer>, List<Integer>> modify(Map<List<Integer>, List<Integer>> pixels) {
-
-    pixels.forEach((pixel, rgb) -> {
-      this.pixels.put(
-       pixel, this.applyToPixel(pixels, rgb)
-      );
+  public List<Pixel> modify(List<Pixel> pixels) {
+    pixels.forEach((pixel) -> {
+      this.pixels.add(this.applyToPixel(pixels, pixel));
     });
 
     return this.pixels;
