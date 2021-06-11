@@ -27,7 +27,7 @@ public class ATransform extends AModifier{
   }
 
   @Override
-  protected Pixel applyToPixel(List<Pixel> pixels, Pixel pixel, int width) {
+  protected Pixel applyToPixel(List<Pixel> pixels, Pixel pixel, int width, int height) {
     //get pixel with new rgb values
     return new Pixel(pixel.x, pixel.y, this.generateNewRGB(pixel));
   }

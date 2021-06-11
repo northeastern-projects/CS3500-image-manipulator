@@ -16,7 +16,8 @@ public class Checkerboard implements IImage{
     this.depth = depth;
   }
 
-  private String getFileString() {
+  @Override
+  public String toString() {
     StringBuilder matrix = new StringBuilder("P3\n" + width + "\n" + height + "\n" + depth + "\n");
     for (int i = 0; i < this.width; i++) {
       for (int j = 0; j < this.height; j++) {
@@ -38,7 +39,7 @@ public class Checkerboard implements IImage{
   @Override
   public void save(String fName) throws IOException {
     System.out.println("Saving...");
-    ImageUtil.writePPM("res/" + fName + ".ppm", this.getFileString());
+    ImageUtil.writePPM("res/" + fName + ".ppm", this.toString());
     System.out.println("Done!\n");
   }
 }
