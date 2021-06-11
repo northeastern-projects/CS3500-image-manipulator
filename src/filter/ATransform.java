@@ -5,8 +5,17 @@ import java.util.Arrays;
 import java.util.List;
 import img.Pixel;
 
+/**
+ * The Transform abstract class implements methods specific to transforms (ex: Sepia).
+ * Extends the AModifier class.
+ */
 public class ATransform extends AModifier{
 
+  /**
+   * Instantiates a new Transform.
+   *
+   * @param kernel the kernel which is validated in the superclass.
+   */
   public ATransform(double[][] kernel) {
     super(kernel);
   }

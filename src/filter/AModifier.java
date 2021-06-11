@@ -2,15 +2,23 @@ package filter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import img.Image;
 import img.Pixel;
 
+/**
+ * The AModifier abstract class implements methods used by both filters and transforms.
+ * Extends the IModifier interface.
+ */
 public abstract class AModifier implements IModifier{
   protected List<Pixel> pixels;
   protected double[][] kernel;
   protected List<Double> crushedKernel;
 
+  /**
+   * Instantiates a new Modifier.
+   *
+   * @param kernel the kernel which is validated to be an odd x odd configuration
+   */
   public AModifier(double[][] kernel) {
 
     if (!this.isValidKernel(kernel)) {

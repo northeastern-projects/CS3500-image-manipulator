@@ -5,8 +5,17 @@ import java.util.Arrays;
 import java.util.List;
 import img.Pixel;
 
+/**
+ * The abstract filter class that contains methods implemented by all filters (ex: Blur).
+ * Extends AModifier
+ */
 public abstract class AFilter extends AModifier{
 
+  /**
+   * Instantiates a new Filter.
+   *
+   * @param kernel the kernel which needs to be a odd x odd configuration.
+   */
   public AFilter(double[][] kernel) {
     super(kernel);
   }
