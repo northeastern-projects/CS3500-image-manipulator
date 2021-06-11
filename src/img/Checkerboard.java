@@ -4,12 +4,24 @@ import filter.IModifier;
 import java.io.IOException;
 import utils.ImageUtil;
 
+/**
+ * The Checkerboard image contains a representation of a simple checkerboard image.
+ * It contains all methods needed to create a black and white checkerboard pattern.
+ * Extends the IImage interface.
+ */
 public class Checkerboard implements IImage{
 
   int width;
   int height;
   int depth;
 
+  /**
+   * Instantiates a new Checkerboard image.
+   *
+   * @param width  the width of the image
+   * @param height the height (which may not be the same as the width)
+   * @param depth  the color depth (normally 255)
+   */
   public Checkerboard (int width, int height, int depth) {
     this.width = width;
     this.height = height;

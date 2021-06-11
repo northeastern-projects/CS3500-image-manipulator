@@ -5,6 +5,9 @@ import java.util.List;
 import filter.IModifier;
 import utils.ImageUtil;
 
+/**
+ * The Image class that contains all methods to represent and modify an image.
+ */
 public class Image implements IImage{
 
   public List<Pixel> pixels;
@@ -12,6 +15,14 @@ public class Image implements IImage{
   public final int height;
   public final int depth;
 
+  /**
+   * Instantiates a new Image.
+   *
+   * @param pixels the pixels that make up the image (note this is 1D not 2D)
+   * @param width  the width of the image
+   * @param height the height
+   * @param depth  the color depth (usually 255)
+   */
   public Image(List<Pixel> pixels, int width, int height, int depth) {
     this.pixels = pixels;
     this.width = width;

@@ -14,7 +14,8 @@ import img.Pixel;
 
 
 /**
- * This class contains utility methods to read a PPM image from file and simply print its contents.
+ * This class contains utility methods to read and write a PPM image from file and simply print its
+ * contents.
  * Feel free to change this method as required.
  */
 public class ImageUtil {
@@ -72,6 +73,13 @@ public class ImageUtil {
     return new Image(pix, width, height, maxValue);
   }
 
+  /**
+   * Write a ppm image to the disk.
+   *
+   * @param fileName the file name
+   * @param contents the contents of the file (exported image)
+   * @throws IOException the IO exception in case there is an error writing to the disk
+   */
   public static void writePPM(String fileName, String contents) throws IOException {
     FileOutputStream out = new FileOutputStream(fileName);
     out.write(contents.getBytes(StandardCharsets.UTF_8));

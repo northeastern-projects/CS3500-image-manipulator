@@ -1,6 +1,13 @@
 package filter;
 
+/**
+ * The Sepia transform.
+ */
 public class Sepia extends ATransform{
+
+  /**
+   * Instantiates a new Sepia transform with a valid kernel.
+   */
   public Sepia() {
     super(new double[][] {
         {0.393, 0.769, 0.189},
