@@ -1,19 +1,16 @@
 package img;
 
-import java.io.IOException;
-import java.util.List;
 import filter.IModifier;
+import java.io.IOException;
 import utils.ImageUtil;
 
-public class Image implements IImage{
+public class Checkerboard implements IImage{
 
-  public List<Pixel> pixels;
-  public final int width;
-  public final int height;
-  public final int depth;
+  int width;
+  int height;
+  int depth;
 
-  public Image(List<Pixel> pixels, int width, int height, int depth) {
-    this.pixels = pixels;
+  public Checkerboard (int width, int height, int depth) {
     this.width = width;
     this.height = height;
     this.depth = depth;
@@ -21,15 +18,21 @@ public class Image implements IImage{
 
   private String getFileString() {
     StringBuilder matrix = new StringBuilder("P3\n" + width + "\n" + height + "\n" + depth + "\n");
-    for (Pixel p : this.pixels) {
-      matrix.append(p.toString());
+    for (int i = 0; i < this.width; i++) {
+      for (int j = 0; j < this.height; j++) {
+        if ((i + j) % 2 == 0) {
+          matrix.append("0 0 0  ");
+        } else {
+          matrix.append("255 255 255  ");
+        }
+      }
     }
     return matrix + "\n";
   }
 
   @Override
   public void applyFilter(IModifier IModifier) {
-    this.pixels = IModifier.modify(this);
+    throw new UnsupportedOperationException("Cannot modify checkerboards");
   }
 
   @Override
