@@ -1,5 +1,6 @@
 import filter.Greyscale;
 import filter.IModifier;
+import img.Checkerboard;
 import java.io.IOException;
 import filter.Blur;
 import filter.Sepia;
@@ -15,32 +16,35 @@ public class Main {
   public static void main(String []args) throws IOException {
     String filename;
 
-    if (args.length>0) {
+    if (args.length > 0) {
       filename = args[0];
     }
     else {
-      filename = "res/flower.ppm";
+      filename = "res/check.ppm";
     }
 
-    img = ImageUtil.readPPM(filename);
-    IModifier mod = new Blur();
-    img.applyFilter(mod);
-    img.save("flower" + "_" + mod);
+    img = new Checkerboard(19, 11, 255);
+    img.save("check");
 
-    img = ImageUtil.readPPM(filename);
-    mod = new Sharpen();
-    img.applyFilter(mod);
-    img.save("flower" + "_" + mod);
-
-    img = ImageUtil.readPPM(filename);
-    mod = new Sepia();
-    img.applyFilter(mod);
-    img.save("flower" + "_" + mod);
-
-    img = ImageUtil.readPPM(filename);
-    mod = new Greyscale();
-    img.applyFilter(mod);
-    img.save("flower" + "_" + mod);
+//    img = ImageUtil.readPPM(filename);
+//    IModifier mod = new Blur();
+//    img.applyFilter(mod);
+//    img.save("flower" + "_" + mod);
+//
+//    img = ImageUtil.readPPM(filename);
+//    mod = new Sharpen();
+//    img.applyFilter(mod);
+//    img.save("flower" + "_" + mod);
+//
+//    img = ImageUtil.readPPM(filename);
+//    mod = new Sepia();
+//    img.applyFilter(mod);
+//    img.save("flower" + "_" + mod);
+//
+//    img = ImageUtil.readPPM(filename);
+//    mod = new Greyscale();
+//    img.applyFilter(mod);
+//    img.save("flower" + "_" + mod);
   }
 
 }
