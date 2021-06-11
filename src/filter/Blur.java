@@ -1,13 +1,17 @@
-package src.filter;
+package filter;
 
 public class Blur extends AFilter{
 
   public Blur() {
-    super(new float[][]{
-        {1/16, 1/8, 1/16},
-        {1/8, 1/4, 1/8},
-        {1/16, 1/8, 1/16}
+    super(new double[][]{
+        {1.0/16.0, 1.0/8.0, 1.0/16.0},
+        {1.0/8.0, 1.0/4.0, 1.0/8.0},
+        {1.0/16.0, 1.0/8.0, 1.0/16.0}
     });
   }
 
+  @Override
+  public String toString() {
+    return "blur";
+  }
 }

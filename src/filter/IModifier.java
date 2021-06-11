@@ -1,10 +1,11 @@
-package src.filter;
+package filter;
 
 import java.util.List;
-import src.img.Pixel;
+import img.Image;
+import img.Pixel;
 
 public interface IModifier {
 
-  List<Pixel> modify(List<Pixel> pixels);
+  List<Pixel> modify(Image image);
 
 }

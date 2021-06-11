@@ -1,4 +1,4 @@
-package src.utils;
+package utils;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
-import src.img.IImage;
-import src.img.Image;
-import src.img.Pixel;
+import img.IImage;
+import img.Image;
+import img.Pixel;
 
 
 /**
@@ -25,6 +25,7 @@ public class ImageUtil {
    * @param filename the path of the file.
    */
   public static IImage readPPM(String filename) throws FileNotFoundException {
+    System.out.println("Reading file...");
     Scanner sc;
     List<Pixel> pix = new ArrayList<>();
 

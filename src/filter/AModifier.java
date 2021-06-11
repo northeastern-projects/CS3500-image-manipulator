@@ -1,14 +1,17 @@
-package src.filter;
+package filter;
 
 import java.util.ArrayList;
 import java.util.List;
-import src.img.Pixel;
+import java.util.concurrent.atomic.AtomicInteger;
+import img.Image;
+import img.Pixel;
 
 public abstract class AModifier implements IModifier{
   protected List<Pixel> pixels;
-  protected float[][] kernel;
+  protected double[][] kernel;
+  protected List<Double> crushedKernel;
 
-  public AModifier(float[][] kernel) {
+  public AModifier(double[][] kernel) {
 
     if (!this.isValidKernel(kernel)) {
       throw new IllegalArgumentException("Invalid kernel");
@@ -16,15 +19,16 @@ public abstract class AModifier implements IModifier{
 
     this.pixels = new ArrayList<>();
     this.kernel = kernel;
+    this.crushedKernel = this.flattenKernel(kernel);
 
   }
 
-  private boolean isValidKernel(float[][] kernel) {
+  private boolean isValidKernel(double[][] kernel) {
     if (kernel.length % 2 == 0) {
       return false;
     }
 
-    for (float[] row : kernel) {
+    for (double[] row : kernel) {
       if (row.length % 2 == 0) {
         return false;
       }
@@ -33,15 +37,29 @@ public abstract class AModifier implements IModifier{
     return true;
   }
 
-  protected List<Float> flattenKernel() {
-    List<Float> crushedKernel = new ArrayList<>();
+  protected List<Double> flattenKernel(double[][] kernel) {
+    List<Double> crushedKernel = new ArrayList<>();
 
-    for (float[] row : kernel) {
-      for (float n : row) {
+    for (double[] row : kernel) {
+      for (double n : row) {
         crushedKernel.add(n);
       }
     }
 
     return crushedKernel;
+  }
+
+  abstract protected Pixel applyToPixel(List<Pixel> pixels, Pixel pixel, int width);
+
+  @Override
+  public List<Pixel> modify(Image image) {
+    System.out.println("Applying modifier...");
+    List<Pixel> origPixels = image.pixels;
+
+    origPixels.forEach((pixel) -> {
+      this.pixels.add(this.applyToPixel(origPixels, pixel, image.width));
+    });
+
+    return this.pixels;
   }
 }
