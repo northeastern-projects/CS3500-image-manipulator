@@ -49,7 +49,7 @@ public abstract class AModifier implements IModifier{
     return crushedKernel;
   }
 
-  abstract protected Pixel applyToPixel(List<Pixel> pixels, Pixel pixel, int width);
+  abstract protected Pixel applyToPixel(List<Pixel> pixels, Pixel pixel, int width, int height);
 
   @Override
   public List<Pixel> modify(Image image) {
@@ -57,7 +57,7 @@ public abstract class AModifier implements IModifier{
     List<Pixel> origPixels = image.pixels;
 
     origPixels.forEach((pixel) -> {
-      this.pixels.add(this.applyToPixel(origPixels, pixel, image.width));
+      this.pixels.add(this.applyToPixel(origPixels, pixel, image.width, image.height));
     });
 
     return this.pixels;

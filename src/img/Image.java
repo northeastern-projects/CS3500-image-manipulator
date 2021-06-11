@@ -19,7 +19,8 @@ public class Image implements IImage{
     this.depth = depth;
   }
 
-  private String getFileString() {
+  @Override
+  public String toString() {
     StringBuilder matrix = new StringBuilder("P3\n" + width + "\n" + height + "\n" + depth + "\n");
     for (Pixel p : this.pixels) {
       matrix.append(p.toString());
@@ -35,7 +36,7 @@ public class Image implements IImage{
   @Override
   public void save(String fName) throws IOException {
     System.out.println("Saving...");
-    ImageUtil.writePPM("res/" + fName + ".ppm", this.getFileString());
+    ImageUtil.writePPM("res/" + fName + ".ppm", this.toString());
     System.out.println("Done!\n");
   }
 }

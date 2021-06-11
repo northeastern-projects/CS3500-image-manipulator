@@ -11,24 +11,25 @@ public abstract class AFilter extends AModifier{
     super(kernel);
   }
 
-  private List<Double> generateNewRGB(List<Pixel> origPixels, Pixel pixel, int width) {
+  private List<Double> generateNewRGB(List<Pixel> origPixels, Pixel pixel, int width, int height) {
     List<Double> newRGB = new ArrayList<>(Arrays.asList(0.0, 0.0, 0.0));
 
     int key = (kernel.length - 1) / 2;
     int kIndex = 0;
     for (int i = -1 * key; i <= key; i++) {
       for (int j = -1 * key; j <= key; j++) {
+
         int index = ((pixel.y + i) * width) + (pixel.x + j);
-        if (index < 0 || index >= origPixels.size()) {
-          kIndex++;
-          break;
-        } else {
+
+        if (!(index < 0 || index >= origPixels.size() || (pixel.x + j < 0) ||(pixel.y + i < 0) || (pixel.x + j) > width - 1 || (pixel.y + i) > height - 1)) {
           List<Double> thisRGB = origPixels.get(index).applyToAllChannels(crushedKernel.get(kIndex));
+
           for (int k = 0; k < newRGB.size(); k++) {
             newRGB.set(k, newRGB.get(k) + thisRGB.get(k));
           }
-          kIndex++;
         }
+
+        kIndex++;
       }
     }
 
@@ -36,8 +37,8 @@ public abstract class AFilter extends AModifier{
   }
 
   @Override
-  protected Pixel applyToPixel(List<Pixel> origPixels, Pixel pixel, int width) {
+  protected Pixel applyToPixel(List<Pixel> origPixels, Pixel pixel, int width, int height) {
     //get pixel with new rgb values
-    return new Pixel(pixel.x, pixel.y, this.generateNewRGB(origPixels, pixel, width));
+    return new Pixel(pixel.x, pixel.y, this.generateNewRGB(origPixels, pixel, width, height));
   }
 }
