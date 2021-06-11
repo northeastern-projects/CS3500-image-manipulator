@@ -1,16 +1,16 @@
-package src.img;
+package img;
 
 import java.io.IOException;
 import java.util.List;
-import src.filter.IModifier;
-import src.utils.ImageUtil;
+import filter.IModifier;
+import utils.ImageUtil;
 
 public class Image implements IImage{
 
-  private List<Pixel> pixels;
-  private final int width;
-  private final int height;
-  private final int depth;
+  public List<Pixel> pixels;
+  public final int width;
+  public final int height;
+  public final int depth;
 
   public Image(List<Pixel> pixels, int width, int height, int depth) {
     this.pixels = pixels;
@@ -20,12 +20,16 @@ public class Image implements IImage{
   }
 
   private String getFileString() {
-    return "P3\n" + width + "\n" + height + "\n" + depth + "\n" + this.pixels.toString() + "\n";
+    StringBuilder matrix = new StringBuilder("P3\n" + width + "\n" + height + "\n" + depth + "\n");
+    for (Pixel p : this.pixels) {
+      matrix.append(p.toString());
+    }
+    return matrix + "\n";
   }
 
   @Override
   public void applyFilter(IModifier IModifier) {
-    this.pixels = IModifier.modify(this.pixels);
+    this.pixels = IModifier.modify(this);
   }
 
   @Override
@@ -34,7 +38,9 @@ public class Image implements IImage{
   }
 
   @Override
-  public void save() throws IOException {
-    ImageUtil.writePPM("result.ppm", this.getFileString());
+  public void save(String fName) throws IOException {
+    System.out.println("Saving...");
+    ImageUtil.writePPM("res/" + fName + ".ppm", this.getFileString());
+    System.out.println("Done!\n");
   }
 }

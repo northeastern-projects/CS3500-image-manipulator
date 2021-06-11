@@ -1,11 +1,16 @@
-package src.filter;
+package filter;
 
 public class Greyscale extends ATransform{
   public Greyscale() {
-    super(new float[][] {
-        {0.2126f, 0.7152f, 0.0722f},
-        {0.2126f, 0.7152f, 0.0722f},
-        {0.2126f, 0.7152f, 0.0722f}
+    super(new double[][] {
+        {0.2126, 0.7152, 0.0722},
+        {0.2126, 0.7152, 0.0722},
+        {0.2126, 0.7152, 0.0722}
     });
+  }
+
+  @Override
+  public String toString() {
+    return "greyscale";
   }
 }

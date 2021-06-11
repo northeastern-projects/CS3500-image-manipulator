@@ -1,12 +1,12 @@
-package src.img;
+package img;
 
 import java.io.IOException;
-import src.filter.IModifier;
+import filter.IModifier;
 
 public interface IImage {
 
   void applyFilter(IModifier IModifier);
   void print();
-  void save() throws IOException;
+  void save(String fName) throws IOException;
 
 }
