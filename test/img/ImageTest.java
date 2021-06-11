@@ -1,0 +1,176 @@
+package img;
+
+import filter.Blur;
+import filter.Greyscale;
+import filter.Sepia;
+import filter.Sharpen;
+import org.junit.Before;
+import org.junit.Test;
+import utils.ImageUtil;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
+/**
+ * This class tests the img.Image class. These tests ensure that the
+ * Image is implemented in the correct way and returns the Image as a String correctly.
+ */
+public class ImageTest {
+  List<Pixel> nullList;
+  List<Pixel> pixels;
+  List<Pixel> pixelsBlurred;
+  List<Pixel> pixelsSharpened;
+  List<Pixel> pixelsSepia;
+  List<Pixel> pixelsGreyscale;
+  int widthInvalid;
+  int width;
+  int heightInvalid;
+  int height;
+  int depthInvalid;
+  int depth;
+  Image img;
+  Image imgBlurred;
+  Image imgSharpened;
+  Image imgSepia;
+  String sepiaString;
+  Image imgGreyscale;
+
+  @Before
+  public void setUp() {
+    nullList = null;
+    pixels = new ArrayList<Pixel>();
+    pixels.add(new Pixel(0, 0, 100, 100, 100));
+    pixels.add(new Pixel(0, 1, 100, 100, 100));
+    pixels.add(new Pixel(0, 2, 100, 100, 100));
+    pixels.add(new Pixel(1, 0, 100, 100, 100));
+    pixels.add(new Pixel(1, 1, 100, 100, 100));
+    pixels.add(new Pixel(1, 2, 100, 100, 100));
+    pixels.add(new Pixel(2, 0, 100, 100, 100));
+    pixels.add(new Pixel(2, 1, 100, 100, 100));
+    pixels.add(new Pixel(2, 2, 100, 100, 100));
+    widthInvalid = -200;
+    width = 3;
+    heightInvalid = 0;
+    height = 3;
+    depthInvalid = -3;
+    depth = 255;
+    img = new Image(pixels, width, height, depth);
+
+    pixelsBlurred = new ArrayList<Pixel>();
+    pixelsBlurred.add(new Pixel(0, 0, 56, 56, 56));
+    pixelsBlurred.add(new Pixel(0, 1, 75, 75, 75));
+    pixelsBlurred.add(new Pixel(0, 2, 56, 56, 56));
+    pixelsBlurred.add(new Pixel(1, 0, 75, 75, 75));
+    pixelsBlurred.add(new Pixel(1, 1, 100, 100, 100));
+    pixelsBlurred.add(new Pixel(1, 2, 75, 75, 75));
+    pixelsBlurred.add(new Pixel(2, 0, 56, 56, 56));
+    pixelsBlurred.add(new Pixel(2, 1, 75, 75, 75));
+    pixelsBlurred.add(new Pixel(2, 2, 56, 56, 56));
+    imgBlurred = new Image(pixelsBlurred, width, height, depth);
+
+    //TODO get updated rbgValues
+    pixelsSharpened = new ArrayList<Pixel>();
+    pixelsSharpened.add(new Pixel(0, 0, 56, 56, 56));
+    pixelsSharpened.add(new Pixel(0, 1, 75, 75, 75));
+    pixelsSharpened.add(new Pixel(0, 2, 56, 56, 56));
+    pixelsSharpened.add(new Pixel(1, 0, 75, 75, 75));
+    pixelsSharpened.add(new Pixel(1, 1, 100, 100, 100));
+    pixelsSharpened.add(new Pixel(1, 2, 75, 75, 75));
+    pixelsSharpened.add(new Pixel(2, 0, 56, 56, 56));
+    pixelsSharpened.add(new Pixel(2, 1, 75, 75, 75));
+    pixelsSharpened.add(new Pixel(2, 2, 56, 56, 56));
+    imgSharpened = new Image(pixelsSharpened, width, height, depth);
+
+    pixelsSepia = new ArrayList<Pixel>();
+    pixelsSepia.add(new Pixel(0, 0, 135, 120, 93));
+    pixelsSepia.add(new Pixel(0, 1, 135, 120, 93));
+    pixelsSepia.add(new Pixel(0, 2, 135, 120, 93));
+    pixelsSepia.add(new Pixel(1, 0, 135, 120, 93));
+    pixelsSepia.add(new Pixel(1, 1, 135, 120, 93));
+    pixelsSepia.add(new Pixel(1, 2, 135, 120, 93));
+    pixelsSepia.add(new Pixel(2, 0, 135, 120, 93));
+    pixelsSepia.add(new Pixel(2, 1, 135, 120, 93));
+    pixelsSepia.add(new Pixel(2, 2, 135, 120, 93));
+    imgSepia = new Image(pixelsSepia, width, height, depth);
+    sepiaString = "P3\n" +
+            "3\n" +
+            "3\n" +
+            "255\n" +
+            "135 120 93  135 120 93  135 120 93  135 120 93  " +
+            "135 120 93  135 120 93  135 120 93  135 120 93  135 120 93  \n";
+    pixelsGreyscale = new ArrayList<Pixel>();
+    pixelsGreyscale.add(new Pixel(0, 0, 100, 100, 100));
+    pixelsGreyscale.add(new Pixel(0, 1, 100, 100, 100));
+    pixelsGreyscale.add(new Pixel(0, 2, 100, 100, 100));
+    pixelsGreyscale.add(new Pixel(1, 0, 100, 100, 100));
+    pixelsGreyscale.add(new Pixel(1, 1, 100, 100, 100));
+    pixelsGreyscale.add(new Pixel(1, 2, 100, 100, 100));
+    pixelsGreyscale.add(new Pixel(2, 0, 100, 100, 100));
+    pixelsGreyscale.add(new Pixel(2, 1, 100, 100, 100));
+    pixelsGreyscale.add(new Pixel(2, 2, 100, 100, 100));
+    imgGreyscale = new Image(pixelsGreyscale, width, height, depth);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidPixels() {
+    new Image(nullList, width, height, depth);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidWidth() {
+    new Image(pixels, widthInvalid, height, depth);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidHeight() {
+    new Image(nullList, width, heightInvalid, depth);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidDepth() {
+    new Image(nullList, width, height, depthInvalid);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidApplyFilter() {
+    img.applyFilter(null);
+  }
+
+  @Test
+  public void testValidApplyBlur() {
+    assertEquals(pixels.toString(), img.pixels.toString());
+    img.applyFilter(new Blur());
+    assertEquals(pixelsBlurred.toString(), img.pixels.toString());
+  }
+
+  @Test
+  public void testValidApplySharpen() {
+    assertEquals(pixels.toString(), img.pixels.toString());
+    img.applyFilter(new Sharpen());
+    assertEquals(pixelsSharpened.toString(), img.pixels.toString());
+  }
+
+  @Test
+  public void testValidApplySepia() {
+    assertEquals(pixels.toString(), img.pixels.toString());
+    img.applyFilter(new Sepia());
+    assertEquals(pixelsSepia.toString(), img.pixels.toString());
+  }
+
+  @Test
+  public void testValidApplyGreyscale() {
+    assertEquals(pixels.toString(), img.pixels.toString());
+    img.applyFilter(new Greyscale());
+    assertEquals(pixelsGreyscale.toString(), img.pixels.toString());
+  }
+
+  @Test
+  public void testExportedImageContents() throws IOException {
+    //in res folder we have an image that we created of the sepia version of img
+    //here we are making sure that that write produces what we expected it to
+    assertEquals(sepiaString, ImageUtil.readPPM("res/random.ppm").toString());
+  }
+}
