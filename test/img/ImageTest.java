@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * This class tests the img.Image class. These tests ensure that the
- * Image is implemented in the correct way and returns the Image as a String correctly.
+ * Image is implemented in the correct way and returns the Image as a String in p3 ppm format.
  */
 public class ImageTest {
   List<Pixel> nullList;
@@ -71,7 +71,6 @@ public class ImageTest {
     pixelsBlurred.add(new Pixel(2, 2, 56, 56, 56));
     imgBlurred = new Image(pixelsBlurred, width, height, depth);
 
-    //TODO get updated rbgValues
     pixelsSharpened = new ArrayList<Pixel>();
     pixelsSharpened.add(new Pixel(0, 0, 56, 56, 56));
     pixelsSharpened.add(new Pixel(0, 1, 75, 75, 75));
@@ -95,12 +94,12 @@ public class ImageTest {
     pixelsSepia.add(new Pixel(2, 1, 135, 120, 93));
     pixelsSepia.add(new Pixel(2, 2, 135, 120, 93));
     imgSepia = new Image(pixelsSepia, width, height, depth);
-    sepiaString = "P3\n" +
-            "3\n" +
-            "3\n" +
-            "255\n" +
-            "135 120 93  135 120 93  135 120 93  135 120 93  " +
-            "135 120 93  135 120 93  135 120 93  135 120 93  135 120 93  \n";
+    sepiaString = "P3\n"
+            + "3\n"
+            + "3\n"
+            + "255\n"
+            + "135 120 93  135 120 93  135 120 93  135 120 93  "
+            + "135 120 93  135 120 93  135 120 93  135 120 93  135 120 93  \n";
     pixelsGreyscale = new ArrayList<Pixel>();
     pixelsGreyscale.add(new Pixel(0, 0, 100, 100, 100));
     pixelsGreyscale.add(new Pixel(0, 1, 100, 100, 100));
@@ -126,12 +125,12 @@ public class ImageTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidHeight() {
-    new Image(nullList, width, heightInvalid, depth);
+    new Image(pixels, width, heightInvalid, depth);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidDepth() {
-    new Image(nullList, width, height, depthInvalid);
+    new Image(pixels, width, height, depthInvalid);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -171,6 +170,6 @@ public class ImageTest {
   public void testExportedImageContents() throws IOException {
     //in res folder we have an image that we created of the sepia version of img
     //here we are making sure that that write produces what we expected it to
-    assertEquals(sepiaString, ImageUtil.readPPM("res/random.ppm").toString());
+    assertEquals(sepiaString, ImageUtil.readPPM("res/sepia3x3.ppm").toString());
   }
 }

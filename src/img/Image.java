@@ -2,13 +2,15 @@ package img;
 
 import java.io.IOException;
 import java.util.List;
+
 import filter.IModifier;
 import utils.ImageUtil;
 
 /**
- * The Image class that contains all methods to represent and modify an image.
+ * The Image class that contains methods to print Image as a file, modify an image, and save an
+ * image to a new file in the res folder. This class also implements the IImage interface.
  */
-public class Image implements IImage{
+public class Image implements IImage {
 
   public List<Pixel> pixels;
   public final int width;
@@ -22,8 +24,13 @@ public class Image implements IImage{
    * @param width  the width of the image
    * @param height the height
    * @param depth  the color depth (usually 255)
+   * @throws IllegalArgumentException if pixels is null or if width, height, or
+   *                                  depth are less than 0
    */
   public Image(List<Pixel> pixels, int width, int height, int depth) {
+    if (pixels == null || width < 0 || height < 0 || depth < 0) {
+      throw new IllegalArgumentException("Invalid Parameters.");
+    }
     this.pixels = pixels;
     this.width = width;
     this.height = height;
@@ -40,8 +47,8 @@ public class Image implements IImage{
   }
 
   @Override
-  public void applyFilter(IModifier IModifier) {
-    this.pixels = IModifier.modify(this);
+  public void applyFilter(IModifier iModifier) {
+    this.pixels = iModifier.modify(this);
   }
 
   @Override

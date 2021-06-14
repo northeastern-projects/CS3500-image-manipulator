@@ -3,13 +3,16 @@ package filter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import img.Pixel;
 
 /**
- * The abstract filter class that contains methods implemented by all filters (ex: Blur).
- * Extends AModifier
+ * The abstract AFilter class contains the methods implemented by all filters (ex: Blur).
+ * This class specifically overrides the AModifier applyToPixel method for kernel configuration
+ * where each pixel is the center of the kernel and the math is applied to each channel.
+ * It also extends AModifier.
  */
-public abstract class AFilter extends AModifier{
+public abstract class AFilter extends AModifier {
 
   /**
    * Instantiates a new Filter.
@@ -20,6 +23,18 @@ public abstract class AFilter extends AModifier{
     super(kernel);
   }
 
+  /**
+   * Determines what the new RBG values are for inputted pixel based on the kernel. The math for
+   * each pixel channel is done by making the pixel the center and multiplying the kernel but the
+   * rbg values that correspond to surrounding pixels. If the pixel doesn't have a neighbor it will
+   * skip that kernel.
+   *
+   * @param origPixels the list of pixels of the original image
+   * @param pixel      the pixel that we want to find the new RGB values of
+   * @param width      the width of the image
+   * @param height     the height of the Image
+   * @return A new list of RBG values that is the result of the kernel math
+   */
   private List<Double> generateNewRGB(List<Pixel> origPixels, Pixel pixel, int width, int height) {
     List<Double> newRGB = new ArrayList<>(Arrays.asList(0.0, 0.0, 0.0));
 
@@ -27,21 +42,18 @@ public abstract class AFilter extends AModifier{
     int kIndex = 0;
     for (int i = -1 * key; i <= key; i++) {
       for (int j = -1 * key; j <= key; j++) {
-
         int index = ((pixel.y + i) * width) + (pixel.x + j);
-
-        if (!(index < 0 || index >= origPixels.size() || (pixel.x + j < 0) ||(pixel.y + i < 0) || (pixel.x + j) > width - 1 || (pixel.y + i) > height - 1)) {
-          List<Double> thisRGB = origPixels.get(index).applyToAllChannels(crushedKernel.get(kIndex));
-
+        if (!(index < 0 || index >= origPixels.size() || (pixel.x + j < 0) || (pixel.y + i < 0) ||
+                (pixel.x + j) > width - 1 || (pixel.y + i) > height - 1)) {
+          List<Double> thisRGB = origPixels.get(index).applyToAllChannels(
+                  crushedKernel.get(kIndex));
           for (int k = 0; k < newRGB.size(); k++) {
             newRGB.set(k, newRGB.get(k) + thisRGB.get(k));
           }
         }
-
         kIndex++;
       }
     }
-
     return newRGB;
   }
 
