@@ -1,8 +1,7 @@
 package filter;
 
+import img.IImage;
 import java.util.List;
-
-import img.Image;
 import img.Pixel;
 
 /**
@@ -17,6 +16,6 @@ public interface IModifier {
    * @param image the image to be modified
    * @return the list of modified pixels after applying a modifier.
    */
-  List<Pixel> modify(Image image);
+  List<Pixel> modify(IImage image);
 
 }

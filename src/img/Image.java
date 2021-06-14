@@ -1,9 +1,12 @@
 package img;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import filter.IModifier;
+import javax.imageio.ImageIO;
 import utils.ImageUtil;
 
 /**
@@ -52,9 +55,24 @@ public class Image implements IImage {
   }
 
   @Override
-  public void save(String fName) throws IOException {
-    System.out.println("Saving...");
-    ImageUtil.writePPM("res/" + fName + ".ppm", this.toString());
+  public void save(String fName, String fType) throws IOException {
+    System.out.println("Saving..."); //TODO
+    ImageUtil.writePPM("res/" + fName + fType, this.toString());
     System.out.println("Done!\n");
+  }
+
+  @Override
+  public List<Pixel> getPixels() {
+    return new ArrayList<>(this.pixels);
+  }
+
+  @Override
+  public Pixel getPixel(int x, int y) {
+    return this.pixels.get((y * width) + x);
+  }
+
+  @Override
+  public List<Integer> getProps() {
+    return new ArrayList<>(Arrays.asList(this.width, this.height, this.depth));
   }
 }
