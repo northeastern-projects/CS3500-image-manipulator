@@ -1,9 +1,8 @@
 package filter;
 
+import img.IImage;
 import java.util.ArrayList;
 import java.util.List;
-
-import img.Image;
 import img.Pixel;
 
 /**
@@ -67,12 +66,17 @@ public abstract class AModifier implements IModifier {
   }
 
   @Override
-  public List<Pixel> modify(Image image) {
+  public List<Pixel> modify(IImage image) {
     System.out.println("Applying modifier...");
-    List<Pixel> origPixels = image.pixels;
+
+    List<Pixel> origPixels = image.getPixels();
+    int width = image.getProps().get(0);
+    int height = image.getProps().get(1);
+
     origPixels.forEach((pixel) -> {
-      this.pixels.add(this.applyToPixel(origPixels, pixel, image.width, image.height));
+      this.pixels.add(this.applyToPixel(origPixels, pixel, width, height));
     });
+
     return this.pixels;
   }
 

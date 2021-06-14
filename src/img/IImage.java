@@ -3,6 +3,7 @@ package img;
 import java.io.IOException;
 
 import filter.IModifier;
+import java.util.List;
 
 /**
  * The IImage interface that contains all publicly implementable methods for an image.
@@ -19,12 +20,36 @@ public interface IImage {
   void applyFilter(IModifier iModifier);
 
   /**
-   * This converts the image to a valid .ppm format and saves it to the /res
-   * folder.
+   * This converts the image to a valid .ppm format and saves it to the /res folder with the given
+   * file type.
    *
    * @param fName the file name
+   * @param fType the file type
    * @throws IOException IO exception in the event that there is an error writing the file.
    */
-  void save(String fName) throws IOException;
+  void save(String fName, String fType) throws IOException;
+
+  /**
+   * Returns a deep copy of the list of pixels of this image.
+   *
+   * @return the list of pixels
+   */
+  List<Pixel> getPixels();
+
+  /**
+   * Gets pixel.
+   *
+   * @param x the x
+   * @param y the y
+   * @return the pixel
+   */
+  Pixel getPixel(int x, int y);
+
+  /**
+   * Return a list of the properties (width, height, depth).
+   *
+   * @return the list of properties
+   */
+  List<Integer> getProps();
 
 }
