@@ -8,22 +8,24 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
+
 import img.IImage;
 import img.Image;
 import img.Pixel;
 
 
 /**
- * This class contains utility methods to read and write a PPM image from file and simply print its
- * contents.
- * Feel free to change this method as required.
+ * This class contains utility methods to read a PPM file and create an image that can be modified.
+ * It also can write a PPM image from file to the res/ folder given a file name and
+ * the contents of a PPM file.
  */
 public class ImageUtil {
 
   /**
-   * Read an image file in the PPM format and print the colors.
+   * Read an image file in the PPM format and creates an IIMage object based on the file.
    *
    * @param filename the path of the file.
+   * @return an IImage object
    */
   public static IImage readPPM(String filename) throws FileNotFoundException {
     System.out.println("Reading file...");
@@ -69,7 +71,6 @@ public class ImageUtil {
         pix.add(new Pixel(j, i, r, g, b));
       }
     }
-
     return new Image(pix, width, height, maxValue);
   }
 
