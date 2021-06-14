@@ -13,7 +13,7 @@ AModifier.
 
 Methods:
 
-* _modify()_ - returns a list of pixels modified with this IModifier
+* `modify()` - returns a list of pixels modified with this IModifier
 
 ---
 
@@ -25,13 +25,13 @@ AModifier extends to two abstract classes: AFilter and ATransform.
 
 Methods:
 
-* _isValid()_ - checks that kernel has odd dimensions
-* _flattenKernel()_ - returns the kernel as a list instead of an array to make it easier to iterate
+* `isValid()` - checks that kernel has odd dimensions
+* `flattenKernel()` - returns the kernel as a list instead of an array to make it easier to iterate
 * through.
-* _modify()_ - overridden from the interface and relies on double dispatch to apply the correct
+* `modify()` - overridden from the interface and relies on double dispatch to apply the correct
   subclass on the list of pixels; this method will specifically parse through the list of pixels and
   apply the modifier on each pixel
-* _applyToPixel()_ - abstract protected method to apply modifier on pixel in subclasses
+* `applyToPixel()` - abstract protected method to apply modifier on pixel in subclasses
 
 ---
 
@@ -42,8 +42,8 @@ class extends to two sub-classes: Blur and Sharpen.
 
 Methods:
 
-* _applyToPixel()_ - returns a new Pixel with the current pixels x and y and updated RGB values
-* _generateNewRGB()_ - returns a list of RGB values that have gone through the kernel configuration.
+* `applyToPixel()` - returns a new Pixel with the current pixels x and y and updated RGB values
+* `generateNewRGB()` - returns a list of RGB values that have gone through the kernel configuration.
   In this case, kernel configuration means that this pixel corresponds to the center of the kernel,
   and in order get the new channel values, you have to do matrix multiplication with the kernel and
   surrounding pixels and then total add those together.
@@ -56,7 +56,7 @@ kernel.
 
 Methods:
 
-* _toString()_ - returns "blur"
+* `toString()` - returns "blur"
 
 #### 2. Class Sharpen extends AFilter
 
@@ -66,7 +66,7 @@ valid kernel.
 
 Methods:
 
-* _toString()_ - returns "sharpen"
+* `toString()` - returns "sharpen"
 
 ---
 
@@ -77,8 +77,8 @@ abstract class extends to two sub-classes: Blur and Sharpen.
 
 Methods:
 
-* _applyToPixel()_ - returns a new Pixel with the current pixels x and y and updated RGB values
-* _generateNewRGB()_ - returns a new list of rgb values. Values are found by matrix multiplication
+* `applyToPixel()` - returns a new Pixel with the current pixels x and y and updated RGB values
+* `generateNewRGB()` - returns a new list of rgb values. Values are found by matrix multiplication
   of a 3x3 kernel array and 1x3 array of the current RBG values. The new r-value corresponds to the
   first row of the 3x3 times the 1x3 array. The new g-value corresponds to the second row times the
   1x3 array. The new b-value corresponds to the third row times the 1x3 array.
@@ -91,7 +91,7 @@ scheme based on an already valid kernel.
 
 Methods:
 
-* _toString()_ - returns "sepia"
+* `toString()` - returns "sepia"
 
 #### 2. Class Greyscale extends ATransform
 
@@ -101,7 +101,7 @@ monochrome color scheme based on an already valid kernel.
 
 Methods:
 
-* _toString()_ - returns "greyscale"
+* `toString()` - returns "greyscale"
 
 ---
 
@@ -112,8 +112,8 @@ Checkerboard.
 
 Methods:
 
-* _applyFilter()_ - applies the IModifier to this IImage
-* _save()_ - converts this IImage to a valid .ppm p3 file and exports it to the res/ folder
+* `applyFilter()` - applies the IModifier to this IImage
+* `save()` - converts this IImage to a valid .ppm p3 file and exports it to the res/ folder
 
 ---
 
@@ -124,9 +124,9 @@ height, and depth greater than 0.
 
 Methods:
 
-* _toString()_ - prints the image in a ppm p3 format
-* _applyFilter()_ - applies the IModifier to this IImage
-* _save()_ - converts this IImage to a valid .ppm p3 file and exports it to the res/ folder
+* `toString()` - prints the image in a ppm p3 format
+* `applyFilter()` - applies the IModifier to this IImage
+* `save()` - converts this IImage to a valid .ppm p3 file and exports it to the res/ folder
 
 ---
 
@@ -134,9 +134,9 @@ Methods:
 
 Methods:
 
-* _toString()_ - prints the image in a ppm p3 format
-* _applyFilter()_ - throws an exception to prevent any modification to the checkerboard image
-* _save()_ - converts this IImage to a valid .ppm p3 file and exports it to the res/ folder
+* `toString()` - prints the image in a ppm p3 format
+* `applyFilter()` - throws an exception to prevent any modification to the checkerboard image
+* `save()` - converts this IImage to a valid .ppm p3 file and exports it to the res/ folder
 
 ---
 
@@ -150,14 +150,14 @@ or equal to 0
 
 Methods:
 
-* _setR()_ - sets the r value of the Pixel between 0 and 255
-* _setG()_ - sets the g value of the Pixel between 0 and 255
-* _setB()_ - sets the b value of the Pixel between 0 and 255
-* _toString()_ - prints the rgb values as you would see in a ppm p3 file
-* _applyToAllChannels()_ - applies the input modifier to all channels
-* _applyToR()_ - applies the input modifier to the r value
-* _applyToG()_ - applies the input modifier to the g value
-* _applyToB()_ - applies the input modifier to the b value
+* `setR()` - sets the r value of the Pixel between 0 and 255
+* `setG()` - sets the g value of the Pixel between 0 and 255
+* `setB()` - sets the b value of the Pixel between 0 and 255
+* `toString()` - prints the rgb values as you would see in a ppm p3 file
+* `applyToAllChannels()` - applies the input modifier to all channels
+* `applyToR()` - applies the input modifier to the r value
+* `applyToG()` - applies the input modifier to the g value
+* `applyToB()` - applies the input modifier to the b value
 
 ---
 
@@ -169,9 +169,9 @@ file.
 
 Methods:
 
-* _readPPM()_ - reads the file at the input file path throws fileNotFoundException if file is not
+* `readPPM()` - reads the file at the input file path throws fileNotFoundException if file is not
   found; creates an IMage from the file
-* _writePPM()_ - writes a ppm file of the input contents and exports it to the destination file name
+* `writePPM()` - writes a ppm file of the input contents and exports it to the destination file name
 
 ---
 
