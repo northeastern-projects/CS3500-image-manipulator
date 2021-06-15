@@ -73,9 +73,9 @@ public class ImageUtilTest {
     //in res folder we have an image that we created of the sepia version of img
     //here we are making sure that that read and write produce the correct string
     //also testing that checkerboard also returns the correct output
-    assertNotEquals(imgFile, ImageUtil.readPPM("res/sepia3x3.ppm").toString());
+    assertNotEquals(imgFile, ImageUtil.readFile("res/sepia3x3.ppm").toString());
     img.applyFilter(new Sepia());
-    assertEquals(imgFileSepia, ImageUtil.readPPM("res/sepia3x3.ppm").toString());
-    assertEquals(checkerboardFile, ImageUtil.readPPM("res/check.ppm").toString());
+    assertEquals(imgFileSepia, ImageUtil.readFile("res/sepia3x3.ppm").toString());
+    assertEquals(checkerboardFile, ImageUtil.readFile("res/check.ppm").toString());
   }
 }

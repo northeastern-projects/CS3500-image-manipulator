@@ -88,6 +88,6 @@ public class CheckerboardTest {
   public void testExportedImageContents() throws IOException {
     //in res folder we have an image that we created of the sepia version of img
     //here we are making sure that that write produces what we expected it to
-    assertEquals(imgFile, ImageUtil.readPPM("res/check.ppm").toString());
+    assertEquals(imgFile, ImageUtil.readFile("res/check.ppm").toString());
   }
 }
