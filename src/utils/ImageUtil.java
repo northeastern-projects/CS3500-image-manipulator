@@ -1,10 +1,16 @@
 package utils;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
@@ -12,6 +18,7 @@ import java.io.FileInputStream;
 import img.IImage;
 import img.Image;
 import img.Pixel;
+import javax.imageio.ImageIO;
 
 
 /**
@@ -21,14 +28,53 @@ import img.Pixel;
  */
 public class ImageUtil {
 
+  public static String[] readTxt(String filename) throws IOException {
+    return null;
+  }
+
+  public static IImage readFile(String filename) throws IOException {
+    System.out.println("Reading file...");
+
+    String[] nameComps = filename.split("\\.");
+    String fileExtension = nameComps[nameComps.length - 1].toLowerCase(Locale.ROOT);
+
+    switch (fileExtension) {
+      case "ppm": return readPPM(filename);
+      case "txt": readFile(filename);
+      case "jpeg":
+      case "png":
+      case "bmp":
+      case "jpg": return readImg(filename);
+      default: throw new UnsupportedOperationException("We cannot read that file type.");
+    }
+  }
+
+  private static IImage readImg(String filename) throws IOException {
+    BufferedImage img = ImageIO.read(new File(filename));
+
+    int height = img.getHeight();
+    int width = img.getWidth();
+    int depth = (img.getColorModel().getPixelSize() * 8) - 1;
+
+    List<Pixel> pixels = new ArrayList<>();
+
+    for (int j = 0; j < height; j++) {
+      for (int i = 0; i < width; i++) {
+        Color c = new Color(img.getRGB(i, j));
+        pixels.add(new Pixel(i, j, c.getRed(), c.getGreen(), c.getBlue()));
+      }
+    }
+
+    return new Image(pixels, width, height, depth);
+  }
+
   /**
    * Read an image file in the PPM format and creates an IIMage object based on the file.
    *
    * @param filename the path of the file.
    * @return an IImage object
    */
-  public static IImage readPPM(String filename) throws FileNotFoundException {
-    System.out.println("Reading file...");
+  private static IImage readPPM(String filename) throws FileNotFoundException {
     Scanner sc;
     List<Pixel> pix = new ArrayList<>();
 
@@ -74,6 +120,18 @@ public class ImageUtil {
     return new Image(pix, width, height, maxValue);
   }
 
+  public static void writeFile(String fileName, String fileType, String contents) throws IOException {
+    System.out.println("Saving...");
+
+    if (fileType.equalsIgnoreCase("ppm")) {
+      writePPM(fileName, contents);
+    } else {
+      //TODO
+    }
+
+    System.out.println("Done!\n");
+  }
+
   /**
    * Write a ppm image to the disk.
    *
@@ -81,8 +139,8 @@ public class ImageUtil {
    * @param contents the contents of the file (exported image)
    * @throws IOException the IO exception in case there is an error writing to the disk
    */
-  public static void writePPM(String fileName, String contents) throws IOException {
-    FileOutputStream out = new FileOutputStream(fileName);
+  private static void writePPM(String fileName, String contents) throws IOException {
+    FileOutputStream out = new FileOutputStream(fileName + ".ppm");
     out.write(contents.getBytes(StandardCharsets.UTF_8));
     out.close();
   }

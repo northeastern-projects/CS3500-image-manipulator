@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import filter.IModifier;
-import javax.imageio.ImageIO;
 import utils.ImageUtil;
 
 /**
@@ -56,9 +55,7 @@ public class Image implements IImage {
 
   @Override
   public void save(String fName, String fType) throws IOException {
-    System.out.println("Saving..."); //TODO
-    ImageUtil.writePPM("res/" + fName + fType, this.toString());
-    System.out.println("Done!\n");
+    ImageUtil.writeFile("res/" + fName, fType, this.toString());
   }
 
   @Override

@@ -170,6 +170,6 @@ public class ImageTest {
   public void testExportedImageContents() throws IOException {
     //in res folder we have an image that we created of the sepia version of img
     //here we are making sure that that write produces what we expected it to
-    assertEquals(sepiaString, ImageUtil.readPPM("res/sepia3x3.ppm").toString());
+    assertEquals(sepiaString, ImageUtil.readFile("res/sepia3x3.ppm").toString());
   }
 }

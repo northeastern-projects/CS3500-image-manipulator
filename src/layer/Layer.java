@@ -105,8 +105,6 @@ public class Layer implements ILayer{
 
   @Override
   public void save(String fName) throws IOException {
-    System.out.println("Saving...");
-    ImageUtil.writePPM("res/" + fName + ".dat", this.toString());
-    System.out.println("Done!\n");
+    ImageUtil.writeFile("res/" + fName, "txt", this.toString());
   }
 }

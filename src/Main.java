@@ -27,39 +27,16 @@ public class Main {
    */
   public static void main(String[] args) throws IOException {
     String filename;
-    String name = "road";
+    String name = "testpng.png";
 
     if (args.length > 0) {
       filename = args[0];
     } else {
-      filename = "res/" + name + ".ppm";
+      filename = "res/" + name;
     }
 
-    IImage img1 = ImageUtil.readPPM(filename);
-    IImage img2 = ImageUtil.readPPM("res/rainbow.ppm");
+    IImage img = ImageUtil.readFile(filename);
+    System.out.println(img);
 
-    ILayer l = new Layer(new ArrayList<>(Arrays.asList(img1, img2)), img1.getProps());
-    l.save("testSave");
-
-//    //code for Image Creation
-//    img = ImageUtil.readPPM(filename);
-//    IModifier mod = new Blur();
-//    img.applyFilter(mod);
-//    img.save(name + "_" + mod, "ppm");
-//
-//    img = ImageUtil.readPPM(filename);
-//    mod = new Sharpen();
-//    img.applyFilter(mod);
-//    img.save(name + "_" + mod, "ppm");
-//
-//    img = ImageUtil.readPPM(filename);
-//    mod = new Sepia();
-//    img.applyFilter(mod);
-//    img.save(name + "_" + mod, "ppm");
-//
-//    img = ImageUtil.readPPM(filename);
-//    mod = new Greyscale();
-//    img.applyFilter(mod);
-//    img.save(name + "_" + mod, "ppm");
   }
 }
