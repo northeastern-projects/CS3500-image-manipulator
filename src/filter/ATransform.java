@@ -1,5 +1,6 @@
 package filter;
 
+import img.IPixel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +31,7 @@ public class ATransform extends AModifier {
    * @param pixel current pixel that we want to apply the kernel on
    * @return new list of RBG values with kernel multiplication applied
    */
-  private List<Double> generateNewRGB(Pixel pixel) {
+  private List<Double> generateNewRGB(IPixel pixel) {
     List<Double> newRGB = new ArrayList<>(Arrays.asList(0.0, 0.0, 0.0));
     newRGB.set(0, pixel.applyToR(crushedKernel.get(0))
             + pixel.applyToG(crushedKernel.get(1))
@@ -46,8 +47,8 @@ public class ATransform extends AModifier {
   }
 
   @Override
-  protected Pixel applyToPixel(List<Pixel> pixels, Pixel pixel, int width, int height) {
+  protected IPixel applyToPixel(List<IPixel> pixels, IPixel pixel, int width, int height) {
     //get pixel with new rgb values
-    return new Pixel(pixel.x, pixel.y, this.generateNewRGB(pixel));
+    return new Pixel(pixel.getCoords(), this.generateNewRGB(pixel));
   }
 }

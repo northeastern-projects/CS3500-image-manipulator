@@ -16,4 +16,6 @@ public interface ILayer {
 
   void save(String fName) throws IOException;
 
+  List<Integer> getProps();
+
 }

@@ -1,6 +1,7 @@
 package layer;
 
 import img.IImage;
+import img.IPixel;
 import img.Image;
 import img.Pixel;
 import java.io.IOException;
@@ -11,10 +12,10 @@ import utils.ImageUtil;
 
 public class Layer implements ILayer{
 
-  List<IImage> layers;
-  int height;
-  int width;
-  int depth;
+  private final List<IImage> layers;
+  private final int height;
+  private final int width;
+  private final int depth;
 
   public Layer(List<IImage> images, List<Integer> props) {
     this(images, props.get(0), props.get(1), props.get(2));
@@ -70,7 +71,7 @@ public class Layer implements ILayer{
   @Override
   public IImage blend() {
     System.out.println("Blending...");
-    List<Pixel> pixels = new ArrayList<>();
+    List<IPixel> pixels = new ArrayList<>();
 
     for (int j = 0 ; j < height; j++) {
       for (int i = 0; i < width; i++) {
@@ -79,10 +80,10 @@ public class Layer implements ILayer{
         double avgB = 0.0;
 
         for (IImage layer : this.layers) {
-          Pixel p = layer.getPixel(i, j);
-          avgR += p.r;
-          avgG += p.g;
-          avgB += p.b;
+          IPixel p = layer.getPixel(i, j);
+          avgR += p.getColor().get(0);
+          avgG += p.getColor().get(1);
+          avgB += p.getColor().get(2);
         }
 
         pixels.add(new Pixel(i, j, avgR / this.layers.size(), avgG / this.layers.size(),
@@ -106,5 +107,10 @@ public class Layer implements ILayer{
   @Override
   public void save(String fName) throws IOException {
     ImageUtil.writeFile("res/" + fName, "txt", this.toString());
+  }
+
+  @Override
+  public List<Integer> getProps() {
+    return new ArrayList<>(Arrays.asList(this.layers.size(), this.height, this.width, this.depth));
   }
 }

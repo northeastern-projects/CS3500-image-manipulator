@@ -1,5 +1,6 @@
 package img;
 
+import filter.IModifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +19,23 @@ public class Checkerboard extends Image {
    * @param depth  the color depth (normally 255)
    * @throws IllegalArgumentException if width, height, or depth are less than 0
    */
-  public Checkerboard(int width, int height, int depth) {
-    super(generateCheckerboard(width, height, depth), width, height, depth);
+  public Checkerboard(int width, int height, int depth, int size) {
+    super(generateCheckerboard(width, height, depth, size), width, height, depth);
   }
 
-  private static List<Pixel> generateCheckerboard(int width, int height, int depth) {
-    List<Pixel> pixels = new ArrayList<>();
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
+  @Override
+  public void applyFilter(IModifier iModifier) {
+    throw new UnsupportedOperationException("Cannot apply filter to Checkerboard");
+  }
+
+  private static List<IPixel> generateCheckerboard(int width, int height, int depth, int size) {
+    if (width % size != 0 || height % size != 0) {
+      throw new IllegalArgumentException("Invalid size, pixels will not fit");
+    }
+
+    List<IPixel> pixels = new ArrayList<>();
+    for (int i = 0; i < width / size; i++) {
+      for (int j = 0; j < height / size; j++) {
         if ((i + j) % 2 == 0) {
           pixels.add(new Pixel(i, j, 0, 0, 0));
         } else {

@@ -1,5 +1,6 @@
 package filter;
 
+import img.IPixel;
 import img.Image;
 import img.Pixel;
 import org.junit.Before;
@@ -17,15 +18,15 @@ import static org.junit.Assert.assertEquals;
  * Sepia object.
  */
 public class SepiaTest extends ATransformTest {
-  List<Pixel> pixels;
-  List<Pixel> pixelsSepia;
+  List<IPixel> pixels;
+  List<IPixel> pixelsSepia;
   Image img;
   double[][] kernelEvenRows;
   double[][] kernelEvenColumns;
 
   @Before
   public void initData() {
-    pixels = new ArrayList<Pixel>();
+    pixels = new ArrayList<>();
     pixels.add(new Pixel(0, 0, 100, 100, 100));
     pixels.add(new Pixel(0, 1, 100, 100, 100));
     pixels.add(new Pixel(0, 2, 100, 100, 100));
@@ -36,7 +37,7 @@ public class SepiaTest extends ATransformTest {
     pixels.add(new Pixel(2, 1, 100, 100, 100));
     pixels.add(new Pixel(2, 2, 100, 100, 100));
 
-    pixelsSepia = new ArrayList<Pixel>();
+    pixelsSepia = new ArrayList<>();
     pixelsSepia.add(new Pixel(0, 0, 135, 120, 93));
     pixelsSepia.add(new Pixel(0, 1, 135, 120, 93));
     pixelsSepia.add(new Pixel(0, 2, 135, 120, 93));

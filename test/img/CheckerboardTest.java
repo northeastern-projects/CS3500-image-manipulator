@@ -34,7 +34,7 @@ public class CheckerboardTest {
     height = 3;
     depthInvalid = -3;
     depth = 255;
-    img = new Checkerboard(width, height, depth);
+    img = new Checkerboard(width, height, depth, 1);
 
     imgFile = "P3\n"
             + "3\n"
@@ -46,17 +46,17 @@ public class CheckerboardTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidWidth() {
-    new Checkerboard(widthInvalid, height, depth);
+    new Checkerboard(widthInvalid, height, depth, 1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidHeight() {
-    new Checkerboard(width, heightInvalid, depth);
+    new Checkerboard(width, heightInvalid, depth, 1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidDepth() {
-    new Checkerboard(width, height, depthInvalid);
+    new Checkerboard(width, height, depthInvalid, 1);
   }
 
   @Test(expected = UnsupportedOperationException.class)

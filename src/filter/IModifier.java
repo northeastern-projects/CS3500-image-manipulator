@@ -1,8 +1,8 @@
 package filter;
 
 import img.IImage;
+import img.IPixel;
 import java.util.List;
-import img.Pixel;
 
 /**
  * The IModifier interface contains all publicly accessible and implementable methods for modifiers.
@@ -16,6 +16,6 @@ public interface IModifier {
    * @param image the image to be modified
    * @return the list of modified pixels after applying a modifier.
    */
-  List<Pixel> modify(IImage image);
+  List<IPixel> modify(IImage image);
 
 }

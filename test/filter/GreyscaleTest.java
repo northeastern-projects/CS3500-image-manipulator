@@ -1,5 +1,6 @@
 package filter;
 
+import img.IPixel;
 import img.Image;
 import img.Pixel;
 import org.junit.Before;
@@ -17,14 +18,14 @@ import static org.junit.Assert.assertEquals;
  * Greyscale object.
  */
 public class GreyscaleTest extends ATransformTest {
-  List<Pixel> pixels;
+  List<IPixel> pixels;
   Image img;
   double[][] kernelEvenRows;
   double[][] kernelEvenColumns;
 
   @Before
   public void initData() {
-    pixels = new ArrayList<Pixel>();
+    pixels = new ArrayList<>();
     pixels.add(new Pixel(0, 0, 100, 100, 100));
     pixels.add(new Pixel(0, 1, 100, 100, 100));
     pixels.add(new Pixel(0, 2, 100, 100, 100));

@@ -16,8 +16,9 @@ public interface IImage {
    * applied to an image at a time, to apply more modifiers call this method repeatedly.
    *
    * @param iModifier the modifier to be applied.
+   * @throws IllegalArgumentException if the modifier provided is invalid or null.
    */
-  void applyFilter(IModifier iModifier);
+  void applyFilter(IModifier iModifier) throws IllegalArgumentException;
 
   /**
    * This converts the image to a valid .ppm format and saves it to the /res folder with the given
@@ -34,7 +35,7 @@ public interface IImage {
    *
    * @return the list of pixels
    */
-  List<Pixel> getPixels();
+  List<IPixel> getPixels();
 
   /**
    * Gets pixel.
@@ -43,7 +44,7 @@ public interface IImage {
    * @param y the y
    * @return the pixel
    */
-  Pixel getPixel(int x, int y);
+  IPixel getPixel(int x, int y);
 
   /**
    * Return a list of the properties (width, height, depth).

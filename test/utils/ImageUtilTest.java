@@ -3,6 +3,7 @@ package utils;
 import filter.Sepia;
 import img.Checkerboard;
 import img.IImage;
+import img.IPixel;
 import img.Image;
 import img.Pixel;
 import org.junit.Before;
@@ -21,7 +22,7 @@ import static org.junit.Assert.assertNotEquals;
  */
 public class ImageUtilTest {
   ImageUtil ut;
-  List<Pixel> pixels;
+  List<IPixel> pixels;
   IImage img;
   IImage checkerboard;
   String imgFile;
@@ -32,7 +33,7 @@ public class ImageUtilTest {
   public void initData() {
     ut = new ImageUtil();
 
-    pixels = new ArrayList<Pixel>();
+    pixels = new ArrayList<>();
     pixels.add(new Pixel(0, 0, 100, 100, 100));
     pixels.add(new Pixel(0, 1, 100, 100, 100));
     pixels.add(new Pixel(0, 2, 100, 100, 100));
@@ -44,7 +45,7 @@ public class ImageUtilTest {
     pixels.add(new Pixel(2, 2, 100, 100, 100));
 
     img = new Image(pixels, 3, 3, 255);
-    checkerboard = new Checkerboard(3, 3, 255);
+    checkerboard = new Checkerboard(3, 3, 255, 1);
 
     imgFile = "P3\n"
             + "3\n"

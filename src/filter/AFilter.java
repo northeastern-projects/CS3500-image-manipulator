@@ -1,5 +1,6 @@
 package filter;
 
+import img.IPixel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,16 +36,19 @@ public abstract class AFilter extends AModifier {
    * @param height     the height of the Image
    * @return A new list of RBG values that is the result of the kernel math
    */
-  private List<Double> generateNewRGB(List<Pixel> origPixels, Pixel pixel, int width, int height) {
+  private List<Double> generateNewRGB(List<IPixel> origPixels, IPixel pixel, int width,
+      int height) {
     List<Double> newRGB = new ArrayList<>(Arrays.asList(0.0, 0.0, 0.0));
+    int x = pixel.getCoords().get(0);
+    int y = pixel.getCoords().get(1);
 
     int key = (kernel.length - 1) / 2;
     int kIndex = 0;
     for (int i = -1 * key; i <= key; i++) {
       for (int j = -1 * key; j <= key; j++) {
-        int index = ((pixel.y + i) * width) + (pixel.x + j);
-        if (!(index < 0 || index >= origPixels.size() || (pixel.x + j < 0) || (pixel.y + i < 0) ||
-                (pixel.x + j) > width - 1 || (pixel.y + i) > height - 1)) {
+        int index = ((y + i) * width) + (x + j);
+        if (!(index < 0 || index >= origPixels.size() || (x + j < 0) || (y + i < 0) ||
+                (x + j) > width - 1 || (y + i) > height - 1)) {
           List<Double> thisRGB = origPixels.get(index).applyToAllChannels(
                   crushedKernel.get(kIndex));
           for (int k = 0; k < newRGB.size(); k++) {
@@ -58,8 +62,8 @@ public abstract class AFilter extends AModifier {
   }
 
   @Override
-  protected Pixel applyToPixel(List<Pixel> origPixels, Pixel pixel, int width, int height) {
+  protected IPixel applyToPixel(List<IPixel> origPixels, IPixel pixel, int width, int height) {
     //get pixel with new rgb values
-    return new Pixel(pixel.x, pixel.y, this.generateNewRGB(origPixels, pixel, width, height));
+    return new Pixel(pixel.getCoords(), this.generateNewRGB(origPixels, pixel, width, height));
   }
 }
