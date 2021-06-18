@@ -1,9 +1,9 @@
 package filter;
 
 import img.IImage;
+import img.IPixel;
 import java.util.ArrayList;
 import java.util.List;
-import img.Pixel;
 
 /**
  * The AModifier abstract class implements methods used by both AFilters and ATransforms.
@@ -11,7 +11,7 @@ import img.Pixel;
  * to .
  */
 public abstract class AModifier implements IModifier {
-  protected List<Pixel> pixels;
+  protected List<IPixel> pixels;
   protected double[][] kernel;
   protected List<Double> crushedKernel;
 
@@ -66,10 +66,10 @@ public abstract class AModifier implements IModifier {
   }
 
   @Override
-  public List<Pixel> modify(IImage image) {
+  public List<IPixel> modify(IImage image) {
     System.out.println("Applying modifier...");
 
-    List<Pixel> origPixels = image.getPixels();
+    List<IPixel> origPixels = image.getPixels();
     int width = image.getProps().get(0);
     int height = image.getProps().get(1);
 
@@ -90,5 +90,5 @@ public abstract class AModifier implements IModifier {
    * @param height the height of the image
    * @return a new pixel with the same x, same y, and new RBG values
    */
-  protected abstract Pixel applyToPixel(List<Pixel> pixels, Pixel pixel, int width, int height);
+  protected abstract IPixel applyToPixel(List<IPixel> pixels, IPixel pixel, int width, int height);
 }

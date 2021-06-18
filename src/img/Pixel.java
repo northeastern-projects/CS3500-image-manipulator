@@ -9,14 +9,18 @@ import java.util.List;
  * one to set RBG values, print the pixel to add to a PPM file through toString, and apply
  * modifiers to RBG values either separately or to all channels.
  */
-public class Pixel {
+public class Pixel implements IPixel{
   //coord
-  public int x;
-  public int y;
+  private final int x;
+  private final int y;
   //rgb
-  public int r;
-  public int g;
-  public int b;
+  private int r;
+  private int g;
+  private int b;
+
+  public Pixel(List<Integer> coords, List<Double> rgb) {
+    this(coords.get(0), coords.get(1), rgb.get(0), rgb.get(1), rgb.get(2));
+  }
 
   /**
    * Instantiates a new Pixel given an x/y coord and a List of Doubles representing the RGB values.
@@ -83,46 +87,35 @@ public class Pixel {
     return r + " " + g + " " + b + "  ";
   }
 
-  /**
-   * Apply a modifier to all channels.
-   *
-   * @param modifier the modifier
-   * @return the list of R, G and B values after modifying each of them.
-   */
+  @Override
   public List<Double> applyToAllChannels(double modifier) {
     return new ArrayList<>(Arrays.asList(this.applyToR(modifier), this.applyToG(modifier),
             this.applyToB(modifier)));
   }
 
-  /**
-   * Apply a given modifier to the R channel of the pixel. The modifier is multiplied by the
-   * current r value and is then clamped to be between 0 and max color depth.
-   *
-   * @param modifier the modifier to be applied
-   * @return the modified R value
-   */
+  @Override
   public double applyToR(double modifier) {
     return this.r * modifier;
   }
 
-  /**
-   * Apply the modifier to the G channel.
-   *
-   * @param modifier the modifier
-   * @return the modified G value
-   */
+  @Override
   public double applyToG(double modifier) {
     return this.g * modifier;
   }
 
-  /**
-   * Apply the modifier to the B channel.
-   *
-   * @param modifier the modifier
-   * @return the modified B value
-   */
+  @Override
   public double applyToB(double modifier) {
     return this.b * modifier;
+  }
+
+  @Override
+  public List<Integer> getCoords() {
+    return new ArrayList<>(Arrays.asList(this.x, this.y));
+  }
+
+  @Override
+  public List<Integer> getColor() {
+    return new ArrayList<>(Arrays.asList(this.r, this.g, this.b));
   }
 
 }

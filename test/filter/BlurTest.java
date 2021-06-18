@@ -1,5 +1,6 @@
 package filter;
 
+import img.IPixel;
 import img.Image;
 import img.Pixel;
 import org.junit.Before;
@@ -16,15 +17,15 @@ import static org.junit.Assert.assertEquals;
  * {@link IModifier}. It also tests the modify and toString method on this Blur object.
  */
 public class BlurTest extends AFilterTest {
-  List<Pixel> pixels;
-  List<Pixel> pixelsBlurred;
+  List<IPixel> pixels;
+  List<IPixel> pixelsBlurred;
   Image img;
   double[][] kernelEvenRows;
   double[][] kernelEvenColumns;
 
   @Before
   public void initData() {
-    pixels = new ArrayList<Pixel>();
+    pixels = new ArrayList<>();
     pixels.add(new Pixel(0, 0, 100, 100, 100));
     pixels.add(new Pixel(0, 1, 100, 100, 100));
     pixels.add(new Pixel(0, 2, 100, 100, 100));
@@ -35,7 +36,7 @@ public class BlurTest extends AFilterTest {
     pixels.add(new Pixel(2, 1, 100, 100, 100));
     pixels.add(new Pixel(2, 2, 100, 100, 100));
 
-    pixelsBlurred = new ArrayList<Pixel>();
+    pixelsBlurred = new ArrayList<>();
     pixelsBlurred.add(new Pixel(0, 0, 56, 56, 56));
     pixelsBlurred.add(new Pixel(0, 1, 75, 75, 75));
     pixelsBlurred.add(new Pixel(0, 2, 56, 56, 56));

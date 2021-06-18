@@ -1,5 +1,6 @@
 package utils;
 
+import img.IPixel;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -7,8 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -56,7 +55,7 @@ public class ImageUtil {
     int width = img.getWidth();
     int depth = (img.getColorModel().getPixelSize() * 8) - 1;
 
-    List<Pixel> pixels = new ArrayList<>();
+    List<IPixel> pixels = new ArrayList<>();
 
     for (int j = 0; j < height; j++) {
       for (int i = 0; i < width; i++) {
@@ -76,7 +75,7 @@ public class ImageUtil {
    */
   private static IImage readPPM(String filename) throws FileNotFoundException {
     Scanner sc;
-    List<Pixel> pix = new ArrayList<>();
+    List<IPixel> pix = new ArrayList<>();
 
     try {
       sc = new Scanner(new FileInputStream(filename));
