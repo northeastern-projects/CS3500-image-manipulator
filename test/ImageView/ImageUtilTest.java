@@ -1,15 +1,15 @@
-package utils;
+package ImageView;
 
+import ImageController.ImageController;
 import filter.Sepia;
-import img.Checkerboard;
-import img.IImage;
-import img.IPixel;
-import img.Image;
-import img.Pixel;
+import ImageModel.Checkerboard;
+import ImageModel.IImage;
+import ImageModel.IPixel;
+import ImageModel.Image;
+import ImageModel.Pixel;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotEquals;
  * and write a file with output-name and file-contents to another ppm file.
  */
 public class ImageUtilTest {
-  ImageUtil ut;
+  ImageController ut;
   List<IPixel> pixels;
   IImage img;
   IImage checkerboard;
@@ -31,7 +31,7 @@ public class ImageUtilTest {
 
   @Before
   public void initData() {
-    ut = new ImageUtil();
+    ut = new ImageController();
 
     pixels = new ArrayList<>();
     pixels.add(new Pixel(0, 0, 100, 100, 100));
@@ -69,14 +69,5 @@ public class ImageUtilTest {
             + "255 255 255  0 0 0  255 255 255  0 0 0  \n";
   }
 
-  @Test
-  public void testExportedImageContents() throws IOException {
-    //in res folder we have an image that we created of the sepia version of img
-    //here we are making sure that that read and write produce the correct string
-    //also testing that checkerboard also returns the correct output
-    assertNotEquals(imgFile, ImageUtil.readFile("res/sepia3x3.ppm").toString());
-    img.applyFilter(new Sepia());
-    assertEquals(imgFileSepia, ImageUtil.readFile("res/sepia3x3.ppm").toString());
-    assertEquals(checkerboardFile, ImageUtil.readFile("res/check.ppm").toString());
-  }
+
 }

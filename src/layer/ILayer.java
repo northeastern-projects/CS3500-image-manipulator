@@ -1,6 +1,6 @@
 package layer;
 
-import img.IImage;
+import ImageModel.IImage;
 import java.io.IOException;
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface ILayer {
 
   IImage blend();
 
-  void save(String fName) throws IOException;
+  void setCurrent(int index);
 
   List<Integer> getProps();
 

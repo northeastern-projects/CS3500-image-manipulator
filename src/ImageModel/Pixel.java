@@ -1,4 +1,4 @@
-package img;
+package ImageModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import java.util.List;
  * one to set RBG values, print the pixel to add to a PPM file through toString, and apply
  * modifiers to RBG values either separately or to all channels.
  */
-public class Pixel implements IPixel{
+public class Pixel implements IPixel {
   //coord
   private final int x;
   private final int y;

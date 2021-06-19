@@ -1,7 +1,7 @@
 package filter;
 
-import img.IImage;
-import img.IPixel;
+import ImageModel.IImage;
+import ImageModel.IPixel;
 import java.util.ArrayList;
 import java.util.List;
 

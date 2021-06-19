@@ -1,8 +1,8 @@
 package filter;
 
-import img.IPixel;
-import img.Image;
-import img.Pixel;
+import ImageModel.IPixel;
+import ImageModel.Image;
+import ImageModel.Pixel;
 import org.junit.Before;
 import org.junit.Test;
 

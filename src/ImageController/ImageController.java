@@ -1,54 +1,74 @@
-package utils;
+package ImageController;
 
-import img.IPixel;
-import java.awt.Color;
+import ImageModel.IImage;
+import ImageModel.IPixel;
+import ImageModel.Image;
+import ImageModel.Pixel;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
-import java.io.FileNotFoundException;
-import java.io.FileInputStream;
-
-import img.IImage;
-import img.Image;
-import img.Pixel;
-import javax.imageio.ImageIO;
 
 
 /**
- * This class contains utility methods to read a PPM file and create an image that can be modified.
- * It also can write a PPM image from file to the res/ folder given a file name and
- * the contents of a PPM file.
+ * This class contains methods for the controller. It allows the reading a PPM file and creates
+ * an image that can be modified. It also can write a PPM image from file to the res/ folder given
+ * a file name and the contents of a PPM file.
  */
-public class ImageUtil {
+public class ImageController implements IController {
 
-  public static String[] readTxt(String filename) throws IOException {
-    return null;
+  private String filename;
+  private IImage model;
+  public ImageController() {
+  }
+  
+  public IImage readTxt() throws IOException {
+    String[] nameComps = filename.split("\\.");
+    String fileExtension = nameComps[nameComps.length - 1].toLowerCase(Locale.ROOT);
+
+    switch (fileExtension) {
+      case "ppm":
+        return readPPM(filename);
+      case "txt":
+        readFile(filename);
+      case "jpeg":
+      case "png":
+      case "bmp":
+      case "jpg":
+        return readImg(filename);
+      default:
+        throw new UnsupportedOperationException("We cannot read that file type.");
+    }
   }
 
-  public static IImage readFile(String filename) throws IOException {
+  public IImage readFile(String filename) throws IOException {
     System.out.println("Reading file...");
 
     String[] nameComps = filename.split("\\.");
     String fileExtension = nameComps[nameComps.length - 1].toLowerCase(Locale.ROOT);
 
     switch (fileExtension) {
-      case "ppm": return readPPM(filename);
-      case "txt": readFile(filename);
+      case "ppm":
+        return readPPM(filename);
+      case "txt":
+        readFile(filename);
       case "jpeg":
       case "png":
       case "bmp":
-      case "jpg": return readImg(filename);
-      default: throw new UnsupportedOperationException("We cannot read that file type.");
+      case "jpg":
+        return readImg(filename);
+      default:
+        throw new UnsupportedOperationException("We cannot read that file type.");
     }
   }
 
-  private static IImage readImg(String filename) throws IOException {
+  private IImage readImg(String filename) throws IOException {
     BufferedImage img = ImageIO.read(new File(filename));
 
     int height = img.getHeight();
@@ -73,7 +93,7 @@ public class ImageUtil {
    * @param filename the path of the file.
    * @return an IImage object
    */
-  private static IImage readPPM(String filename) throws FileNotFoundException {
+  private IImage readPPM(String filename) throws FileNotFoundException {
     Scanner sc;
     List<IPixel> pix = new ArrayList<>();
 
@@ -119,7 +139,7 @@ public class ImageUtil {
     return new Image(pix, width, height, maxValue);
   }
 
-  public static void writeFile(String fileName, String fileType, String contents) throws IOException {
+  public void writeFile(String fileName, String fileType, String contents) throws IOException {
     System.out.println("Saving...");
 
     if (fileType.equalsIgnoreCase("ppm")) {
@@ -132,13 +152,28 @@ public class ImageUtil {
   }
 
   /**
+   * This converts the image to a valid .ppm format and saves it to the /res folder with the given
+   * file type.
+   *
+   * @param fName the file name
+   * @param fType the file type
+   * @throws IOException IO exception in the event that there is an error writing the file.
+   */
+  //void save(String fName, String fType) throws IOException;
+
+
+  public void save(String fName, String fType, IImage image) throws IOException {
+    writeFile("res/" + fName, fType, image.toString());
+  }
+
+  /**
    * Write a ppm image to the disk.
    *
    * @param fileName the file name
    * @param contents the contents of the file (exported image)
    * @throws IOException the IO exception in case there is an error writing to the disk
    */
-  private static void writePPM(String fileName, String contents) throws IOException {
+  private void writePPM(String fileName, String contents) throws IOException {
     FileOutputStream out = new FileOutputStream(fileName + ".ppm");
     out.write(contents.getBytes(StandardCharsets.UTF_8));
     out.close();
