@@ -1,4 +1,4 @@
-package img;
+package ImageModel;
 
 import filter.IModifier;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class Checkerboard extends Image {
     throw new UnsupportedOperationException("Cannot apply filter to Checkerboard");
   }
 
-  private static List<IPixel> generateCheckerboard(int width, int height, int depth, int size) {
+  protected static List<IPixel> generateCheckerboard(int width, int height, int depth, int size) {
     if (width % size != 0 || height % size != 0) {
       throw new IllegalArgumentException("Invalid size, pixels will not fit");
     }

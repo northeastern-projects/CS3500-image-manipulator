@@ -1,18 +1,22 @@
 package layer;
 
-import img.IImage;
-import img.IPixel;
-import img.Image;
-import img.Pixel;
+import ImageModel.IImage;
+import ImageModel.IPixel;
+import ImageModel.Image;
+import ImageModel.Pixel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import utils.ImageUtil;
+import ImageController.ImageController;
 
-public class Layer implements ILayer{
+public class Layer implements ILayer {
 
+  //think we should change this to hashmap of IImage, boolean
+  // to tell if this IIMage is visible - true or false
   private final List<IImage> layers;
+  private IImage current;
+  private boolean visible;
   private final int height;
   private final int width;
   private final int depth;
@@ -25,7 +29,6 @@ public class Layer implements ILayer{
     if (images == null || !this.isValidImages(images)) {
       throw new IllegalArgumentException("Invalid list of images provided");
     }
-
     this.layers = images;
     this.height = height;
     this.width = width;
@@ -95,6 +98,11 @@ public class Layer implements ILayer{
   }
 
   @Override
+  public void setCurrent(int index) {
+
+  }
+
+  @Override
   public String toString() {
     StringBuilder matrix = new StringBuilder("LAYER\n" + this.layers.size() + "\n" + width + "\n"
         + height + "\n" + depth + "\n");
@@ -102,11 +110,6 @@ public class Layer implements ILayer{
       matrix.append("\n").append(img.toString());
     }
     return matrix + "\n";
-  }
-
-  @Override
-  public void save(String fName) throws IOException {
-    ImageUtil.writeFile("res/" + fName, "txt", this.toString());
   }
 
   @Override

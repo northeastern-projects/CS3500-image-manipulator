@@ -1,19 +1,8 @@
-import filter.Greyscale;
-import filter.IModifier;
-
-import img.Image;
 import java.io.IOException;
 
-import filter.Blur;
-import filter.Sepia;
-import filter.Sharpen;
-import img.IImage;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import layer.ILayer;
-import layer.Layer;
-import utils.ImageUtil;
+import ImageModel.IImage;
+import ImageController.IController;
+import ImageController.ImageController;
 
 /**
  * This class allows a user to create, modify,and save images or print images to the console.
@@ -35,8 +24,12 @@ public class Main {
       filename = "res/" + name;
     }
 
-    IImage img = ImageUtil.readFile(filename);
-    System.out.println(img);
+    /* this should give script input file to controller which should parse that and dispatch to
+     * view and model based on what it is given.
+     */
+
+    IController controller = new ImageController();
+    //System.out.println(img);
 
   }
 }

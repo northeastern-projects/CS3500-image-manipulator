@@ -1,4 +1,4 @@
-package img;
+package ImageModel;
 
 import java.io.IOException;
 
@@ -19,16 +19,6 @@ public interface IImage {
    * @throws IllegalArgumentException if the modifier provided is invalid or null.
    */
   void applyFilter(IModifier iModifier) throws IllegalArgumentException;
-
-  /**
-   * This converts the image to a valid .ppm format and saves it to the /res folder with the given
-   * file type.
-   *
-   * @param fName the file name
-   * @param fType the file type
-   * @throws IOException IO exception in the event that there is an error writing the file.
-   */
-  void save(String fName, String fType) throws IOException;
 
   /**
    * Returns a deep copy of the list of pixels of this image.

@@ -1,4 +1,4 @@
-package img;
+package ImageModel;
 
 import java.util.List;
 

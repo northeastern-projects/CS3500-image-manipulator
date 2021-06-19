@@ -1,4 +1,4 @@
-package img;
+package ImageModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import filter.IModifier;
-import utils.ImageUtil;
+import ImageController.ImageController;
 
 /**
  * The Image class that contains methods to print Image as a file, modify an image, and save an
@@ -54,11 +54,6 @@ public class Image implements IImage {
       throw new IllegalArgumentException("Illegal modifier");
     }
     this.pixels = iModifier.modify(this);
-  }
-
-  @Override
-  public void save(String fName, String fType) throws IOException {
-    ImageUtil.writeFile("res/" + fName, fType, this.toString());
   }
 
   @Override
