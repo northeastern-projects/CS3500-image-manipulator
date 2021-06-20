@@ -113,7 +113,9 @@ Checkerboard.
 Methods:
 
 * `applyFilter()` - applies the IModifier to this IImage
-* `save()` - converts this IImage to a valid .ppm p3 file and exports it to the res/ folder
+* `getPixels()` - creates a deep copy of the pixels in this IImage
+* `getPixel()` - returns the pixel at the input x and y coord in this IImage
+* `getProps()` - returns a list of the width, height, and depth
 
 ---
 
@@ -126,21 +128,38 @@ Methods:
 
 * `toString()` - prints the image in a ppm p3 format
 * `applyFilter()` - applies the IModifier to this IImage
-* `save()` - converts this IImage to a valid .ppm p3 file and exports it to the res/ folder
+* `getPixels()` - creates a deep copy of the pixels in this Image
+* `getPixel()` - returns the pixel at the input x and y coord in this Image
+* `getProps()` - returns a list of the width, height, and depth
 
 ---
 
-### Class Checkerboard implements IImage
+### Class Checkerboard extends Image
+Generates an Image in the checkerboard format.
 
 Methods:
 
-* `toString()` - prints the image in a ppm p3 format
+* `generateCheckerboard()` - creates pixels based on the checkerboard format
 * `applyFilter()` - throws an exception to prevent any modification to the checkerboard image
-* `save()` - converts this IImage to a valid .ppm p3 file and exports it to the res/ folder
+* 
 
 ---
+## Interface IPixel
+Represents a pixel. This interface allows future use to apply a modifier to all channels,
+and apply a modifier to the r, g, and b value. One will also be able to observe its coordinaties
+and rgb values.
 
-## Class Pixel
+Methods:
+
+* `applyToAllChannels()` - applies the input modifier to all channels
+* `applyToR()` - applies the input modifier to the r value
+* `applyToG()` - applies the input modifier to the g value
+* `applyToB()` - applies the input modifier to the b value
+* `getCoords()` -returns a list of the x and y coordinates of this IPixel
+* `getColor()` - returns a list of the r,g,b values of this IPixel
+
+---
+### Class Pixel implements IPixel
 
 The Pixel class that represents a single Pixel in an image with an x and y to represent the
 coordinate and r, g, b and represent the RGB values of the pixel. This class has two constructors:
@@ -158,22 +177,86 @@ Methods:
 * `applyToR()` - applies the input modifier to the r value
 * `applyToG()` - applies the input modifier to the g value
 * `applyToB()` - applies the input modifier to the b value
+* `getCoords()` -returns a list of the x and y coordinates of this IPixel
+* `getColor()` - returns a list of the r,g,b values of this IPixel
 
 ---
+##Interface ILayer
+An interface that represents multiple IImage that can be edited. 
+This interface supplies methods that allow the addition of layers, the ability to get an
+IImage from the corresponding layer, blend the layers to create one IImage
+the setting of a layer as a current one to be edited, the ability to set a layer as invisible,
+the ability to apply an IModifier to a layer, and the ability to get the properties
+of a layer.
 
-## Class ImageUtils
+Methods:
 
-This class contains utility methods to read a PPM file and create an image that can be modified. It
+* `addLayer()` - Adds an image as a layer to this ILayer
+* `getLayer()` - returns the IImage of the layer corresponding to the index.
+* `blend()` - Blends all visible IImages.
+* `setCurrent()` -  Sets the layer at the given index as the current one.
+* `setInvisibility()` - Sets the layer at the index to invisible.
+* `getVisible()` - an observer for all visible images in this ILayer.
+* `applyToCurrent()` - appliesthe IModifier to the current layer.
+* `getProps()` - returns a list of the number of layers, width, height, depth, and current index 
+  of the ILayer.
+---
+###Class Layer implements ILayer
+Implementation of ILayer that represents a list of Images.
+
+Methods:
+
+* `addLayer()` - Adds an image as a layer to this ILayer
+* `getLayer()` - returns the IImage of the layer corresponding to the index.
+* `blend()` - Blends all visible IImages.
+* `setCurrent()` -  Sets the layer at the given index as the current one.
+* `setInvisibility()` - Sets the layer at the index to invisible.
+* `getVisible()` - an observer for all visible images in this ILayer.
+* `applyToCurrent()` - appliesthe IModifier to the current layer.
+* `getProps()` - returns a list of the number of layers, width, height, depth, and current index
+  of the ILayer.
+* `createMappedInvsibility()` - creates default Map for the layers where all are visible
+* `canAcceptImage()` -determines if image matches layer properties
+* `isValidImages()` -  determines if list has zero elements
+* `toString()` - returns the layer as a String
+
+---
+##Interface IFileController
+This interface allows for a file to be parsed and written into the res/ folder. It allows for
+an IImage to be created based on the input file name .
+
+Methods:
+
+* `readImage()` - reads the input file and returns an IImage
+* `readText()` - returns the contents of the file
+* `writeFile()` - writes the file to the desired extension with desired contents
+
+
+### Class FileController implements IFileController
+
+This class contains methods to read a PPM file and create an image that can be modified. It
 also can write a PPM image from file to the res/ folder given a file name and the contents of a PPM
 file.
 
 Methods:
 
+* `readImage()` - reads the input file and returns an IImage
+* `readText()` - returns the contents of the file
+* `writeFile()` - writes the file to the desired extension with desired contents
 * `readPPM()` - reads the file at the input file path throws fileNotFoundException if file is not
   found; creates an IMage from the file
 * `writePPM()` - writes a ppm file of the input contents and exports it to the destination file name
 
 ---
+
+###Changes to initial design
+We first changed any public or default access modifiers and created observer methods in order to 
+prevent changes to be made to the existing data outside the classes. We also removed any I/O in 
+IImage so that it would be separate from the controller. This way we have no overlapping coupling
+of the controller and model. We also created interface IPixel in order to allow future 
+implementation of it that may be different. We extended Checkerboard from Image instead of 
+implementing IImage because there was a lot of overlap in the methods. We also created a controller 
+that replaced imageUtils to handle I/O.
 
 # Citations
 

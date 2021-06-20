@@ -1,13 +1,13 @@
 package ImageModel;
 
-import FilterModel.IModifier;
+import Filter.IModifier;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The Checkerboard image contains a representation of a simple checkerboard image.
  * It contains all methods needed to create a black and white checkerboard pattern.
- * implements the IImage interface.
+ * extends the Image Class.
  */
 public class Checkerboard extends Image {
 
@@ -29,7 +29,7 @@ public class Checkerboard extends Image {
   }
 
   protected static List<IPixel> generateCheckerboard(int width, int height, int depth, int size) {
-    if (width % size != 0 || height % size != 0) {
+    if (size == 0 || width % size != 0 || height % size != 0) {
       throw new IllegalArgumentException("Invalid size, pixels will not fit");
     }
 

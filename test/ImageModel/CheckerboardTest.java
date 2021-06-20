@@ -1,13 +1,11 @@
 package ImageModel;
 
-import FilterModel.Blur;
-import FilterModel.Greyscale;
-import FilterModel.Sepia;
-import FilterModel.Sharpen;
+import Filter.Blur;
+import Filter.Greyscale;
+import Filter.Sepia;
+import Filter.Sharpen;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,7 +21,9 @@ public class CheckerboardTest {
   int depthInvalid;
   int depth;
   Checkerboard img;
+  Checkerboard img2;
   String imgFile;
+  String imgFile2;
 
   @Before
   public void setUp() {
@@ -34,6 +34,7 @@ public class CheckerboardTest {
     depthInvalid = -3;
     depth = 255;
     img = new Checkerboard(width, height, depth, 1);
+    img2 = new Checkerboard(width, height, depth, 3);
 
     imgFile = "P3\n"
             + "3\n"
@@ -41,6 +42,12 @@ public class CheckerboardTest {
             + "255\n"
             + "0 0 0  255 255 255  0 0 0  255 255 255  0 0 0  255 255 255  0 0 0  "
             + "255 255 255  0 0 0  \n";
+
+    imgFile2 = "P3\n"
+            + "3\n"
+            + "3\n"
+            + "255\n"
+            + "0 0 0  \n";
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -56,6 +63,16 @@ public class CheckerboardTest {
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidDepth() {
     new Checkerboard(width, height, depthInvalid, 1);
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testInvalidSize() {
+    new Checkerboard(width, height, depth, 0);
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testInvalidSizeWithHeight() {
+    new Checkerboard(width, height, depth, 2);
   }
 
   @Test(expected = UnsupportedOperationException.class)
@@ -84,9 +101,7 @@ public class CheckerboardTest {
   }
 
   @Test
-  public void testExportedImageContents() throws IOException {
-    //in res folder we have an image that we created of the sepia version of img
-    //here we are making sure that that write produces what we expected it to
-    //assertEquals(imgFile, readFile("res/check.ppm").toString());
+  public void testToStringForSizeGreaterThan1() {
+    assertEquals(imgFile2, img2.toString());
   }
 }

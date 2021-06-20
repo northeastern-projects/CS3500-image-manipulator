@@ -2,6 +2,11 @@ package ImageModel;
 
 import java.util.List;
 
+/**
+ * Represents a pixel. This interface allows future use to apply a modifier to all channels,
+ * and apply a modifier to the r, g, and b value. One will also be able to observe its coordinaties
+ * and rgb values;
+ */
 public interface IPixel {
 
   /**

@@ -1,4 +1,4 @@
-package FilterModel;
+package Filter;
 
 /**
  * The Sepia class is an ATransform which has a constructor of the Kernel to be applied to an

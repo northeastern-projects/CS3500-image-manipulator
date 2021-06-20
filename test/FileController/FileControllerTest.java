@@ -1,24 +1,15 @@
-package View;
+package FileController;
 
-import FileController.FileController;
-import ImageModel.Checkerboard;
-import ImageModel.IImage;
-import ImageModel.IPixel;
-import ImageModel.Image;
-import ImageModel.Pixel;
+import ImageModel.*;
 import org.junit.Before;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
 /**
- * This class tests utility methods that read a PPM image from file and create an {@link IImage}
- * and write a file with output-name and file-contents to another ppm file.
+ * This class allows for the testing of the FileController which reads and parses image files.
  */
-public class ImageUtilTest {
+public class FileControllerTest {
   FileController ut;
   List<IPixel> pixels;
   IImage img;
@@ -66,6 +57,4 @@ public class ImageUtilTest {
             + "0 0 0  255 255 255  0 0 0  255 255 255  0 0 0  "
             + "255 255 255  0 0 0  255 255 255  0 0 0  \n";
   }
-
-
 }

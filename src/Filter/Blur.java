@@ -1,4 +1,4 @@
-package FilterModel;
+package Filter;
 
 /**
  * The Blur class is an AFilter which has a constructor of the Kernel to be applied to an IImage

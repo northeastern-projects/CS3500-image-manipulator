@@ -1,5 +1,6 @@
-package FilterModel;
+package Filter;
 
+import ImageModel.IImage;
 import ImageModel.IPixel;
 import ImageModel.Image;
 import ImageModel.Pixel;
@@ -19,7 +20,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class GreyscaleTest extends ATransformTest {
   List<IPixel> pixels;
-  Image img;
+  IImage img;
   double[][] kernelEvenRows;
   double[][] kernelEvenColumns;
 

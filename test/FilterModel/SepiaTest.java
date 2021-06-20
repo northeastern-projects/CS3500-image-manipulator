@@ -1,5 +1,6 @@
-package FilterModel;
+package Filter;
 
+import ImageModel.IImage;
 import ImageModel.IPixel;
 import ImageModel.Image;
 import ImageModel.Pixel;
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 public class SepiaTest extends ATransformTest {
   List<IPixel> pixels;
   List<IPixel> pixelsSepia;
-  Image img;
+  IImage img;
   double[][] kernelEvenRows;
   double[][] kernelEvenColumns;
 
