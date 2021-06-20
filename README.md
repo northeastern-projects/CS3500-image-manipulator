@@ -195,9 +195,9 @@ Methods:
 * `getLayer()` - returns the IImage of the layer corresponding to the index.
 * `blend()` - Blends all visible IImages.
 * `setCurrent()` -  Sets the layer at the given index as the current one.
-* `setInvisibility()` - Sets the layer at the index to invisible.
+* `toggleVisibility()` - Sets the layer at the index to invisible.
 * `getVisible()` - an observer for all visible images in this ILayer.
-* `applyToCurrent()` - appliesthe IModifier to the current layer.
+* `applyToCurrent()` - applies the IModifier to the current layer.
 * `getProps()` - returns a list of the number of layers, width, height, depth, and current index 
   of the ILayer.
 ---
@@ -210,7 +210,7 @@ Methods:
 * `getLayer()` - returns the IImage of the layer corresponding to the index.
 * `blend()` - Blends all visible IImages.
 * `setCurrent()` -  Sets the layer at the given index as the current one.
-* `setInvisibility()` - Sets the layer at the index to invisible.
+* `toggleVisibility()` - Sets the layer at the index to invisible.
 * `getVisible()` - an observer for all visible images in this ILayer.
 * `applyToCurrent()` - appliesthe IModifier to the current layer.
 * `getProps()` - returns a list of the number of layers, width, height, depth, and current index

@@ -110,26 +110,32 @@ public class FileController implements IFileController {
   }
 
   @Override
-  public String readText(String filename) {
-    return null;
+  public String readText(String filename) throws FileNotFoundException {
+    File f = new File(filename + ".txt");
+    Scanner s;
+
+    try {
+      s = new Scanner(f);
+    } catch (FileNotFoundException e) {
+      throw new FileNotFoundException("File " + filename + " not found!");
+    }
+    StringBuilder contents = new StringBuilder();
+
+    while(s.hasNext()) {
+      contents.append(s.nextLine()).append(System.lineSeparator());
+    }
+
+    return contents.toString();
   }
 
   @Override
   public void writeFile(String filename, String extension, String contents) throws IOException {
     System.out.println("Saving...");
 
-    if (extension.equalsIgnoreCase("ppm")) {
-      writePPM(filename, contents);
-    } else {
-      //TODO
-    }
-
-    System.out.println("Done!\n");
-  }
-
-  private void writePPM(String fileName, String contents) throws IOException {
-    FileOutputStream out = new FileOutputStream(fileName + ".ppm");
+    FileOutputStream out = new FileOutputStream(filename + "." + extension);
     out.write(contents.getBytes(StandardCharsets.UTF_8));
     out.close();
+
+    System.out.println("Done!\n");
   }
 }

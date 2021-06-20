@@ -5,11 +5,9 @@ import ImageModel.IImage;
 import ImageModel.IPixel;
 import ImageModel.Image;
 import ImageModel.Pixel;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -149,8 +147,8 @@ public class LayerTest {
 
   @Test
   public void testBlendWhenAllInvisible() {
-    layer.setInvisibility(0);
-    layer.setInvisibility(1);
+    layer.toggleVisibility(0);
+    layer.toggleVisibility(1);
     assertEquals("P3\n3\n3\n255\n0 0 0  0 0 0  0 0 0  0 0 0  0 0 0  0 0 0  "
                     + "0 0 0  0 0 0  0 0 0  \n",
             layer.blend().toString());
@@ -158,7 +156,7 @@ public class LayerTest {
 
   @Test
   public void testBlendWhenOnlyOneVisible() {
-    layer.setInvisibility(0);
+    layer.toggleVisibility(0);
     assertEquals(img2.toString(), layer.blend().toString());
   }
 
@@ -175,21 +173,21 @@ public class LayerTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testSetInvisibilityOutofBounds() {
-    layer.setInvisibility(25);
+    layer.toggleVisibility(25);
   }
   @Test
   public void testSetInvisibility() {
     assertEquals(2, layer.getVisible().size());
-    layer.setInvisibility(0);
+    layer.toggleVisibility(0);
     assertEquals(1, layer.getVisible().size());
-    layer.setInvisibility(1);
+    layer.toggleVisibility(1);
     assertEquals(0, layer.getVisible().size());
   }
 
   @Test
   public void testGetVisible() {
     assertEquals(realLayers, layer.getVisible());
-    layer.setInvisibility(1);
+    layer.toggleVisibility(1);
     assertEquals(new ArrayList<>(Arrays.asList(img)).toString(), layer.getVisible().toString());
   }
 
@@ -202,7 +200,7 @@ public class LayerTest {
 
   @Test
   public void testToString() {
-    layer.setInvisibility(1);
+    layer.toggleVisibility(1);
     layer.applyToCurrent(new Blur());
     assertEquals("LAYER\n1\n3\n3\n255\n\n" + blurredImage + "\n", layer.toString());
   }
