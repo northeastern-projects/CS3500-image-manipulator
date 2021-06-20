@@ -17,9 +17,10 @@ import java.util.Scanner;
 
 
 /**
- * This class contains methods for the controller. It allows the reading a PPM file and creates
- * an image that can be modified. It also can write a PPM image from file to the res/ folder given
- * a file name and the contents of a PPM file.
+ * This class contains methods for the FileController. This class allows for creation of images
+ * based on the input image files, such as (ppm, bmp, jpeg, and png). It results in am image
+ * that can be modified. It also can write an image to a file in the res/ folder when given a
+ * file name and the contents of the file.
  */
 public class FileController implements IFileController {
 
@@ -132,4 +133,3 @@ public class FileController implements IFileController {
     out.close();
   }
 }
-

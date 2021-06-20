@@ -69,4 +69,14 @@ public class PixelTest {
     assertEquals(new ArrayList<Double>(Arrays.asList(0.0, 0.0, 0.0)),
             black.applyToAllChannels(123.123123));
   }
+
+  @Test
+  public void testGetCoords() {
+    assertEquals("[3, 3]", random.getCoords().toString());
+  }
+
+  @Test
+  public void testGetColor() {
+    assertEquals("[40, 30, 112]", random.getColor().toString());
+  }
 }

@@ -1,4 +1,4 @@
-package FilterModel;
+package Filter;
 
 import ImageModel.IImage;
 import ImageModel.IPixel;

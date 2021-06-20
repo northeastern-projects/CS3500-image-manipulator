@@ -1,13 +1,12 @@
 package ImageModel;
 
-import FilterModel.Blur;
-import FilterModel.Greyscale;
-import FilterModel.Sepia;
-import FilterModel.Sharpen;
+import Filter.Blur;
+import Filter.Greyscale;
+import Filter.Sepia;
+import Filter.Sharpen;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,15 +70,15 @@ public class ImageTest {
     imgBlurred = new Image(pixelsBlurred, width, height, depth);
 
     pixelsSharpened = new ArrayList<>();
-    pixelsSharpened.add(new Pixel(0, 0, 56, 56, 56));
-    pixelsSharpened.add(new Pixel(0, 1, 75, 75, 75));
-    pixelsSharpened.add(new Pixel(0, 2, 56, 56, 56));
-    pixelsSharpened.add(new Pixel(1, 0, 75, 75, 75));
-    pixelsSharpened.add(new Pixel(1, 1, 100, 100, 100));
-    pixelsSharpened.add(new Pixel(1, 2, 75, 75, 75));
-    pixelsSharpened.add(new Pixel(2, 0, 56, 56, 56));
-    pixelsSharpened.add(new Pixel(2, 1, 75, 75, 75));
-    pixelsSharpened.add(new Pixel(2, 2, 56, 56, 56));
+    pixelsSharpened.add(new Pixel(0, 0, 112, 112, 112));
+    pixelsSharpened.add(new Pixel(0, 1, 187, 187, 187));
+    pixelsSharpened.add(new Pixel(0, 2, 112, 112, 112));
+    pixelsSharpened.add(new Pixel(1, 0, 187, 187, 187));
+    pixelsSharpened.add(new Pixel(1, 1, 255, 255, 255));
+    pixelsSharpened.add(new Pixel(1, 2, 187, 187, 187));
+    pixelsSharpened.add(new Pixel(2, 0, 112, 112, 112));
+    pixelsSharpened.add(new Pixel(2, 1, 187, 187, 187));
+    pixelsSharpened.add(new Pixel(2, 2, 112, 112, 112));
     imgSharpened = new Image(pixelsSharpened, width, height, depth);
 
     pixelsSepia = new ArrayList<>();
@@ -148,7 +147,7 @@ public class ImageTest {
   public void testValidApplySharpen() {
     assertEquals(pixels.toString(), img.getPixels().toString());
     img.applyFilter(new Sharpen());
-    //assertEquals(pixelsSharpened.toString(), img.getPixels().toString());
+    assertEquals(pixelsSharpened.toString(), img.getPixels().toString());
   }
 
   @Test
@@ -166,9 +165,21 @@ public class ImageTest {
   }
 
   @Test
-  public void testExportedImageContents() throws IOException {
-    //in res folder we have an image that we created of the sepia version of img
-    //here we are making sure that that write produces what we expected it to
-    //assertEquals(sepiaString, ImageController.readFile("res/sepia3x3.ppm").toString());
+  public void testGetPixels() {
+    assertEquals(pixels.toString(), img.getPixels().toString());
+    img.applyFilter(new Blur());
+    assertEquals(pixelsBlurred.toString(), img.getPixels().toString());
+  }
+
+  @Test
+  public void testGetPixel() {
+    assertEquals("100 100 100  ", img.getPixel(0, 0).toString());
+    img.applyFilter(new Blur());
+    assertEquals("56 56 56  ", img.getPixel(0,0).toString());
+  }
+
+  @Test
+  public void testGetProps() {
+    assertEquals("[3, 3, 255]", img.getProps().toString());
   }
 }

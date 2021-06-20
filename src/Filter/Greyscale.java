@@ -1,4 +1,4 @@
-package FilterModel;
+package Filter;
 
 /**
  * The Greyscale class is an ATransform which has a constructor of the Kernel to be applied to an

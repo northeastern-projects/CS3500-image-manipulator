@@ -1,4 +1,4 @@
-package FilterModel;
+package Filter;
 
 import org.junit.Test;
 

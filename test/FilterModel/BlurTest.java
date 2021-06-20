@@ -1,6 +1,7 @@
-package FilterModel;
+package Filter;
 
 import ImageModel.IPixel;
+import ImageModel.IImage;
 import ImageModel.Image;
 import ImageModel.Pixel;
 import org.junit.Before;
@@ -19,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 public class BlurTest extends AFilterTest {
   List<IPixel> pixels;
   List<IPixel> pixelsBlurred;
-  Image img;
+  IImage img;
   double[][] kernelEvenRows;
   double[][] kernelEvenColumns;
 

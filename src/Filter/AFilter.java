@@ -1,4 +1,4 @@
-package FilterModel;
+package Filter;
 
 import ImageModel.IPixel;
 import java.util.ArrayList;
