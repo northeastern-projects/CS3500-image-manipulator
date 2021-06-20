@@ -53,7 +53,7 @@ public interface ILayer {
    * @param index corresponds to the layer than one wants to be invisible
    * @throws IllegalArgumentException if index is out of bounds
    */
-  void setInvisibility(int index) throws IllegalArgumentException;
+  void toggleVisibility(int index) throws IllegalArgumentException;
 
   /**
    * An observer for all visible images in this ILayer.

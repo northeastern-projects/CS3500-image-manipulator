@@ -5,6 +5,8 @@ import FileController.IFileController;
 import LayerModel.ILayer;
 import View.View;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -41,7 +43,11 @@ public class Controller implements IController {
   }
 
   @Override
-  public void loadState(String stateName) {
+  public void loadState(String stateName) throws FileNotFoundException {
+    try {
     fileController.readText(stateName);
+    } catch (FileNotFoundException e) {
+      throw new FileNotFoundException("File not found.");
+    }
   }
 }

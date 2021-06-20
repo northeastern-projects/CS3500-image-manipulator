@@ -141,12 +141,12 @@ public class Layer implements ILayer {
   }
 
   @Override
-  public void setInvisibility(int index) throws IllegalArgumentException {
+  public void toggleVisibility(int index) throws IllegalArgumentException {
     if (index < 0 || index > this.layers.size()) {
       throw new IllegalArgumentException("Invalid index.");
     } else {
       IImage img = this.layers.get(index);
-      this.visibility.replace(img, false);
+      this.visibility.replace(img, !this.visibility.get(img));
     }
   }
 
@@ -168,8 +168,8 @@ public class Layer implements ILayer {
 
   @Override
   public String toString() {
-    StringBuilder matrix = new StringBuilder("LAYER\n" + this.getVisible().size() + "\n" + width + "\n"
-            + height + "\n" + depth + "\n");
+    StringBuilder matrix = new StringBuilder("LAYER\n" + this.getVisible().size() + "\n"
+            + width + "\n" + height + "\n" + depth + "\n");
     for (IImage img : this.getVisible()) {
       matrix.append("\n").append(img.toString());
     }

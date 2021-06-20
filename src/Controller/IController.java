@@ -1,5 +1,6 @@
 package Controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -12,6 +13,6 @@ public interface IController {
 
   void saveState(String stateName) throws IOException;
 
-  void loadState(String stateName);
+  void loadState(String stateName) throws FileNotFoundException;
 
 }
