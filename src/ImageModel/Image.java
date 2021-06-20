@@ -1,12 +1,10 @@
 package ImageModel;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import filter.IModifier;
-import ImageController.ImageController;
+import FilterModel.IModifier;
 
 /**
  * The Image class that contains methods to print Image as a file, modify an image, and save an

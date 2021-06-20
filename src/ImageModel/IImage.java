@@ -1,8 +1,6 @@
 package ImageModel;
 
-import java.io.IOException;
-
-import filter.IModifier;
+import FilterModel.IModifier;
 import java.util.List;
 
 /**

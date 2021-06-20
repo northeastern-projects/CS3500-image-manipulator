@@ -1,12 +1,11 @@
 package ImageModel;
 
-import filter.Blur;
-import filter.Greyscale;
-import filter.Sepia;
-import filter.Sharpen;
+import FilterModel.Blur;
+import FilterModel.Greyscale;
+import FilterModel.Sepia;
+import FilterModel.Sharpen;
 import org.junit.Before;
 import org.junit.Test;
-import ImageController.ImageController;
 
 import java.io.IOException;
 

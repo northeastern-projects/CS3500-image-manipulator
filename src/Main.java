@@ -1,8 +1,7 @@
 import java.io.IOException;
 
-import ImageModel.IImage;
-import ImageController.IController;
-import ImageController.ImageController;
+import FileController.IFileController;
+import FileController.FileController;
 
 /**
  * This class allows a user to create, modify,and save images or print images to the console.
@@ -14,7 +13,7 @@ public class Main {
    * flower, a ppm file that exists in the res/ folder. Also has the ability to create a
    * checkerboard image.
    */
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) {
     String filename;
     String name = "testpng.png";
 
@@ -28,7 +27,7 @@ public class Main {
      * view and model based on what it is given.
      */
 
-    IController controller = new ImageController();
+    IFileController controller = new FileController();
     //System.out.println(img);
 
   }
