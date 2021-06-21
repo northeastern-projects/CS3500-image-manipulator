@@ -40,11 +40,11 @@ public class Image implements IImage {
 
   @Override
   public String toString() {
-    StringBuilder matrix = new StringBuilder("P3\n" + width + "\n" + height + "\n" + depth + "\n");
+    StringBuilder matrix = new StringBuilder(width + "\n" + height + "\n" + depth + "\n");
     for (IPixel p : this.pixels) {
       matrix.append(p.toString());
     }
-    return matrix + "\n";
+    return matrix.append("\n").toString();
   }
 
   @Override

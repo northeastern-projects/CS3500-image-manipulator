@@ -35,6 +35,7 @@ public class LayerTest {
   List<IImage> invalidPropsLayers;
   ILayer layer;
   String blurredImage;
+  String blurredLayer;
 
   @Before
   public void setUp() {
@@ -96,12 +97,31 @@ public class LayerTest {
     nullLayers = null;
     invalidPropsLayers = new ArrayList<>(Arrays.asList(img, img2, img3, diffPropsImage));
     layer = new Layer(realLayers, width, height, depth);
-    blurredImage = "P3\n" +
-            "3\n" +
+    blurredImage = "3\n" +
             "3\n" +
             "255\n" +
             "56 56 56  75 75 75  56 56 56  75 75 75  100 100 100  "
             + "75 75 75  56 56 56  75 75 75  56 56 56  \n";
+    blurredLayer = "LAYER\n"
+        + "2\n"
+        + "3\n"
+        + "3\n"
+        + "255\n"
+        + "\n"
+        + "IMG\n"
+        + "true\n"
+        + "3\n"
+        + "3\n"
+        + "255\n"
+        + "56 56 56  75 75 75  56 56 56  75 75 75  100 100 100  75 75 75  56 56 56  75 75 75  56 56 56  \n"
+        + "\n"
+        + "IMG\n"
+        + "false\n"
+        + "3\n"
+        + "3\n"
+        + "255\n"
+        + "0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100"
+        + "  0 100 100  \n";
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -149,7 +169,7 @@ public class LayerTest {
   public void testBlendWhenAllInvisible() {
     layer.toggleVisibility(0);
     layer.toggleVisibility(1);
-    assertEquals("P3\n3\n3\n255\n0 0 0  0 0 0  0 0 0  0 0 0  0 0 0  0 0 0  "
+    assertEquals("3\n3\n255\n0 0 0  0 0 0  0 0 0  0 0 0  0 0 0  0 0 0  "
                     + "0 0 0  0 0 0  0 0 0  \n",
             layer.blend().toString());
   }
@@ -202,7 +222,7 @@ public class LayerTest {
   public void testToString() {
     layer.toggleVisibility(1);
     layer.applyToCurrent(new Blur());
-    assertEquals("LAYER\n1\n3\n3\n255\n\n" + blurredImage + "\n", layer.toString());
+    assertEquals(blurredLayer, layer.toString());
   }
 
   @Test

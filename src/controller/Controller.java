@@ -7,6 +7,7 @@ import filter.Greyscale;
 import filter.IModifier;
 import filter.Sepia;
 import filter.Sharpen;
+import javax.swing.JComponent;
 import layermodel.ILayer;
 import view.ITextView;
 
@@ -23,6 +24,7 @@ public class Controller implements IController {
   private final IFileController fileController;
   private final ITextView view;
   private final ILayer model;
+  private boolean running;
 
   /**
    * Creates a controller object.
@@ -34,11 +36,12 @@ public class Controller implements IController {
     this.fileController = new FileController();
     this.view = view;
     this.model = model;
+    this.running = true;
   }
 
   @Override
   public void go() throws IOException {
-    while (true) {
+    while (this.running) {
       this.handleInput(this.view.getInput());
     }
   }
@@ -49,15 +52,25 @@ public class Controller implements IController {
     /*
     possible commands that the user can issue:
 
-    load STRING: path to image (auto creates new layer)
+    load image STRING: path to image (auto creates new layer)
+    load state STRING: path to state
+
     apply MODIFIER: apply a modifier to current image
     set INTEGER: set this as current
+
     save STRING: save the layer with the name
+    save image INTEGER STRING: save the image at said index with given name
+    save image current STRING: save the current image with the given name
+    save image all STRING: export each image individually with the given prefix + index
+
+    export STRING: save the layer as an image with the given name;
+
+    toggle INTEGER: index of layer
      */
 
-    switch(components[0]) {
+    switch (components[0]) {
       case "load":
-        model.addLayer(fileController.readImage(components[1]));
+        this.loadInputHandler(components);
         break;
       case "apply":
         model.applyToCurrent(this.getModifier(components[1]));
@@ -66,17 +79,71 @@ public class Controller implements IController {
         model.setCurrent(Integer.parseInt(components[1]));
         break;
       case "save":
-        this.saveState(components[1]);
+        this.saveInputHandler(components);
+        break;
+      case "toggle":
+        this.model.toggleVisibility(Integer.parseInt(components[1]));
+        break;
+      case "export":
+        String[] subcomps = components[1].split("\\.");
+        this.fileController.writeImage(subcomps[0], subcomps[1], this.model.blend());
+      case "exit":
+        this.view.displayOutput("All unsaved changes will be lost.\n");
+        this.running = false;
+        break;
+      default:
+        this.view.displayOutput("unable to perform that operation!\n");
     }
   }
 
-  private IModifier getModifier(String name) {
-    switch(name){
+  private void saveInputHandler(String[] args) throws IOException {
+    switch (args[1]) {
+      case "image":
+        this.saveImageHandlerHelper(args);
+        break;
+      default:
+        this.saveState(args[1]);
+    }
+  }
+
+  private void saveImageHandlerHelper(String[] args) throws IOException {
+    String[] subcomps = args[3].split("\\.");
+
+    switch (args[2]) {
+      case "current":
+        this.fileController.writeImage(subcomps[0], subcomps[1], this.model.getCurrent());
+      case "all":
+        //DO NOTHING
+      default:
+        this.fileController.writeImage(subcomps[0], subcomps[1],
+            this.model.getLayer(Integer.parseInt(args[2])));
+    }
+  }
+
+  private void loadInputHandler(String[] args) throws IOException {
+    switch (args[1]) {
+      case "image":
+        this.model.addLayer(fileController.readImage(args[2]));
+        break;
+      case "state":
+        this.loadState(this.fileController.readText(args[2]));
+        break;
+      default:
+        this.view.displayOutput("Unknown asset to load.\n");
+        this.running = false;
+    }
+  }
+
+  private IModifier getModifier(String name) throws IOException {
+    switch (name){
       case "blur": return new Blur();
       case "sharpen": return new Sharpen();
       case "sepia": return new Sepia();
       case "greyscale": return new Greyscale();
-      default: throw new UnsupportedOperationException("Cannot find such a modifier");
+      default:
+        this.view.displayOutput("Cannot apply that modifier!\n");
+        this.running = false;
+        return null;
     }
   }
 
@@ -84,19 +151,7 @@ public class Controller implements IController {
     fileController.writeTextOrPPM(stateName, "txt", model.toString());
   }
 
-  private void parseState(String state) throws IOException {
-    String[] cmds = state.split(System.lineSeparator());
+  private void loadState(String state) {
 
-    for (String cmd: cmds) {
-      this.handleInput(cmd);
-    }
-  }
-
-  private void loadState(String stateName) throws IOException {
-    try {
-      parseState(fileController.readText(stateName));
-    } catch (FileNotFoundException e) {
-      throw new FileNotFoundException("File not found.");
-    }
   }
 }

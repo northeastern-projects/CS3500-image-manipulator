@@ -22,9 +22,13 @@ public class Layer implements ILayer {
   private final List<IImage> layers;
   private Map<IImage, Boolean> visibility;
   private int current;
-  private final int height;
-  private final int width;
-  private final int depth;
+  private int height;
+  private int width;
+  private int depth;
+
+  public Layer() {
+    this(new ArrayList<>(), -1, -1, -1);
+  }
 
   /**
    * Constructor that takes in a list of the IImage properties.
@@ -67,6 +71,13 @@ public class Layer implements ILayer {
   }
 
   private boolean canAcceptImage(IImage image) {
+    if (this.layers.size() == 0) {
+      this.width = image.getProps().get(0);
+      this.height = image.getProps().get(1);
+      this.depth = image.getProps().get(2);
+      return true;
+    }
+
     return this.width == image.getProps().get(0)
             && this.height == image.getProps().get(1)
             && this.depth == image.getProps().get(2);
@@ -141,6 +152,14 @@ public class Layer implements ILayer {
   }
 
   @Override
+  public IImage getCurrent() throws IllegalArgumentException {
+    if (this.layers.isEmpty()) {
+      throw new IllegalArgumentException("No current image to get!");
+    }
+    return this.layers.get(current);
+  }
+
+  @Override
   public void toggleVisibility(int index) throws IllegalArgumentException {
     if (index < 0 || index > this.layers.size()) {
       throw new IllegalArgumentException("Invalid index.");
@@ -168,17 +187,30 @@ public class Layer implements ILayer {
 
   @Override
   public String toString() {
-    StringBuilder matrix = new StringBuilder("LAYER\n" + this.getVisible().size() + "\n"
+    StringBuilder matrix = new StringBuilder("LAYER\n" + this.layers.size() + "\n"
             + width + "\n" + height + "\n" + depth + "\n");
-    for (IImage img : this.getVisible()) {
-      matrix.append("\n").append(img.toString());
+    for (IImage img : this.layers) {
+      matrix.append("\nIMG\n").append(this.visibility.get(img)).append("\n").append(img.toString());
     }
-    return matrix + "\n";
+    return matrix.toString();
   }
 
   @Override
   public List<Integer> getProps() {
     return new ArrayList<>(Arrays.asList(this.layers.size(), this.height, this.width, this.depth,
             this.current));
+  }
+
+  @Override
+  public void removeLayer(int index) throws IllegalArgumentException {
+    if (index > 0 && index < this.layers.size()) {
+      this.visibility.remove(this.layers.remove(index));
+
+      if (current == index || current >= this.layers.size()) {
+        current--;
+      }
+    } else {
+      throw new IllegalArgumentException("Cannot remove something that does not exist");
+    }
   }
 }

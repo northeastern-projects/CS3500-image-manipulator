@@ -75,7 +75,7 @@ public class FileController implements IFileController {
     int height = sc.nextInt();
     System.out.println("Height of image: " + height);
     int maxValue = sc.nextInt();
-    System.out.println("Maximum value of a color in this file (usually 256): " + maxValue);
+    System.out.println("Maximum value of a color in this file: " + maxValue);
 
     for (int i = 0; i < height; i++) { //COL
       for (int j = 0; j < width; j++) { //ROW
@@ -139,10 +139,9 @@ public class FileController implements IFileController {
       case "jpg":
         ImageIO.write(b, "JPG", f);
       case "ppm":
-        writeTextOrPPM(filename, extension, contents.toString());
+        writeTextOrPPM(filename, extension, "P3\n" + contents.toString());
     }
   }
-
 
   @Override
   public void writeTextOrPPM(String filename, String extension, String contents)
