@@ -29,13 +29,23 @@ public interface IFileController {
   String readText(String filename) throws FileNotFoundException;
 
   /**
-   * Writes a file into the res/ folder.
+   * Exports an image file to the res/ folder.
+   *
+   * @param filename to be created
+   * @param extension image file extension
+   * @param image IImage that needs to be exported
+   * @throws IOException if file cannot be created
+   */
+  void writeImage(String filename, String extension, IImage image) throws IOException;
+
+  /**
+   * Writes a text or ppm file into the res/ folder.
    *
    * @param filename of the file to be written
    * @param extension file extension
    * @param contents the information to be written in the file
    * @throws IOException if file cannot be made
    */
-  void writeFile(String filename, String extension, String contents) throws IOException;
+  void writeTextOrPPM(String filename, String extension, String contents) throws IOException;
 
 }

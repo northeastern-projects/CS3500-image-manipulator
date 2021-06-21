@@ -39,7 +39,7 @@ public class Controller implements IController {
 
   @Override
   public void saveState(String stateName) throws IOException {
-    fileController.writeFile(stateName, "txt", model.toString());
+    fileController.writeTextOrPPM(stateName, "txt", model.toString());
   }
 
   @Override
