@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- * This class tests the LayerModel class which
+ * This class tests the LayerModel class and determine if it was implemented correctly.
  */
 public class LayerTest {
 

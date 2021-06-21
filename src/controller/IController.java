@@ -8,6 +8,12 @@ import java.io.IOException;
  */
 public interface IController {
 
+  /**
+   * Method that starts controller.
+   *
+   * @throws IOException when input or output fail
+   */
+
   void go() throws IOException;
 
 }

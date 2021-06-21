@@ -29,7 +29,7 @@ public class Controller implements IController {
   /**
    * Creates a controller object.
    *
-   * @param view a View object
+   * @param view  a View object
    * @param model An ILayer object.
    */
   public Controller(ITextView view, ILayer model) {
@@ -51,10 +51,9 @@ public class Controller implements IController {
 
     /*
     possible commands that the user can issue:
-
+    
     load image STRING: path to image (auto creates new layer)
     load state STRING: path to state
-
     apply MODIFIER: apply a modifier to current image
     set INTEGER: set this as current
 
