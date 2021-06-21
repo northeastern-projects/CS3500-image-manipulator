@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -9,10 +8,11 @@ import java.io.IOException;
  */
 public interface IController {
 
-  void handleInput(String input);
-
-  void saveState(String stateName) throws IOException;
-
-  void loadState(String stateName) throws FileNotFoundException;
+  /**
+   * Method that starts controller.
+   *
+   * @throws IOException when input or output fail
+   */
+  void go() throws IOException;
 
 }
