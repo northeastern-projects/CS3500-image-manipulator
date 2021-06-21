@@ -2,12 +2,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import FileController.IFileController;
-import FileController.FileController;
-import ImageModel.IImage;
-import ImageModel.IPixel;
-import ImageModel.Image;
-import ImageModel.Pixel;
+import filecontroller.IFileController;
+import filecontroller.FileController;
+import imagemodel.IImage;
+import imagemodel.IPixel;
+import imagemodel.Image;
+import imagemodel.Pixel;
 
 /**
  * This class allows a user to create, modify,and save images or print images to the console.
