@@ -1,6 +1,8 @@
 package ImageModel;
 
 import Filter.IModifier;
+
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
@@ -40,5 +42,12 @@ public interface IImage {
    * @return the list of properties
    */
   List<Integer> getProps();
+
+  /**
+   * Creates a bufferedImage from this IImage.
+   *
+   * @return a buffered Image.
+   */
+  BufferedImage createImage();
 
 }

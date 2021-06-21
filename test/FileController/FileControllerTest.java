@@ -2,12 +2,14 @@ package FileController;
 
 import ImageModel.*;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class allows for the testing of the FileController which reads and parses image files.
+ * This class allows for the testing of the FileController which reads and parses, and writes image
+ * and text files.
  */
 public class FileControllerTest {
   FileController ut;
@@ -57,4 +59,5 @@ public class FileControllerTest {
             + "0 0 0  255 255 255  0 0 0  255 255 255  0 0 0  "
             + "255 255 255  0 0 0  255 255 255  0 0 0  \n";
   }
+
 }

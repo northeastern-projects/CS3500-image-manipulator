@@ -1,5 +1,7 @@
 package ImageModel;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +46,20 @@ public class Image implements IImage {
       matrix.append(p.toString());
     }
     return matrix + "\n";
+  }
+
+  @Override
+  public BufferedImage createImage() {
+    BufferedImage b = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        IPixel p = this.getPixel(i,j);
+        List<Integer> color = p.getColor();
+        int rgb = (color.get(0) + color.get(1) + color.get(2)) / 3;
+        b.setRGB(i, j, rgb);
+      }
+    }
+    return b;
   }
 
   @Override

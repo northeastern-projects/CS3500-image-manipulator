@@ -36,7 +36,6 @@ public class FileController implements IFileController {
         return readPPM(filename);
       case "jpeg":
       case "png":
-      case "bmp":
       case "jpg":
         return readOtherImg(filename);
       default:
@@ -121,15 +120,33 @@ public class FileController implements IFileController {
     }
     StringBuilder contents = new StringBuilder();
 
-    while(s.hasNext()) {
+    while (s.hasNext()) {
       contents.append(s.nextLine()).append(System.lineSeparator());
     }
-
     return contents.toString();
   }
 
   @Override
-  public void writeFile(String filename, String extension, String contents) throws IOException {
+  public void writeImage(String filename, String extension, IImage contents) throws IOException {
+    BufferedImage b = contents.createImage();
+    File f = new File(filename + "." + extension);
+
+    switch (extension) {
+      case "png":
+        ImageIO.write(b, "PNG", f);
+      case "jpeg":
+        ImageIO.write(b, "JPEG", f);
+      case "jpg":
+        ImageIO.write(b, "JPG", f);
+      case "ppm":
+        writeTextOrPPM(filename, extension, contents.toString());
+    }
+  }
+
+
+  @Override
+  public void writeTextOrPPM(String filename, String extension, String contents)
+          throws IOException {
     System.out.println("Saving...");
 
     FileOutputStream out = new FileOutputStream(filename + "." + extension);
