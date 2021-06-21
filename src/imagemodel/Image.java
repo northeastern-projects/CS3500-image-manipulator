@@ -53,6 +53,7 @@ public class Image implements IImage {
     for (int i = 0; i < width; i++) {
       for (int j = 0; j < height; j++) {
         IPixel p = this.getPixel(i, j);
+
         List<Integer> color = p.getColor();
         int rgb = (color.get(0) + color.get(1) + color.get(2)) / 3;
         b.setRGB(i, j, rgb);
@@ -64,6 +65,7 @@ public class Image implements IImage {
   @Override
   public void applyFilter(IModifier iModifier) {
     if (iModifier == null) {
+
       throw new IllegalArgumentException("Illegal modifier");
     }
     this.pixels = iModifier.modify(this);

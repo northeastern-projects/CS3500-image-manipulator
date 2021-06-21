@@ -8,7 +8,6 @@ import filter.IModifier;
 
 import java.util.*;
 
-
 /**
  * This class represents an implementation of {@link ILayer}. It takes in a List of {@link IImage},
  * a width, a height, and a depth. From this, it automatically sets all layers as visible.

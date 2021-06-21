@@ -13,6 +13,7 @@ public interface IController {
    *
    * @throws IOException when input or output fail
    */
+
   void go() throws IOException;
 
 }

@@ -5,9 +5,11 @@ import java.util.Scanner;
 /**
  * This class represents the view of an Image model and parses any user input.
  */
+
 public class TextView implements ITextView {
 
   private Scanner sc;
+
 
   /**
    * Creates a TextView object.

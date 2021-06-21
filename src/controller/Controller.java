@@ -54,7 +54,7 @@ public class Controller implements IController {
     save STRING: save the layer with the name
      */
 
-    switch (components[0]) {
+    switch(components[0]) {
       case "load":
         model.addLayer(fileController.readImage(components[1]));
         break;
