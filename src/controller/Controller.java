@@ -27,7 +27,7 @@ public class Controller implements IController {
   /**
    * Creates a controller object.
    *
-   * @param view a View object
+   * @param view  a View object
    * @param model An ILayer object.
    */
   public Controller(ITextView view, ILayer model) {
@@ -48,7 +48,6 @@ public class Controller implements IController {
 
     /*
     possible commands that the user can issue:
-
     load STRING: path to image (auto creates new layer)
     apply MODIFIER: apply a modifier to current image
     set INTEGER: set this as current
@@ -71,12 +70,17 @@ public class Controller implements IController {
   }
 
   private IModifier getModifier(String name) {
-    switch(name){
-      case "blur": return new Blur();
-      case "sharpen": return new Sharpen();
-      case "sepia": return new Sepia();
-      case "greyscale": return new Greyscale();
-      default: throw new UnsupportedOperationException("Cannot find such a modifier");
+    switch (name) {
+      case "blur":
+        return new Blur();
+      case "sharpen":
+        return new Sharpen();
+      case "sepia":
+        return new Sepia();
+      case "greyscale":
+        return new Greyscale();
+      default:
+        throw new UnsupportedOperationException("Cannot find such a modifier");
     }
   }
 
@@ -87,7 +91,7 @@ public class Controller implements IController {
   private void parseState(String state) throws IOException {
     String[] cmds = state.split(System.lineSeparator());
 
-    for (String cmd: cmds) {
+    for (String cmd : cmds) {
       this.handleInput(cmd);
     }
   }

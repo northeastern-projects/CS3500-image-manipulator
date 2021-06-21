@@ -42,7 +42,7 @@ public class Layer implements ILayer {
    * @param images List of IImages that become separate layers
    * @param width  of the Layer
    * @param height of the Layer
-   * @param depth  the meximum color value of the Layer
+   * @param depth  the maximum color value of the Layer
    * @throws IllegalArgumentException when list of images is null or has an image with diff
    * properties
    */

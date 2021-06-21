@@ -6,8 +6,18 @@ package view;
  */
 public interface ITextView {
 
+  /**
+   * Returns a string of user input.
+   *
+   * @return String
+   */
   String getInput();
 
+  /**
+   * Prints the string that is given.
+   *
+   * @param output String
+   */
   void displayOutput(String output);
 
 }
