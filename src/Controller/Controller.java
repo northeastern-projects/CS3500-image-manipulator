@@ -2,10 +2,14 @@ package Controller;
 
 import FileController.FileController;
 import FileController.IFileController;
+import Filter.Blur;
+import Filter.Greyscale;
+import Filter.IModifier;
+import Filter.Sepia;
+import Filter.Sharpen;
 import LayerModel.ILayer;
-import View.View;
+import View.ITextView;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -17,7 +21,7 @@ import java.io.IOException;
 public class Controller implements IController {
 
   private final IFileController fileController;
-  private final View view;
+  private final ITextView view;
   private final ILayer model;
 
   /**
@@ -26,26 +30,71 @@ public class Controller implements IController {
    * @param view a View object
    * @param model An ILayer object.
    */
-  public Controller(View view, ILayer model) {
+  public Controller(ITextView view, ILayer model) {
     this.fileController = new FileController();
     this.view = view;
     this.model = model;
   }
 
   @Override
-  public void handleInput(String input) {
-
+  public void go() throws IOException {
+    while (true) {
+      this.handleInput(this.view.getInput());
+    }
   }
 
-  @Override
-  public void saveState(String stateName) throws IOException {
+  private void handleInput(String input) throws IOException {
+    String[] components = input.split(" ");
+
+    /*
+    possible commands that the user can issue:
+
+    load STRING: path to image (auto creates new layer)
+    apply MODIFIER: apply a modifier to current image
+    set INTEGER: set this as current
+    save STRING: save the layer with the name
+     */
+
+    switch(components[0]) {
+      case "load":
+        model.addLayer(fileController.readImage(components[1]));
+        break;
+      case "apply":
+        model.applyToCurrent(this.getModifier(components[1]));
+        break;
+      case "set":
+        model.setCurrent(Integer.parseInt(components[1]));
+        break;
+      case "save":
+        this.saveState(components[1]);
+    }
+  }
+  
+  private IModifier getModifier(String name) {
+    switch(name){
+      case "blur": return new Blur();
+      case "sharpen": return new Sharpen();
+      case "sepia": return new Sepia();
+      case "greyscale": return new Greyscale();
+      default: throw new UnsupportedOperationException("Cannot find such a modifier");
+    }
+  }
+
+  private void saveState(String stateName) throws IOException {
     fileController.writeTextOrPPM(stateName, "txt", model.toString());
   }
 
-  @Override
-  public void loadState(String stateName) throws FileNotFoundException {
+  private void parseState(String state) throws IOException {
+    String[] cmds = state.split(System.lineSeparator());
+
+    for (String cmd: cmds) {
+      this.handleInput(cmd);
+    }
+  }
+
+  private void loadState(String stateName) throws IOException {
     try {
-    fileController.readText(stateName);
+      parseState(fileController.readText(stateName));
     } catch (FileNotFoundException e) {
       throw new FileNotFoundException("File not found.");
     }
