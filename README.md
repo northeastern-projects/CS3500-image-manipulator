@@ -232,7 +232,7 @@ Methods:
 * `writeFile()` - writes the file to the desired extension with desired contents
 
 
-### Class FileController implements IFileController
+### Class filecontroller implements IFileController
 
 This class contains methods to read a PPM file and create an image that can be modified. It
 also can write a PPM image from file to the res/ folder given a file name and the contents of a PPM
