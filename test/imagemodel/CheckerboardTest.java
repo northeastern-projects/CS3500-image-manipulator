@@ -36,15 +36,13 @@ public class CheckerboardTest {
     img = new Checkerboard(width, height, depth, 1);
     img2 = new Checkerboard(width, height, depth, 3);
 
-    imgFile = "P3\n"
-            + "3\n"
+    imgFile = "3\n"
             + "3\n"
             + "255\n"
             + "0 0 0  255 255 255  0 0 0  255 255 255  0 0 0  255 255 255  0 0 0  "
             + "255 255 255  0 0 0  \n";
 
-    imgFile2 = "P3\n"
-            + "3\n"
+    imgFile2 = "3\n"
             + "3\n"
             + "255\n"
             + "0 0 0  \n";

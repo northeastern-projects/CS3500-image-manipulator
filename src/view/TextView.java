@@ -1,5 +1,6 @@
 package view;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -9,17 +10,18 @@ import java.util.Scanner;
 public class TextView implements ITextView {
 
   private Scanner sc;
+  private Readable rd;
+  private Appendable ap;
 
-
-  /**
-   * Creates a TextView object.
-   */
-  public TextView() {
-    sc = new Scanner(System.in);
+  public TextView(Readable rd, Appendable ap) {
+    this.rd = rd;
+    this.ap = ap;
+    sc = new Scanner(rd);
   }
 
   @Override
-  public String getInput() {
+  public String getInput() throws IOException {
+    this.displayOutput("Enter input: ");
     if (sc.hasNextLine()) {
       return sc.nextLine();
     } else {
@@ -29,7 +31,7 @@ public class TextView implements ITextView {
   }
 
   @Override
-  public void displayOutput(String output) {
-    System.out.println(output);
+  public void displayOutput(String output) throws IOException {
+    this.ap.append(output);
   }
 }

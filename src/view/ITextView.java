@@ -1,23 +1,15 @@
 package view;
 
+import java.io.IOException;
+
 /**
  * This interface outlines the basic things that the view should parsing commands. IView allows for
  * interactive and file-based textual scripting.
  */
 public interface ITextView {
 
-  /**
-   * Returns a string of user input.
-   *
-   * @return String
-   */
-  String getInput();
+  String getInput() throws IOException;
 
-  /**
-   * Prints the string that is given.
-   *
-   * @param output String
-   */
-  void displayOutput(String output);
+  void displayOutput(String output) throws IOException;
 
 }

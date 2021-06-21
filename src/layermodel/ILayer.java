@@ -47,6 +47,8 @@ public interface ILayer {
    */
   void setCurrent(int index) throws IllegalArgumentException;
 
+  IImage getCurrent() throws IllegalArgumentException;
+
   /**
    * Sets the layer at the index to invisible.
    *
@@ -74,5 +76,7 @@ public interface ILayer {
    * @return a list of Integers
    */
   List<Integer> getProps();
+
+  void removeLayer(int index) throws IllegalArgumentException;
 
 }
