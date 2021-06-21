@@ -69,7 +69,7 @@ public class Controller implements IController {
         this.saveState(components[1]);
     }
   }
-  
+
   private IModifier getModifier(String name) {
     switch(name){
       case "blur": return new Blur();
