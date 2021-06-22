@@ -4,6 +4,7 @@ import imagemodel.IImage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import layermodel.ILayer;
 
 /**
  * This interface allows for a file to be parsed and written into the res/ folder. It allows for
@@ -20,13 +21,7 @@ public interface IFileController {
    */
   IImage readImage(String filename) throws IOException;
 
-  /**
-   * Returns the contents of a txt file.
-   *
-   * @param filename name of file
-   * @return String
-   */
-  String readText(String filename) throws FileNotFoundException;
+  ILayer readState(String filename) throws FileNotFoundException;
 
   /**
    * Exports an image file to the res/ folder.

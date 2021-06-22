@@ -23,7 +23,7 @@ public class Controller implements IController {
 
   private final IFileController fileController;
   private final ITextView view;
-  private final ILayer model;
+  private ILayer model;
   private boolean running;
 
   /**
@@ -57,7 +57,7 @@ public class Controller implements IController {
     apply MODIFIER: apply a modifier to current image
     set INTEGER: set this as current
 
-    save STRING: save the layer with the name
+    save state STRING: save the layer with the name
     save image INTEGER STRING: save the image at said index with given name
     save image current STRING: save the current image with the given name
     save image all STRING: export each image individually with the given prefix + index
@@ -72,7 +72,10 @@ public class Controller implements IController {
         this.loadInputHandler(components);
         break;
       case "apply":
-        model.applyToCurrent(this.getModifier(components[1]));
+        IModifier modifier = this.getModifier(components[1]);
+        if (modifier != null) {
+          model.applyToCurrent(modifier);
+        }
         break;
       case "set":
         model.setCurrent(Integer.parseInt(components[1]));
@@ -100,8 +103,10 @@ public class Controller implements IController {
       case "image":
         this.saveImageHandlerHelper(args);
         break;
-      default:
+      case "state":
         this.saveState(args[1]);
+      default:
+        this.view.displayOutput("unable to perform that operation!\n");
     }
   }
 
@@ -125,11 +130,10 @@ public class Controller implements IController {
         this.model.addLayer(fileController.readImage(args[2]));
         break;
       case "state":
-        this.loadState(this.fileController.readText(args[2]));
+        this.model = this.fileController.readState(args[2]);
         break;
       default:
         this.view.displayOutput("Unknown asset to load.\n");
-        this.running = false;
     }
   }
 
@@ -141,16 +145,11 @@ public class Controller implements IController {
       case "greyscale": return new Greyscale();
       default:
         this.view.displayOutput("Cannot apply that modifier!\n");
-        this.running = false;
         return null;
     }
   }
 
   private void saveState(String stateName) throws IOException {
-    fileController.writeTextOrPPM(stateName, "txt", model.toString());
-  }
-
-  private void loadState(String state) {
-
+    fileController.writeTextOrPPM("res/" + stateName, "txt", model.toString());
   }
 }

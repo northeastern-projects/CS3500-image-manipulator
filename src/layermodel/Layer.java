@@ -30,6 +30,10 @@ public class Layer implements ILayer {
     this(new ArrayList<>(), -1, -1, -1);
   }
 
+  public Layer(List<Integer> props) {
+    this(new ArrayList<>(), props.get(0), props.get(1), props.get(2));
+  }
+
   /**
    * Constructor that takes in a list of the IImage properties.
    *
@@ -71,7 +75,7 @@ public class Layer implements ILayer {
   }
 
   private boolean canAcceptImage(IImage image) {
-    if (this.layers.size() == 0) {
+    if (this.width == -1 || this.height == -1 || this.depth == -1) {
       this.width = image.getProps().get(0);
       this.height = image.getProps().get(1);
       this.depth = image.getProps().get(2);
@@ -190,7 +194,7 @@ public class Layer implements ILayer {
     StringBuilder matrix = new StringBuilder("LAYER\n" + this.layers.size() + "\n"
             + width + "\n" + height + "\n" + depth + "\n");
     for (IImage img : this.layers) {
-      matrix.append("\nIMG\n").append(this.visibility.get(img)).append("\n").append(img.toString());
+      matrix.append(this.visibility.get(img)).append("\n").append(img.toString());
     }
     return matrix.toString();
   }
