@@ -5,6 +5,7 @@ import imagemodel.IPixel;
 import imagemodel.Image;
 import imagemodel.Pixel;
 
+import java.util.Arrays;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import layermodel.ILayer;
+import layermodel.Layer;
 
 
 /**
@@ -45,7 +48,6 @@ public class FileController implements IFileController {
 
   private IImage readPPM(String filename) throws FileNotFoundException {
     Scanner sc;
-    List<IPixel> pix = new ArrayList<>();
 
     try {
       sc = new Scanner(new FileInputStream(filename));
@@ -70,6 +72,13 @@ public class FileController implements IFileController {
     if (!token.equals("P3")) {
       throw new FileNotFoundException("Invalid PPM file: plain RAW file should begin with P3");
     }
+
+    return this.makeImage(sc);
+  }
+
+  private IImage makeImage(Scanner sc) {
+    List<IPixel> pix = new ArrayList<>();
+
     int width = sc.nextInt();
     System.out.println("Width of image: " + width);
     int height = sc.nextInt();
@@ -109,8 +118,9 @@ public class FileController implements IFileController {
   }
 
   @Override
-  public String readText(String filename) throws FileNotFoundException {
-    File f = new File(filename + ".txt");
+  public ILayer readState(String filename) throws FileNotFoundException {
+    filename = "res/" + filename + ".txt";
+    File f = new File(filename);
     Scanner s;
 
     try {
@@ -123,7 +133,25 @@ public class FileController implements IFileController {
     while (s.hasNext()) {
       contents.append(s.nextLine()).append(System.lineSeparator());
     }
-    return contents.toString();
+
+    s = new Scanner(contents.toString());
+
+    if (!s.next().equals("LAYER")) {
+      throw new FileNotFoundException("This is not a valid layer state");
+    }
+
+    int numImgs = s.nextInt();
+    ILayer layer = new Layer(new ArrayList<>(Arrays.asList(s.nextInt(), s.nextInt(), s.nextInt())));
+
+    for (int i = 0; i < numImgs; i++) {
+      boolean visible = Boolean.parseBoolean(s.next());
+      layer.addLayer(this.makeImage(s));
+      if (!visible) {
+        layer.toggleVisibility(i);
+      }
+    }
+
+    return layer;
   }
 
   @Override
