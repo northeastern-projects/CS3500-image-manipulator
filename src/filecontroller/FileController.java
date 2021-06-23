@@ -4,33 +4,29 @@ import imagemodel.IImage;
 import imagemodel.IPixel;
 import imagemodel.Image;
 import imagemodel.Pixel;
+import layermodel.ILayer;
+import layermodel.Layer;
 
-import java.util.Arrays;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
-import layermodel.ILayer;
-import layermodel.Layer;
+import java.util.*;
 
 
 /**
  * This class contains methods for the FileController. This class allows for creation of images
  * based on the input image files, such as (ppm, bmp, jpeg, and png). It results in am image
- * that can be modified. It also can write an image to a file in the res/ folder when given a
- * file name and the contents of the file.
+ * that can be modified. It also can write an image to a file in the users choosing folder when
+ * given a file name and the contents of the file.
  */
 public class FileController implements IFileController {
 
   @Override
   public IImage readImage(String filename) throws IOException {
     System.out.println("Reading file...");
-
     String[] nameComps = filename.split("\\.");
     String fileExtension = nameComps[nameComps.length - 1].toLowerCase(Locale.ROOT);
 
@@ -48,7 +44,6 @@ public class FileController implements IFileController {
 
   private IImage readPPM(String filename) throws FileNotFoundException {
     Scanner sc;
-
     try {
       sc = new Scanner(new FileInputStream(filename));
     } catch (FileNotFoundException e) {
@@ -119,7 +114,6 @@ public class FileController implements IFileController {
 
   @Override
   public ILayer readState(String filename) throws FileNotFoundException {
-    filename = "res/" + filename + ".txt";
     File f = new File(filename);
     Scanner s;
 
@@ -161,11 +155,11 @@ public class FileController implements IFileController {
 
     switch (extension) {
       case "png":
-        ImageIO.write(b, "PNG", f);
+        ImageIO.write(b, "png", f);
       case "jpeg":
-        ImageIO.write(b, "JPEG", f);
+        ImageIO.write(b, "jpeg", f);
       case "jpg":
-        ImageIO.write(b, "JPG", f);
+        ImageIO.write(b, "jpg", f);
       case "ppm":
         writeTextOrPPM(filename, extension, "P3\n" + contents.toString());
     }

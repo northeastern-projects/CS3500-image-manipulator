@@ -156,7 +156,7 @@ public class LayerTest {
   @Test
   public void testGetLayer() {
     layer.addLayer(img3);
-    assertEquals(img3, layer.getLayer(2));
+    assertEquals(img3, layer.getLayer(3));
   }
 
   @Test
