@@ -113,10 +113,10 @@ public class Layer implements ILayer {
 
   @Override
   public IImage getLayer(int index) throws IllegalArgumentException {
-    if (index < 0 || index > this.layers.size()) {
+    if (index <= 0 || index > this.layers.size()) {
       throw new IllegalArgumentException("Invalid index provided");
     }
-    return this.layers.get(index);
+    return this.layers.get(index - 1);
   }
 
   @Override
@@ -148,10 +148,10 @@ public class Layer implements ILayer {
 
   @Override
   public void setCurrent(int index) throws IllegalArgumentException {
-    if (index < 0 || index > this.layers.size()) {
-      throw new IllegalArgumentException("Invalid index.");
+    if (index <= 0 || index > this.layers.size()) {
+      throw new IllegalArgumentException("Image at " + index + " does not exist.");
     } else {
-      this.current = index;
+      this.current = index - 1;
     }
   }
 
@@ -165,10 +165,10 @@ public class Layer implements ILayer {
 
   @Override
   public void toggleVisibility(int index) throws IllegalArgumentException {
-    if (index < 0 || index > this.layers.size()) {
-      throw new IllegalArgumentException("Invalid index.");
+    if (index <= 0 || index > this.layers.size()) {
+      throw new IllegalArgumentException("Image at " + index + " does not exist.");
     } else {
-      IImage img = this.layers.get(index);
+      IImage img = this.layers.get(index - 1);
       this.visibility.replace(img, !this.visibility.get(img));
     }
   }
@@ -186,7 +186,11 @@ public class Layer implements ILayer {
 
   @Override
   public void applyToCurrent(IModifier modifier) {
-    this.layers.get(current).applyFilter(modifier);
+    if (layers.size() == 0) {
+      throw new IllegalArgumentException("No image to apply filter to.");
+    } else {
+      this.layers.get(current).applyFilter(modifier);
+    }
   }
 
   @Override

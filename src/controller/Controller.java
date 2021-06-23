@@ -2,12 +2,7 @@ package controller;
 
 import filecontroller.FileController;
 import filecontroller.IFileController;
-import filter.Blur;
-import filter.Greyscale;
-import filter.IModifier;
-import filter.Sepia;
-import filter.Sharpen;
-import javax.swing.JComponent;
+import filter.*;
 import layermodel.ILayer;
 import view.ITextView;
 
@@ -67,82 +62,151 @@ public class Controller implements IController {
     toggle INTEGER: index of layer
      */
 
-    switch (components[0]) {
-      case "load":
-        this.loadInputHandler(components);
-        break;
-      case "apply":
-        IModifier modifier = this.getModifier(components[1]);
-        if (modifier != null) {
-          model.applyToCurrent(modifier);
-        }
-        break;
-      case "set":
-        model.setCurrent(Integer.parseInt(components[1]));
-        break;
-      case "save":
-        this.saveInputHandler(components);
-        break;
-      case "toggle":
-        this.model.toggleVisibility(Integer.parseInt(components[1]));
-        break;
-      case "export":
-        String[] subcomps = components[1].split("\\.");
-        this.fileController.writeImage(subcomps[0], subcomps[1], this.model.blend());
-      case "exit":
+    if (components.length < 2) {
+      if (components[0].equalsIgnoreCase("exit")) {
         this.view.displayOutput("All unsaved changes will be lost.\n");
         this.running = false;
-        break;
-      default:
-        this.view.displayOutput("unable to perform that operation!\n");
+      } else {
+        this.view.displayOutput("Invalid number of arguments.\n");
+      }
+    } else {
+      switch (components[0]) {
+        case "load":
+          this.loadInputHandler(components);
+          break;
+        case "apply":
+          IModifier modifier = this.getModifier(components[1]);
+          if (modifier != null) {
+            try {
+              model.applyToCurrent(modifier);
+            } catch (IllegalArgumentException e) {
+              this.view.displayOutput(e.getMessage() + System.lineSeparator());
+            }
+          }
+          break;
+        case "set":
+          try {
+            try {
+              model.setCurrent(Integer.parseInt(components[1]));
+            } catch (IllegalArgumentException e) {
+              this.view.displayOutput("Must enter integer.\n");
+            }
+          } catch (IllegalArgumentException e) {
+            this.view.displayOutput(e.getMessage() + System.lineSeparator());
+          }
+          break;
+        case "save":
+          try {
+            this.saveInputHandler(components);
+          } catch (IOException e) {
+            this.view.displayOutput(e.getMessage() + System.lineSeparator());
+          }
+          break;
+        case "toggle":
+          try {
+            try {
+              this.model.toggleVisibility(Integer.parseInt(components[1]));
+            } catch (IllegalArgumentException e) {
+              this.view.displayOutput("Must enter integer after toggle.\n");
+            }
+          } catch (IllegalArgumentException e) {
+            this.view.displayOutput(e.getMessage() + System.lineSeparator());
+          }
+          break;
+        case "export":
+          String[] subcomps = components[1].split("\\.");
+          this.fileController.writeImage(subcomps[0], subcomps[1], this.model.blend());
+        default:
+          this.view.displayOutput("unable to perform that operation!\n");
+      }
     }
   }
 
   private void saveInputHandler(String[] args) throws IOException {
-    switch (args[1]) {
-      case "image":
-        this.saveImageHandlerHelper(args);
-        break;
-      case "state":
-        this.saveState(args[1]);
-      default:
-        this.view.displayOutput("unable to perform that operation!\n");
+    if (args.length < 3) {
+      this.view.displayOutput("Invalid number of arguments.\n");
+    } else {
+      switch (args[1]) {
+        case "image":
+          try {
+            this.saveImageHandlerHelper(args);
+          } catch (IOException e) {
+            this.view.displayOutput(e.getMessage() + System.lineSeparator());
+          }
+          break;
+        case "state":
+          try {
+            this.saveState(args[2]);
+          } catch (IOException e) {
+            this.view.displayOutput(e.getMessage() + System.lineSeparator());
+          }
+        default:
+          this.view.displayOutput("unable to perform that operation!\n");
+      }
     }
   }
 
   private void saveImageHandlerHelper(String[] args) throws IOException {
-    String[] subcomps = args[3].split("\\.");
+    if (args.length < 4) {
+      this.view.displayOutput("Invalid number of arguments.\n");
+    } else {
+      String[] subcomps = args[3].split("\\.");
+      if (subcomps.length < 2) {
+        this.view.displayOutput("Invalid file extension on " + args[3] + "." + System.lineSeparator());
+      } else {
+        switch (args[2]) {
+          case "current":
+            this.fileController.writeImage(subcomps[0], subcomps[1], this.model.getCurrent());
+          case "all":
+            //DO NOTHING
+          default:
+            try {
+              this.fileController.writeImage(subcomps[0], subcomps[1],
+                      this.model.getLayer(Integer.parseInt(args[2])));
+            } catch (IllegalArgumentException e) {
+              this.view.displayOutput("Layer at this index does not exist.\n");
+            }
 
-    switch (args[2]) {
-      case "current":
-        this.fileController.writeImage(subcomps[0], subcomps[1], this.model.getCurrent());
-      case "all":
-        //DO NOTHING
-      default:
-        this.fileController.writeImage(subcomps[0], subcomps[1],
-            this.model.getLayer(Integer.parseInt(args[2])));
+        }
+      }
     }
   }
 
   private void loadInputHandler(String[] args) throws IOException {
-    switch (args[1]) {
-      case "image":
-        this.model.addLayer(fileController.readImage(args[2]));
-        break;
-      case "state":
-        this.model = this.fileController.readState(args[2]);
-        break;
-      default:
-        this.view.displayOutput("Unknown asset to load.\n");
+    if (args.length < 3) {
+      this.view.displayOutput("Invalid number of arguments.\n");
+    } else {
+      switch (args[1]) {
+        case "image":
+          try {
+            this.model.addLayer(fileController.readImage(args[2]));
+          } catch (UnsupportedOperationException e) {
+            this.view.displayOutput(e.getMessage() + System.lineSeparator());
+          }
+          break;
+        case "state":
+          try {
+            this.model = this.fileController.readState(args[2]);
+          } catch (FileNotFoundException e) {
+            this.view.displayOutput(e.getMessage() + System.lineSeparator());
+          }
+          break;
+        default:
+          this.view.displayOutput("Unknown asset to load.\n");
+      }
     }
   }
 
   private IModifier getModifier(String name) throws IOException {
-    switch (name){
-      case "blur": return new Blur();
-      case "sharpen": return new Sharpen();
-      case "sepia": return new Sepia();
-      case "greyscale": return new Greyscale();
+    switch (name) {
+      case "blur":
+        return new Blur();
+      case "sharpen":
+        return new Sharpen();
+      case "sepia":
+        return new Sepia();
+      case "greyscale":
+        return new Greyscale();
       default:
         this.view.displayOutput("Cannot apply that modifier!\n");
         return null;
