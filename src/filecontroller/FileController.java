@@ -152,16 +152,22 @@ public class FileController implements IFileController {
   public void writeImage(String filename, String extension, IImage contents) throws IOException {
     BufferedImage b = contents.createImage();
     File f = new File(filename + "." + extension);
-
+    System.out.println(extension);
     switch (extension) {
-      case "png":
-        ImageIO.write(b, "png", f);
-      case "jpeg":
-        ImageIO.write(b, "jpeg", f);
-      case "jpg":
-        ImageIO.write(b, "jpg", f);
       case "ppm":
         writeTextOrPPM(filename, extension, "P3\n" + contents.toString());
+        break;
+      case "png":
+        ImageIO.write(b, "PNG", f);
+        break;
+      case "jpeg":
+        ImageIO.write(b, "JPEG", f);
+        break;
+      case "jpg":
+        ImageIO.write(b, "JPG", f);
+        break;
+      default:
+        throw new IllegalArgumentException("Enter valid image file type.");
     }
   }
 
