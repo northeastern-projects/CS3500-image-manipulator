@@ -207,6 +207,8 @@ public class Controller implements IController {
         return new Sepia();
       case "greyscale":
         return new Greyscale();
+      case "mosaic":
+        return new Mosaic(15000);
       default:
         this.view.displayOutput("Cannot apply that modifier!\n");
         return null;
