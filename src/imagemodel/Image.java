@@ -1,5 +1,6 @@
 package imagemodel;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,8 +15,8 @@ import filter.IModifier;
 public class Image implements IImage {
 
   private List<IPixel> pixels;
-  private final int width;
-  private final int height;
+  private int width;
+  private int height;
   private final int depth;
 
   /**
@@ -50,16 +51,18 @@ public class Image implements IImage {
   @Override
   public BufferedImage createImage() {
     BufferedImage b = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
-        IPixel p = this.getPixel(i, j);
+    for (IPixel p : pixels) {
+      Color rgb = new Color(p.getColor().get(0), p.getColor().get(1), p.getColor().get(2));
 
-        List<Integer> color = p.getColor();
-        int rgb = (color.get(0) + color.get(1) + color.get(2)) / 3;
-        b.setRGB(i, j, rgb);
-      }
+      b.setRGB(p.getCoords().get(0), p.getCoords().get(1), rgb.getRGB());
     }
     return b;
+  }
+
+  @Override
+  public void changeCanvasSize(int width, int height) {
+    this.width = width;
+    this.height = height;
   }
 
   @Override

@@ -209,6 +209,8 @@ public class Controller implements IController {
         return new Greyscale();
       case "mosaic":
         return new Mosaic(15000);
+      case "downscale":
+        return new DownScaling(1080, 720);
       default:
         this.view.displayOutput("Cannot apply that modifier!\n");
         return null;

@@ -50,4 +50,12 @@ public interface IImage {
    */
   BufferedImage createImage();
 
+  /**
+   * Changes the canvas size of this IImage.
+   *
+   * @param width  int
+   * @param height int
+   */
+  void changeCanvasSize(int width, int height);
+
 }
