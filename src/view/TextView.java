@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * This class represents the view of an Image model and parses any user input.
+ * This class represents a TextView of this image processing program. It allows
+ * parsing of user input and displaying output that may be any errors caused by the user's input.
  */
 
 public class TextView implements ITextView {
@@ -13,7 +14,17 @@ public class TextView implements ITextView {
   private Readable rd;
   private Appendable ap;
 
-  public TextView(Readable rd, Appendable ap) {
+  /**
+   * creates a TextView object.
+   *
+   * @param rd Readable object
+   * @param ap Appendable object.
+   * @throws IllegalArgumentException if arguments are null.
+   */
+  public TextView(Readable rd, Appendable ap) throws IllegalArgumentException{
+    if (rd == null || ap == null) {
+      throw new IllegalArgumentException("Arguments are invalid.");
+    }
     this.rd = rd;
     this.ap = ap;
     sc = new Scanner(rd);
@@ -25,7 +36,7 @@ public class TextView implements ITextView {
     if (sc.hasNextLine()) {
       return sc.nextLine();
     } else {
-      this.displayOutput("unable to read input");
+      this.displayOutput("Unable to read input.");
       return null;
     }
   }

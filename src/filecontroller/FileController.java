@@ -18,8 +18,9 @@ import java.util.*;
 
 /**
  * This class contains methods for the FileController. This class allows for creation of images
- * based on the input image files, such as (ppm, bmp, jpeg, and png). It results in am image
- * that can be modified. It also can write an image to a file in the users choosing folder when
+ * based on the input image files, such as (ppm, bmp, jpeg, and png) or the reading of a state which
+ * is a layer file that is in a txt file. It results in am image or a layer that can be modified.
+ * It also can write an image or a layer to a file in the users choosing folder when
  * given a file name and the contents of the file.
  */
 public class FileController implements IFileController {
@@ -152,7 +153,6 @@ public class FileController implements IFileController {
   public void writeImage(String filename, String extension, IImage contents) throws IOException {
     BufferedImage b = contents.createImage();
     File f = new File(filename + "." + extension);
-    System.out.println(extension);
     switch (extension) {
       case "ppm":
         writeTextOrPPM(filename, extension, "P3\n" + contents.toString());
@@ -175,11 +175,9 @@ public class FileController implements IFileController {
   public void writeTextOrPPM(String filename, String extension, String contents)
           throws IOException {
     System.out.println("Saving...");
-
     FileOutputStream out = new FileOutputStream(filename + "." + extension);
     out.write(contents.getBytes(StandardCharsets.UTF_8));
     out.close();
-
     System.out.println("Done!\n");
   }
 }

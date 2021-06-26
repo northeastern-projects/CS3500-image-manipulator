@@ -11,7 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Mosaic implements IModifier{
+/**
+ * This class represents a way to modify an image that creates a mosaic of it based on an input
+ * seed. The class has a toString and a modify method. The modify method creates a new list of
+ * pixels which implements the mosaic on the IImage this is implemented upon.
+ */
+public class Mosaic implements IModifier {
 
   private final int seeds;
   private final List<IPixel> centroids;
@@ -148,14 +153,14 @@ public class Mosaic implements IModifier{
         && pixel.getCoords().get(1) < maxY).collect(Collectors.toList());
   }
 
-  private double findDistance(List<Integer> CS1, List<Integer> CS2) {
-    return Math.hypot(Math.abs(CS2.get(0) - CS1.get(0)), Math.abs(CS2.get(1) - CS1.get(1)));
+  private double findDistance(List<Integer> p1, List<Integer> p2) {
+    return Math.hypot(Math.abs(p2.get(0) - p1.get(0)), Math.abs(p2.get(1) - p1.get(1)));
   }
 
   private void sowSeeds(List<IPixel> pixels) {
     Collections.shuffle(pixels);
 
-    for (int i = 0; i < this.seeds; i++) {
+    for (int i = 0; i < this.seeds - 1; i++) {
       IPixel centroid = pixels.get(i);
       this.centroids.add(centroid);
       this.centroidToPixels.put(centroid, new ArrayList<>());

@@ -36,6 +36,7 @@ public class LayerTest {
   ILayer layer;
   String blurredImage;
   String blurredLayer;
+  String layers;
 
   @Before
   public void setUp() {
@@ -114,10 +115,22 @@ public class LayerTest {
         + "56 56 56  75 75 75  56 56 56  75 75 75  100 100 100  75 75 75  56 56 56  75 75 75  56 56 56  \n"
         + "false\n"
         + "3\n"
-        + "3\n"
+            + "3\n"
         + "255\n"
         + "0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100"
         + "  0 100 100  \n";
+    layers = "[3\n"
+            + "3\n"
+            + "255\n"
+            + "0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100 "
+            + " 0 100 100  0 100 100  0 100 100  \n"
+            + ", 3\n"
+            + "3\n"
+            + "255\n"
+            + "100 100 100  100 100 100  100 100 100  100 100 100  100 100 100 "
+            + " 100 100 100  100 100 100  100 100 100  100 100 100  \n"
+            + "]";
+
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -163,8 +176,8 @@ public class LayerTest {
 
   @Test
   public void testBlendWhenAllInvisible() {
-    layer.toggleVisibility(0);
     layer.toggleVisibility(1);
+    layer.toggleVisibility(2);
     assertEquals("3\n3\n255\n0 0 0  0 0 0  0 0 0  0 0 0  0 0 0  0 0 0  "
                     + "0 0 0  0 0 0  0 0 0  \n",
             layer.blend().toString());
@@ -172,7 +185,7 @@ public class LayerTest {
 
   @Test
   public void testBlendWhenOnlyOneVisible() {
-    layer.toggleVisibility(0);
+    layer.toggleVisibility(1);
     assertEquals(img2.toString(), layer.blend().toString());
   }
 
@@ -183,7 +196,7 @@ public class LayerTest {
   @Test
   public void testSetCurrent() {
     assertEquals("0", layer.getProps().get(4).toString());
-    layer.setCurrent(1);
+    layer.setCurrent(2);
     assertEquals("1", layer.getProps().get(4).toString());
   }
 
@@ -194,29 +207,29 @@ public class LayerTest {
   @Test
   public void testSetInvisibility() {
     assertEquals(2, layer.getVisible().size());
-    layer.toggleVisibility(0);
-    assertEquals(1, layer.getVisible().size());
     layer.toggleVisibility(1);
+    assertEquals(1, layer.getVisible().size());
+    layer.toggleVisibility(2);
     assertEquals(0, layer.getVisible().size());
   }
 
   @Test
   public void testGetVisible() {
-    assertEquals(realLayers, layer.getVisible());
+    assertEquals(layers, layer.getVisible().toString());
     layer.toggleVisibility(1);
-    assertEquals(new ArrayList<>(Arrays.asList(img)).toString(), layer.getVisible().toString());
+    assertEquals(new ArrayList<>(Arrays.asList(img2)).toString(), layer.getVisible().toString());
   }
 
   @Test
   public void testApplyToCurrent() {
-    assertEquals(img.toString(), layer.getLayer(0).toString());
+    assertEquals(img.toString(), layer.getLayer(1).toString());
     layer.applyToCurrent(new Blur());
-    assertEquals(blurredImage, layer.getLayer(0).toString());
+    assertEquals(blurredImage, layer.getLayer(1).toString());
   }
 
   @Test
   public void testToString() {
-    layer.toggleVisibility(1);
+    layer.toggleVisibility(2);
     layer.applyToCurrent(new Blur());
     assertEquals(blurredLayer, layer.toString());
   }
@@ -225,7 +238,7 @@ public class LayerTest {
   public void testGetProps() {
     List<Integer> props = new ArrayList<>(Arrays.asList(2, 3, 3, 255, 0));
     assertEquals(props.toString(), layer.getProps().toString());
-    layer.setCurrent(1);
+    layer.setCurrent(2);
     props = new ArrayList<>(Arrays.asList(2, 3, 3, 255, 1));
     assertEquals(props.toString(), layer.getProps().toString());
   }
