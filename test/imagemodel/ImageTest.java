@@ -7,13 +7,14 @@ import filter.Sharpen;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * This class tests the img.Image class. These tests ensure that the
+ * This class tests the Image class. These tests ensure that the
  * Image is implemented in the correct way and returns the Image as a String in p3 ppm format.
  */
 public class ImageTest {
@@ -181,5 +182,14 @@ public class ImageTest {
   @Test
   public void testGetProps() {
     assertEquals("[3, 3, 255]", img.getProps().toString());
+  }
+
+  @Test
+  public void testChangeCanvasSize() {
+    assertEquals("3", img.getProps().get(0).toString());
+    assertEquals("3", img.getProps().get(1).toString());
+    img.changeCanvasSize(4,5);
+    assertEquals("4", img.getProps().get(0).toString());
+    assertEquals("5", img.getProps().get(1).toString());
   }
 }

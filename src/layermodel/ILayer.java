@@ -47,6 +47,12 @@ public interface ILayer {
    */
   void setCurrent(int index) throws IllegalArgumentException;
 
+  /**
+   * Produces the IImage at the current index.
+   *
+   * @return the current IImage
+   * @throws IllegalArgumentException if index is out of bounds
+   */
   IImage getCurrent() throws IllegalArgumentException;
 
   /**
@@ -76,7 +82,5 @@ public interface ILayer {
    * @return a list of Integers
    */
   List<Integer> getProps();
-
-  void removeLayer(int index) throws IllegalArgumentException;
 
 }

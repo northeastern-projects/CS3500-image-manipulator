@@ -209,16 +209,4 @@ public class Layer implements ILayer {
             this.current));
   }
 
-  @Override
-  public void removeLayer(int index) throws IllegalArgumentException {
-    if (index > 0 && index < this.layers.size()) {
-      this.visibility.remove(this.layers.remove(index));
-
-      if (current == index || current >= this.layers.size()) {
-        current--;
-      }
-    } else {
-      throw new IllegalArgumentException("Cannot remove something that does not exist");
-    }
-  }
 }

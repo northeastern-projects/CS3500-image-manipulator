@@ -9,8 +9,10 @@ import java.util.List;
 import filter.IModifier;
 
 /**
- * The Image class that contains methods to print Image as a file, modify an image, and save an
- * image to a new file in the res folder. This class also implements the IImage interface.
+ * The Image class that contains methods to print Image as a ppm file, modify an image, and create a
+ * bufferedImage of this Image, change the canvas size, get the pixels, get a pixel at a certain
+ * coordinate, and get the properties of this Image. This class also implements the IImage
+ * interface.
  */
 public class Image implements IImage {
 
@@ -53,7 +55,6 @@ public class Image implements IImage {
     BufferedImage b = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     for (IPixel p : pixels) {
       Color rgb = new Color(p.getColor().get(0), p.getColor().get(1), p.getColor().get(2));
-
       b.setRGB(p.getCoords().get(0), p.getCoords().get(1), rgb.getRGB());
     }
     return b;

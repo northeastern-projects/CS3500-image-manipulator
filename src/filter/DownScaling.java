@@ -7,7 +7,7 @@ import imagemodel.Pixel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DownScaling implements IModifier{
+public class DownScaling implements IModifier {
   private int width;
   private int height;
 
@@ -42,6 +42,7 @@ public class DownScaling implements IModifier{
      * for new pixels
      * return the new list of updated sized pixels
      */
+    return image.getPixels();
 
   }
 
@@ -50,10 +51,6 @@ public class DownScaling implements IModifier{
     double r = 0.0;
     double g = 0.0;
     double b = 0.0;
-
-
-
-
 
     rgb.add(r);
     rgb.add(g);

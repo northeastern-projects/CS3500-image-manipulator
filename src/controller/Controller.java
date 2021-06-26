@@ -26,8 +26,12 @@ public class Controller implements IController {
    *
    * @param view  a View object
    * @param model An ILayer object.
+   * @throws IllegalArgumentException if arguments are bull
    */
   public Controller(ITextView view, ILayer model) {
+    if (view == null || model == null) {
+      throw new IllegalArgumentException("Arguments are null.");
+    }
     this.fileController = new FileController();
     this.view = view;
     this.model = model;
@@ -44,24 +48,6 @@ public class Controller implements IController {
   private void handleInput(String input) throws IOException {
     String[] components = input.split(" ");
 
-    /*
-    possible commands that the user can issue:
-    
-    load image STRING: path to image (auto creates new layer)
-    load state STRING: path to state
-    apply MODIFIER: apply a modifier to current image
-    set INTEGER: set this as current
-
-    save state STRING: save the layer with the name
-    save image INTEGER STRING: save the image at said index with given name
-    save image current STRING: save the current image with the given name
-    save image all STRING: export each image individually with the given prefix + index
-
-    export STRING: save the layer as an image with the given name;
-
-    toggle INTEGER: index of layer
-     */
-
     if (components.length < 2) {
       if (components[0].equalsIgnoreCase("exit")) {
         this.view.displayOutput("All unsaved changes will be lost.\n");
@@ -75,7 +61,7 @@ public class Controller implements IController {
           this.loadInputHandler(components);
           break;
         case "apply":
-          IModifier modifier = this.getModifier(components[1]);
+          IModifier modifier = this.getModifier(components);
           if (modifier != null) {
             try {
               model.applyToCurrent(modifier);
@@ -86,13 +72,14 @@ public class Controller implements IController {
           break;
         case "set":
           try {
+            int num = Integer.parseInt(components[1]);
             try {
-              model.setCurrent(Integer.parseInt(components[1]));
+              model.setCurrent(num);
             } catch (IllegalArgumentException e) {
-              this.view.displayOutput("Must enter integer.\n");
+              this.view.displayOutput(e.getMessage() + System.lineSeparator());
             }
-          } catch (IllegalArgumentException e) {
-            this.view.displayOutput(e.getMessage() + System.lineSeparator());
+          } catch (NumberFormatException e) {
+            this.view.displayOutput("Must enter integer.\n");
           }
           break;
         case "save":
@@ -104,20 +91,26 @@ public class Controller implements IController {
           break;
         case "toggle":
           try {
+            int num = Integer.parseInt(components[1]);
             try {
-              this.model.toggleVisibility(Integer.parseInt(components[1]));
+              this.model.toggleVisibility(num);
             } catch (IllegalArgumentException e) {
-              this.view.displayOutput("Must enter integer after toggle.\n");
+              this.view.displayOutput(e.getMessage() + System.lineSeparator());
             }
-          } catch (IllegalArgumentException e) {
-            this.view.displayOutput(e.getMessage() + System.lineSeparator());
+          } catch (NumberFormatException e) {
+            this.view.displayOutput("Must enter integer after toggle.\n");
           }
           break;
         case "export":
           String[] subcomps = components[1].split("\\.");
-          this.fileController.writeImage(subcomps[0], subcomps[1], this.model.blend());
+          try {
+            this.fileController.writeImage(subcomps[0], subcomps[1], this.model.blend());
+          } catch (IllegalArgumentException e) {
+            this.view.displayOutput(e.getMessage() + System.lineSeparator());
+          }
+          break;
         default:
-          this.view.displayOutput("unable to perform that operation!\n");
+          this.view.displayOutput("Unable to perform that operation!\n");
       }
     }
   }
@@ -140,8 +133,9 @@ public class Controller implements IController {
           } catch (IOException e) {
             this.view.displayOutput(e.getMessage() + System.lineSeparator());
           }
+          break;
         default:
-          this.view.displayOutput("unable to perform that operation!\n");
+          this.view.displayOutput("Unable to perform that operation!\n");
       }
     }
   }
@@ -157,8 +151,7 @@ public class Controller implements IController {
         switch (args[2]) {
           case "current":
             this.fileController.writeImage(subcomps[0], subcomps[1], this.model.getCurrent());
-          case "all":
-            //DO NOTHING
+            break;
           default:
             try {
               this.fileController.writeImage(subcomps[0], subcomps[1],
@@ -197,8 +190,8 @@ public class Controller implements IController {
     }
   }
 
-  private IModifier getModifier(String name) throws IOException {
-    switch (name) {
+  private IModifier getModifier(String[] args) throws IOException {
+    switch (args[1]) {
       case "blur":
         return new Blur();
       case "sharpen":
@@ -208,9 +201,24 @@ public class Controller implements IController {
       case "greyscale":
         return new Greyscale();
       case "mosaic":
-        return new Mosaic(15000);
+        try {
+          int seed = Integer.valueOf(args[2]);
+          return new Mosaic(seed);
+        }
+        catch (NumberFormatException e) {
+          this.view.displayOutput("Mosaic requires an integer input.\n");
+          return null;
+        }
       case "downscale":
-        return new DownScaling(1080, 720);
+        try {
+          int width = Integer.valueOf(args[2]);
+          int height = Integer.valueOf(args[3]);
+          return new DownScaling(width, height);
+        }
+        catch (NumberFormatException e) {
+          this.view.displayOutput("Downscale requires integers for width and height.\n");
+          return null;
+        }
       default:
         this.view.displayOutput("Cannot apply that modifier!\n");
         return null;
@@ -218,6 +226,6 @@ public class Controller implements IController {
   }
 
   private void saveState(String stateName) throws IOException {
-    fileController.writeTextOrPPM("res/" + stateName, "txt", model.toString());
+    fileController.writeTextOrPPM(stateName, "txt", model.toString());
   }
 }

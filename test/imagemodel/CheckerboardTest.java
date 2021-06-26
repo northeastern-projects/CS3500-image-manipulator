@@ -10,7 +10,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * This class tests the img.Checkerboard class. These tests ensure that the IImage is implemented
+ * This class tests the Checkerboard class. These tests ensure that the IImage is implemented
  * in the correct way and returns the CheckerboardImage as a String in p3 ppm format.
  */
 public class CheckerboardTest {
