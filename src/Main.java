@@ -19,7 +19,6 @@ public class Main {
    */
   public static void main(String[] args) throws IOException {
     ILayer model = new Layer();
-    //ITextView view = new TextView(new InputStreamReader(System.in), System.out);
     IGraphicalView view = new GraphicalView("home");
     IController controller = new GraphicalController(view, model);
 
