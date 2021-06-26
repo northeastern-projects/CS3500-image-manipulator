@@ -3,11 +3,12 @@ package controller;
 import filecontroller.FileController;
 import filecontroller.IFileController;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import layermodel.ILayer;
 import view.IGraphicalView;
 
-public class GraphicalController implements IGraphicalController{
+public class GraphicalController implements IController, ActionListener {
 
   private final IFileController fileController;
   private final IGraphicalView view;
@@ -29,7 +30,9 @@ public class GraphicalController implements IGraphicalController{
 
   @Override
   public void actionPerformed(ActionEvent e) {
-
+    switch (e.getActionCommand()) {
+      default: System.out.println(e.getActionCommand());
+    }
   }
 
 }
