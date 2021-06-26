@@ -45,6 +45,7 @@ public class Mosaic implements IModifier{
     int searchDist =
         Math.min(image.getProps().get(0), image.getProps().get(1)) / (int)Math.sqrt(this.seeds);
 
+    System.out.println("Search dist:" + searchDist);
     System.out.println("Sowing...");
     this.sowSeeds(image.getPixels());
     System.out.println("Clustering...");
@@ -109,7 +110,6 @@ public class Mosaic implements IModifier{
             maxY + incr),
             pixel);
       }
-
 
       centroidToPixels.get(closest).add(pixel);
     }
