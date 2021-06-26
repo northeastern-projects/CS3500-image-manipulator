@@ -43,6 +43,8 @@ public class DownScaling implements IModifier{
      * return the new list of updated sized pixels
      */
 
+    return null;
+
   }
 
   private List<Double> getColorAt(double xRatio, double yRatio, int width, int height) {
