@@ -280,6 +280,8 @@ Methods:
 * `writeImage()` - writes the image to the desired extension with desired file placement
 * `writeTextOrPPM()` - writes an ILayer to a text file or an image to a ppm file
 
+---
+
 ### Class Filecontroller implements IFileController
 
 This class contains methods to read a PPM file and create an image that can be modified. It also can
