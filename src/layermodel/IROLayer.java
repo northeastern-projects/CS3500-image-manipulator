@@ -37,4 +37,6 @@ public interface IROLayer {
 
   boolean hasCurrent();
 
+  IImage getCurrentVisible();
+
 }

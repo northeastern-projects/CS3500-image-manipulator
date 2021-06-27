@@ -22,6 +22,7 @@ public class Layer implements ILayer {
 
   private final List<IImage> layers;
   private Map<IImage, Boolean> visibility;
+  private final List<Integer> currentHistory;
   private int current;
   private int height;
   private int width;
@@ -65,6 +66,7 @@ public class Layer implements ILayer {
     this.width = width;
     this.depth = depth;
     this.current = 0;
+    this.currentHistory = new ArrayList<>(Collections.singleton(0));
   }
 
   private Map<IImage, Boolean> createMappedVisibility(List<IImage> images) {
@@ -102,12 +104,20 @@ public class Layer implements ILayer {
     return true;
   }
 
+  private void updateHistory(int idx) {
+    if (this.currentHistory.contains(idx)) {
+      this.currentHistory.remove(Integer.valueOf(idx));
+    }
+    this.currentHistory.add(0, idx);
+  }
+
   @Override
   public void addLayer(IImage image) throws IllegalArgumentException {
     if (!canAcceptImage(image)) {
       throw new IllegalArgumentException("Image must have same properties as the one in the layer"
               + " below");
     }
+    this.currentHistory.add(this.currentHistory.size());
     this.layers.add(image);
     this.visibility.put(image, true);
   }
@@ -154,6 +164,7 @@ public class Layer implements ILayer {
     } else {
       this.current = index - 1;
     }
+    this.updateHistory(index - 1);
   }
 
   @Override
@@ -229,6 +240,23 @@ public class Layer implements ILayer {
   @Override
   public boolean hasCurrent() {
     return this.layers.size() > 0;
+  }
+
+  @Override
+  public IImage getCurrentVisible() {
+    IImage current = this.getCurrent();
+    if (this.visibility.get(current)) {
+      return current;
+    } else {
+      for (int i = 1; i < this.currentHistory.size() - 1; i++) {
+        current = this.layers.get(this.currentHistory.get(i));
+        if (this.visibility.get(current)) {
+          return current;
+        }
+      }
+    }
+
+    return null;
   }
 
 }

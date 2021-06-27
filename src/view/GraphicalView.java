@@ -1,5 +1,6 @@
 package view;
 
+import imagemodel.IImage;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -64,7 +65,12 @@ public class GraphicalView implements IGraphicalView {
 
   @Override
   public void refresh() {
-    this.imageDisplay.setViewportView(new JLabel(new ImageIcon(this.roLayer.getCurrent().createImage())));
+    IImage current = this.roLayer.getCurrentVisible();
+    if (current != null) {
+      this.imageDisplay.setViewportView(new JLabel(new ImageIcon(current.createImage())));
+    } else {
+      this.imageDisplay.setViewportView(new JLabel(new ImageIcon()));
+    }
   }
 
   @Override
