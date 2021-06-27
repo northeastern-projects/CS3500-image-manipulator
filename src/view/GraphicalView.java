@@ -1,7 +1,12 @@
 package view;
 
-import javax.swing.*;
+import imagemodel.IImage;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import layermodel.ILayer;
 
 public class GraphicalView implements IGraphicalView {
 
@@ -15,7 +20,9 @@ public class GraphicalView implements IGraphicalView {
   private JButton loadButton;
   private JButton saveButton;
   private JButton exportButton;
+  private JScrollPane imageDisplay;
   private JFrame frame;
+  private ILayer layer;
 
   public GraphicalView(String title) {
     this.initialise();
@@ -44,5 +51,9 @@ public class GraphicalView implements IGraphicalView {
     loadButton.addActionListener(listener);
     saveButton.addActionListener(listener);
     exportButton.addActionListener(listener);
+  }
+
+  private void createUIComponents() {
+    // TODO: place custom component creation code here
   }
 }

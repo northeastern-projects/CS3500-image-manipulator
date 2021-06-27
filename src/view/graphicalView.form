@@ -121,7 +121,7 @@
               </component>
             </children>
           </grid>
-          <scrollpane id="94492">
+          <scrollpane id="94492" binding="imageDisplay" custom-create="true">
             <constraints>
               <splitpane position="left"/>
             </constraints>
