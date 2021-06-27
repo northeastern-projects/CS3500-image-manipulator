@@ -1,12 +1,11 @@
 package filter;
 
 import imagemodel.IPixel;
+import imagemodel.Pixel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import imagemodel.Pixel;
 
 /**
  * The abstract AFilter class contains the methods implemented by all filters (ex: Blur).

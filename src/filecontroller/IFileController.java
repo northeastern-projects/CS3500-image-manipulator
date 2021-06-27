@@ -1,11 +1,10 @@
 package filecontroller;
 
 import imagemodel.IImage;
+import layermodel.ILayer;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import layermodel.ILayer;
 
 /**
  * This interface allows for a file to be parsed and written into the res/ folder. It allows for

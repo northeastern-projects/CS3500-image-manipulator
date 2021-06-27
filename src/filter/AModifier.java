@@ -68,8 +68,6 @@ public abstract class AModifier implements IModifier {
 
   @Override
   public List<IPixel> modify(IImage image) {
-    System.out.println("Applying modifier...");
-
     List<IPixel> origPixels = image.getPixels();
     int width = image.getProps().get(0);
     int height = image.getProps().get(1);

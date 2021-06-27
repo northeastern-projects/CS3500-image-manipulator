@@ -40,18 +40,13 @@ public class DownScale implements IModifier {
     List<IPixel> newPixels = new ArrayList<>();
     final int currWidth = image.getProps().get(0);
     final int currHeight = image.getProps().get(1);
-    System.out.println(currWidth);
-    System.out.println(currHeight);
 
-
-    float xRatio = (1.0f * currWidth) / this.width;  //May need to flip these!!!
+    float xRatio = (1.0f * currWidth) / this.width;
     float yRatio = (1.0f * currHeight) / this.height;
 
-    System.out.println(xRatio);
-    System.out.println(yRatio);
     for (int i = 0; i < this.height; i++) {
       for (int j = 0; j < this.width; j++) {
-        int x = Math.round(j * yRatio);
+        int x = Math.round(j * xRatio);
         int y = Math.round(i * yRatio);
         if (x < currWidth && y < currHeight) {
           List<Integer> c = image.getPixel(x, y).getColor();

@@ -187,8 +187,8 @@ public class ImageTest {
   public void testChangeCanvasSize() {
     assertEquals("3", img.getProps().get(0).toString());
     assertEquals("3", img.getProps().get(1).toString());
-    img.changeCanvasSize(4, 5);
-    assertEquals("4", img.getProps().get(0).toString());
-    assertEquals("5", img.getProps().get(1).toString());
+    img.changeCanvasSize(2, 3);
+    assertEquals("2", img.getProps().get(0).toString());
+    assertEquals("3", img.getProps().get(1).toString());
   }
 }

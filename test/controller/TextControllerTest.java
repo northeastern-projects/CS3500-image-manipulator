@@ -43,7 +43,7 @@ public class TextControllerTest {
     } catch (IOException e) {
     }
     imgs = new ArrayList<>(Arrays.asList(img));
-    model = new Layer(imgs, img.getProps());
+    model = new Layer(imgs, imgs.get(0).getProps());
 
   }
 
