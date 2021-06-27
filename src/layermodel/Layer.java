@@ -132,7 +132,6 @@ public class Layer implements ILayer {
 
   @Override
   public IImage blend() {
-    System.out.println("Blending...");
     List<IPixel> pixels = new ArrayList<>();
     int numOfVisibleLayers = this.getVisible().size();
 

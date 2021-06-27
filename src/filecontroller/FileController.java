@@ -27,7 +27,6 @@ public class FileController implements IFileController {
 
   @Override
   public IImage readImage(String filename) throws IOException {
-    System.out.println("Reading file...");
     String[] nameComps = filename.split("\\.");
     String fileExtension = nameComps[nameComps.length - 1].toLowerCase(Locale.ROOT);
 
@@ -76,11 +75,8 @@ public class FileController implements IFileController {
     List<IPixel> pix = new ArrayList<>();
 
     int width = sc.nextInt();
-    System.out.println("Width of image: " + width);
     int height = sc.nextInt();
-    System.out.println("Height of image: " + height);
     int maxValue = sc.nextInt();
-    System.out.println("Maximum value of a color in this file: " + maxValue);
 
     for (int i = 0; i < height; i++) { //COL
       for (int j = 0; j < width; j++) { //ROW
@@ -174,10 +170,8 @@ public class FileController implements IFileController {
   @Override
   public void writeTextOrPPM(String filename, String extension, String contents)
           throws IOException {
-    System.out.println("Saving...");
     FileOutputStream out = new FileOutputStream(filename + "." + extension);
     out.write(contents.getBytes(StandardCharsets.UTF_8));
     out.close();
-    System.out.println("Done!\n");
   }
 }

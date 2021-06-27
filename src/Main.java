@@ -27,6 +27,7 @@ public class Main {
     IGraphicalView view2;
     IController controller;
     ILayer model = new Layer();
+
     if (args.length < 1) {
       throw new IllegalArgumentException("Please enter 'file' followed by the txt file name for"
               + "file-based scripting or enter 'interactive' for user input.\n");
@@ -39,7 +40,7 @@ public class Main {
       view = new TextView(new InputStreamReader(System.in), System.out);
       controller = new TextController(view, model);
       controller.go();
-    } else if (args[0].equalsIgnoreCase("-interactive")) {
+    } else if (args[0].equalsIgnoreCase("-interactive")) { 
       UIManager.setLookAndFeel(new NimbusLookAndFeel());
       view2 = new GraphicalView("Image manipulator!", model);
       controller = new GraphicalController(view2, model);
