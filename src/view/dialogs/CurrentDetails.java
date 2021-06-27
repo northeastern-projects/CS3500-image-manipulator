@@ -21,7 +21,7 @@ public class CurrentDetails extends JDialog implements IDialogView {
   private JButton buttonOK;
   private JButton buttonCancel;
   private JTextPane textPane1;
-  private final List<String> res;
+  private List<String> res;
 
   public CurrentDetails() {
     setContentPane(contentPane);
@@ -57,11 +57,15 @@ public class CurrentDetails extends JDialog implements IDialogView {
   }
 
   private void onCancel() {
+    this.res = null;
     dispose();
   }
 
   @Override
   public List<String> getResults() {
-    return new ArrayList<>(this.res);
+    if (this.res != null) {
+      return new ArrayList<>(this.res);
+    }
+    return null;
   }
 }
