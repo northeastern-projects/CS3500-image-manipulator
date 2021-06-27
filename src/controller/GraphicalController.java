@@ -20,12 +20,25 @@ import layermodel.ILayer;
 import layermodel.Layer;
 import view.IGraphicalView;
 
+/**
+ * This class represents a visual rendering of an Image Processing server. It implements IController
+ * and ActionListener in order to create a GUI version of an ILayer model. This class takes in an
+ * IGraphical view and an ILayer model and delegates to each based on what the user does when main
+ * is running. This class has a method that starts the controller, go, and an actionPerformed
+ * method that refreshes the GUI each time a button is pushed or input is given.
+ */
 public class GraphicalController implements IController, ActionListener {
 
   private final IFileController fileController;
   private final IGraphicalView view;
   private ILayer model;
 
+  /**
+   * Creates a GraphicalController object with a view and model.
+   *
+   * @param view IGraphicalView obj
+   * @param model ILayer obj
+   */
   public GraphicalController(IGraphicalView view, ILayer model) {
     this.fileController = new FileController();
     this.view = view;

@@ -18,6 +18,12 @@ public class DownScale implements IModifier {
   private int width;
   private int height;
 
+  /**
+   * Creates a Downscale obj with a width and height.
+   *
+   * @param width  int
+   * @param height int
+   */
   public DownScale(int width, int height) {
     this.width = width;
     this.height = height;
