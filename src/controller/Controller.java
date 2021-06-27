@@ -65,7 +65,7 @@ public class Controller implements IController {
           if (modifier != null) {
             if (components[1].equalsIgnoreCase("downscale")) {
               try {
-                model.alterLayer(modifier, Integer.valueOf(components[2]), Integer.valueOf(components[3]));
+                model.alterLayer(modifier, Integer.parseInt(components[2]), Integer.parseInt(components[3]));
               } catch (IllegalArgumentException e) {
                 this.view.displayOutput(e.getMessage() + System.lineSeparator());
               }
@@ -210,7 +210,7 @@ public class Controller implements IController {
         return new Greyscale();
       case "mosaic":
         try {
-          int seed = Integer.valueOf(args[2]);
+          int seed = Integer.parseInt(args[2]);
           return new Mosaic(seed);
         } catch (NumberFormatException e) {
           this.view.displayOutput("Mosaic requires an integer input.\n");
@@ -218,8 +218,8 @@ public class Controller implements IController {
         }
       case "downscale":
         try {
-          int width = Integer.valueOf(args[2]);
-          int height = Integer.valueOf(args[3]);
+          int width = Integer.parseInt(args[2]);
+          int height = Integer.parseInt(args[3]);
           return new DownScale(width, height);
         } catch (NumberFormatException e) {
           this.view.displayOutput("Downscale requires integers for width and height.\n");

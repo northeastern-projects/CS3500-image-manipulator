@@ -13,7 +13,7 @@ import java.util.List;
  * the ability to apply an {@link IModifier} to a layer, and the ability to get the properties
  * of a layer.
  */
-public interface ILayer {
+public interface ILayer extends IROLayer {
 
   /**
    * Adds an image as a layer to this ILayer.
@@ -22,15 +22,6 @@ public interface ILayer {
    * @throws IllegalArgumentException if the image properties do not match those of the layers
    */
   void addLayer(IImage image) throws IllegalArgumentException;
-
-  /**
-   * returns the IImage of the layer corresponding to the index.
-   *
-   * @param index that corresponds to the layer
-   * @return an IImage of the layer
-   * @throws IllegalArgumentException if index is out of bounds
-   */
-  IImage getLayer(int index) throws IllegalArgumentException;
 
   /**
    * Blends all visible IImages.
@@ -48,27 +39,12 @@ public interface ILayer {
   void setCurrent(int index) throws IllegalArgumentException;
 
   /**
-   * Produces the IImage at the current index.
-   *
-   * @return the current IImage
-   * @throws IllegalArgumentException if index is out of bounds
-   */
-  IImage getCurrent() throws IllegalArgumentException;
-
-  /**
    * Sets the layer at the index to invisible.
    *
    * @param index corresponds to the layer than one wants to be invisible
    * @throws IllegalArgumentException if index is out of bounds
    */
   void toggleVisibility(int index) throws IllegalArgumentException;
-
-  /**
-   * An observer for all visible images in this ILayer.
-   *
-   * @return A list of IImage
-   */
-  List<IImage> getVisible();
 
   /**
    * Applies the IModifier to the current layer.
