@@ -24,7 +24,7 @@ public class ToggleDetails extends JDialog implements IDialogView {
   private JButton buttonOK;
   private JButton buttonCancel;
   private JTextPane textPane1;
-  private List<String> res;
+  private final List<String> res;
 
   public ToggleDetails() {
     setContentPane(contentPane);
@@ -48,6 +48,10 @@ public class ToggleDetails extends JDialog implements IDialogView {
     // call onCancel() on ESCAPE
     contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
         JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+    pack();
+    setLocationRelativeTo(null);
+    setVisible(true);
   }
 
   private void onOK() {

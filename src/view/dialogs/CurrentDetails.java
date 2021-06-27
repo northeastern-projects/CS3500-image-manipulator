@@ -21,7 +21,7 @@ public class CurrentDetails extends JDialog implements IDialogView {
   private JButton buttonOK;
   private JButton buttonCancel;
   private JTextPane textPane1;
-  private List<String> res;
+  private final List<String> res;
 
   public CurrentDetails() {
     setContentPane(contentPane);

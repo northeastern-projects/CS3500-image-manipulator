@@ -14,7 +14,6 @@ import filter.Mosaic;
 import filter.Sepia;
 import filter.Sharpen;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import layermodel.ILayer;
@@ -100,16 +99,16 @@ public class GraphicalController implements IController, ActionListener {
   }
 
   private void toggleVisHandler() {
-    List<String> res = this.view.dialogHandler("downscale");
+    List<String> res = this.view.dialogHandler("toggle");
 
     if (!res.get(0).equals("")) {
       String idx = res.get(0);
       if (this.isNumeric(idx)) {
         int pIdx = Integer.parseInt(idx);
-        if (this.model.getProps().get(0) > pIdx || pIdx < 0) {
-          this.model.toggleVisibility(pIdx);
-        } else {
+        if (this.model.getProps().get(0) < pIdx || pIdx <= 0) {
           this.view.alert("That index is out of bounds!");
+        } else {
+          this.model.toggleVisibility(pIdx);
         }
       } else {
         this.view.alert("The index must be a number");
@@ -126,10 +125,10 @@ public class GraphicalController implements IController, ActionListener {
       String idx = res.get(0);
       if (this.isNumeric(idx)) {
         int pIdx = Integer.parseInt(idx);
-        if (this.model.getProps().get(0) > pIdx || pIdx < 0) {
-          this.model.setCurrent(pIdx);
-        } else {
+        if (this.model.getProps().get(0) < pIdx || pIdx <= 0) {
           this.view.alert("That index is out of bounds!");
+        } else {
+          this.model.setCurrent(pIdx);
         }
       } else {
         this.view.alert("The index must be a number");
@@ -140,11 +139,24 @@ public class GraphicalController implements IController, ActionListener {
   }
 
   private void saveHandler() {
-    this.view.dialogHandler("save");
+    List<String> res = this.view.dialogHandler("save");
+    String filePath = res.get(0);
+    try {
+      this.fileController.writeTextOrPPM(filePath, "txt", this.model.toString());
+    } catch (IOException e) {
+      this.view.alert("Could not save state!");
+    }
   }
 
   private void exportHandler() {
-    this.view.dialogHandler("export");
+    List<String> res = this.view.dialogHandler("export");
+    String filePath = res.get(0);
+    String fileExt = res.get(1);
+    try {
+      this.fileController.writeImage(filePath, fileExt, this.model.getCurrentVisible());
+    } catch (IOException e) {
+      this.view.alert("Error exporting image!");
+    }
   }
 
   @Override
@@ -177,7 +189,7 @@ public class GraphicalController implements IController, ActionListener {
           case "Toggle Visibility":
             this.toggleVisHandler();
             break;
-          case "Set":
+          case "Set Current":
             this.setCurrentHandler();
             break;
           case "Save":
@@ -186,10 +198,11 @@ public class GraphicalController implements IController, ActionListener {
           case "Export":
             this.exportHandler();
             break;
-          case "Blend":
+          case "Blend All Layers":
             IImage blended = this.model.blend();
             this.model = new Layer(new ArrayList<>(Collections.singletonList(blended)), blended.getProps());
             this.view.setModel(this.model); //they loose sync otherwise
+            break;
           default:
             throw new IllegalStateException("Reached a point which should absolutely not have "
                 + "been reached");

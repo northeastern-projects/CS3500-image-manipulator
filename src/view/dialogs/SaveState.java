@@ -20,7 +20,7 @@ import view.IDialogView;
 public class SaveState extends JDialog implements IDialogView {
 
   private JPanel contentPane;
-  List<String> res;
+  private final List<String> res;
 
   public SaveState() {
     JFileChooser fileChooser = new JFileChooser();

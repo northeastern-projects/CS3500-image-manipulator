@@ -13,7 +13,7 @@ import view.IDialogView;
 public class ExportImage extends JDialog implements IDialogView {
 
   private JPanel contentPane;
-  List<String> res;
+  private final List<String> res;
 
   public ExportImage() {
     JFileChooser fileChooser = new JFileChooser();
@@ -26,13 +26,16 @@ public class ExportImage extends JDialog implements IDialogView {
     contentPane.add(fileChooser);
     fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
     fileChooser.setAcceptAllFileFilterUsed(false);
-    fileChooser.setFileFilter(new FileNameExtensionFilter("Image", "jpg", "png", "ppm",
-        "jpeg"));
+    fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("png", "png"));
+    fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("jpg", "jpg"));
+    fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("ppm", "ppm"));
+    fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("jpeg", "jpeg"));
     int result = fileChooser.showSaveDialog(this.contentPane);
 
     if (result == JFileChooser.APPROVE_OPTION) {
       System.out.println("File saved...");
       res.add(fileChooser.getSelectedFile().getAbsolutePath());
+      res.add(fileChooser.getFileFilter().getDescription());
     } else if (result == JFileChooser.CANCEL_OPTION) {
       System.out.println("State not saved!");
     }
