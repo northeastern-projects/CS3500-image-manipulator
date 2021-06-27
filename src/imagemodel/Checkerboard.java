@@ -1,6 +1,7 @@
 package imagemodel;
 
 import filter.IModifier;
+
 import java.util.ArrayList;
 import java.util.List;
 

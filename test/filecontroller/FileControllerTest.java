@@ -1,15 +1,12 @@
 package filecontroller;
 
-import imagemodel.*;
+import imagemodel.Image;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * This class allows for the testing of the FileController which reads and parses, and writes image
@@ -37,7 +34,7 @@ public class FileControllerTest {
   @Test(expected = IllegalArgumentException.class)
   public void testWriteImageWithUnknownExtension() throws IOException {
     ut.writeImage("cow", "doc",
-            new Image(new ArrayList<>(), 12,13,255));
+            new Image(new ArrayList<>(), 12, 13, 255));
   }
 
 }

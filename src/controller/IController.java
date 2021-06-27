@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
@@ -14,7 +13,6 @@ public interface IController {
    *
    * @throws IOException when input or output fail
    */
-
   void go() throws IOException;
 
 }

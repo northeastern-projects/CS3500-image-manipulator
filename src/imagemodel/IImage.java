@@ -51,11 +51,14 @@ public interface IImage {
   BufferedImage createImage();
 
   /**
-   * Changes the canvas size of this IImage.
+   * Changes the canvas size of this IImage if width and height are less than or equals to current
+   * width and height.
    *
    * @param width  int
    * @param height int
+   * @throws IllegalArgumentException if width and height are greater than the current width and
+   *                                  height.
    */
-  void changeCanvasSize(int width, int height);
+  void changeCanvasSize(int width, int height) throws IllegalArgumentException;
 
 }

@@ -63,10 +63,18 @@ public class Controller implements IController {
         case "apply":
           IModifier modifier = this.getModifier(components);
           if (modifier != null) {
-            try {
-              model.applyToCurrent(modifier);
-            } catch (IllegalArgumentException e) {
-              this.view.displayOutput(e.getMessage() + System.lineSeparator());
+            if (components[1].equalsIgnoreCase("downscale")) {
+              try {
+                model.alterLayer(modifier, Integer.valueOf(components[2]), Integer.valueOf(components[3]));
+              } catch (IllegalArgumentException e) {
+                this.view.displayOutput(e.getMessage() + System.lineSeparator());
+              }
+            } else {
+              try {
+                model.applyToCurrent(modifier);
+              } catch (IllegalArgumentException e) {
+                this.view.displayOutput(e.getMessage() + System.lineSeparator());
+              }
             }
           }
           break;
@@ -204,8 +212,7 @@ public class Controller implements IController {
         try {
           int seed = Integer.valueOf(args[2]);
           return new Mosaic(seed);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
           this.view.displayOutput("Mosaic requires an integer input.\n");
           return null;
         }
@@ -213,9 +220,8 @@ public class Controller implements IController {
         try {
           int width = Integer.valueOf(args[2]);
           int height = Integer.valueOf(args[3]);
-          return new DownScaling(width, height);
-        }
-        catch (NumberFormatException e) {
+          return new DownScale(width, height);
+        } catch (NumberFormatException e) {
           this.view.displayOutput("Downscale requires integers for width and height.\n");
           return null;
         }

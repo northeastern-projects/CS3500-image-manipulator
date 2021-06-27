@@ -21,7 +21,7 @@ public class TextView implements ITextView {
    * @param ap Appendable object.
    * @throws IllegalArgumentException if arguments are null.
    */
-  public TextView(Readable rd, Appendable ap) throws IllegalArgumentException{
+  public TextView(Readable rd, Appendable ap) throws IllegalArgumentException {
     if (rd == null || ap == null) {
       throw new IllegalArgumentException("Arguments are invalid.");
     }

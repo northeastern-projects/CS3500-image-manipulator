@@ -7,7 +7,6 @@ import filter.Sharpen;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -176,7 +175,7 @@ public class ImageTest {
   public void testGetPixel() {
     assertEquals("100 100 100  ", img.getPixel(0, 0).toString());
     img.applyFilter(new Blur());
-    assertEquals("56 56 56  ", img.getPixel(0,0).toString());
+    assertEquals("56 56 56  ", img.getPixel(0, 0).toString());
   }
 
   @Test
@@ -188,7 +187,7 @@ public class ImageTest {
   public void testChangeCanvasSize() {
     assertEquals("3", img.getProps().get(0).toString());
     assertEquals("3", img.getProps().get(1).toString());
-    img.changeCanvasSize(4,5);
+    img.changeCanvasSize(4, 5);
     assertEquals("4", img.getProps().get(0).toString());
     assertEquals("5", img.getProps().get(1).toString());
   }

@@ -1,12 +1,13 @@
 package layermodel;
 
+import filter.IModifier;
 import imagemodel.IImage;
 import imagemodel.IPixel;
 import imagemodel.Image;
 import imagemodel.Pixel;
-import filter.IModifier;
 
 import java.util.*;
+
 
 /**
  * This class represents an implementation of {@link ILayer}. It takes in a List of {@link IImage},
@@ -52,7 +53,7 @@ public class Layer implements ILayer {
    * @param height of the Layer
    * @param depth  the maximum color value of the Layer
    * @throws IllegalArgumentException when list of images is null or has an image with diff
-   * properties
+   *                                  properties
    */
   public Layer(List<IImage> images, int width, int height, int depth) {
     if (images == null || !this.isValidImages(images)) {
@@ -191,6 +192,22 @@ public class Layer implements ILayer {
     } else {
       this.layers.get(current).applyFilter(modifier);
     }
+  }
+
+  @Override
+  public void alterLayer(IModifier modifier, int width, int height) {
+    if (width > this.width || height > this.height) {
+      throw new IllegalArgumentException("\"Width and height must be less than current width "
+              + "and height.");
+    }
+    if (layers.size() == 0) {
+      throw new IllegalArgumentException("No image to apply filter to.");
+    } else {
+      for (IImage img : this.layers)
+        img.applyFilter(modifier);
+    }
+    this.width = width;
+    this.height = height;
   }
 
   @Override

@@ -104,21 +104,21 @@ public class LayerTest {
             "56 56 56  75 75 75  56 56 56  75 75 75  100 100 100  "
             + "75 75 75  56 56 56  75 75 75  56 56 56  \n";
     blurredLayer = "LAYER\n"
-        + "2\n"
-        + "3\n"
-        + "3\n"
-        + "255\n"
-        + "true\n"
-        + "3\n"
-        + "3\n"
-        + "255\n"
-        + "56 56 56  75 75 75  56 56 56  75 75 75  100 100 100  75 75 75  56 56 56  75 75 75  56 56 56  \n"
-        + "false\n"
-        + "3\n"
+            + "2\n"
             + "3\n"
-        + "255\n"
-        + "0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100"
-        + "  0 100 100  \n";
+            + "3\n"
+            + "255\n"
+            + "true\n"
+            + "3\n"
+            + "3\n"
+            + "255\n"
+            + "56 56 56  75 75 75  56 56 56  75 75 75  100 100 100  75 75 75  56 56 56  75 75 75  56 56 56  \n"
+            + "false\n"
+            + "3\n"
+            + "3\n"
+            + "255\n"
+            + "0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100"
+            + "  0 100 100  \n";
     layers = "[3\n"
             + "3\n"
             + "255\n"
@@ -143,7 +143,7 @@ public class LayerTest {
     new Layer(invalidPropsLayers, width, height, depth);
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void addLayerWithDiffProperties() {
     layer.addLayer(diffPropsImage);
   }
@@ -157,7 +157,7 @@ public class LayerTest {
     assertEquals("3", props.get(0).toString());
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testGetLayerOutOfBounds() {
     layer.getLayer(20);
   }
@@ -193,6 +193,7 @@ public class LayerTest {
   public void testSetCurrentOutofBounds() {
     layer.setCurrent(25);
   }
+
   @Test
   public void testSetCurrent() {
     assertEquals("0", layer.getProps().get(4).toString());
@@ -204,6 +205,7 @@ public class LayerTest {
   public void testSetInvisibilityOutofBounds() {
     layer.toggleVisibility(25);
   }
+
   @Test
   public void testSetInvisibility() {
     assertEquals(2, layer.getVisible().size());

@@ -40,7 +40,8 @@ public class ControllerTest {
     ap = new StringBuffer();
     try {
       img = fileController.readImage("res/flower.ppm");
-    } catch (IOException e) {}
+    } catch (IOException e) {
+    }
     imgs = new ArrayList<>(Arrays.asList(img));
     model = new Layer(imgs, img.getProps());
 

@@ -65,6 +65,7 @@ public interface ILayer {
 
   /**
    * An observer for all visible images in this ILayer.
+   *
    * @return A list of IImage
    */
   List<IImage> getVisible();
@@ -75,6 +76,13 @@ public interface ILayer {
    * @param modifier that one wants to apply to the layer
    */
   void applyToCurrent(IModifier modifier);
+
+  /**
+   * Applies the IModifier to all layers and changes canvas size.
+   *
+   * @param modifier that one wants to apply to all layers
+   */
+  void alterLayer(IModifier modifier, int width, int height);
 
   /**
    * Creates a list of the number of layers, width, height, depth, and current index of the ILayer.
