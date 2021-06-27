@@ -8,12 +8,19 @@ import layermodel.ILayer;
 import layermodel.Layer;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.*;
+import java.util.Locale;
+import java.util.Scanner;
+import java.io.FileOutputStream;
 
 
 /**

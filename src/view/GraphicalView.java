@@ -21,6 +21,12 @@ import view.dialogs.MosaicDetails;
 import view.dialogs.SaveState;
 import view.dialogs.ToggleDetails;
 
+/**
+ * This class represents a GUI view of an Image processing program. This class creates a view that
+ * shows the buttons, panels, and a scroll pane. This class also shows error messages. This class
+ * takes in a title and a IROLayer which is a read only layer. This allows the view to get
+ * components of the layer images without being about to edit it in any way.
+ */
 public class GraphicalView implements IGraphicalView {
 
   private JPanel panel1;
@@ -44,6 +50,13 @@ public class GraphicalView implements IGraphicalView {
 
   private IROLayer roLayer;
 
+  /**
+   * Creates a GraphicalView object.
+   *
+   * @param title   String that appears at the top of the GUI frame
+   * @param roLayer Read only layer object which will allow the view to access observers for the
+   *                model.
+   */
   public GraphicalView(String title, IROLayer roLayer) {
     this.initialise(title);
     this.roLayer = roLayer;

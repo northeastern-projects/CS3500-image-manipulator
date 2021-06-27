@@ -14,7 +14,6 @@ import java.util.ArrayList;
  */
 public class FileTextControllerTest {
   FileController ut;
-  String flower;
 
   @Before
   public void setUp() {

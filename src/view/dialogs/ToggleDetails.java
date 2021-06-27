@@ -1,8 +1,5 @@
 package view.dialogs;
 
-import filecontroller.IFileController;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -11,13 +8,17 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import view.IDialogView;
 
+
+/**
+ * This class is the GUI representation of what happens when the toggle button is pushed. This class
+ * will create a window where the user will input the image index (from 1) that it wishes to either
+ * turn visible or invisible. This class extends JDialog and implements IDialogView.
+ */
 public class ToggleDetails extends JDialog implements IDialogView {
 
   private JPanel contentPane;
@@ -26,6 +27,9 @@ public class ToggleDetails extends JDialog implements IDialogView {
   private JTextPane textPane1;
   private List<String> res;
 
+  /**
+   * Creates a ToggleDetails object which will render the window that asks for the index
+   */
   public ToggleDetails() {
     setContentPane(contentPane);
     setModal(true);
@@ -47,7 +51,7 @@ public class ToggleDetails extends JDialog implements IDialogView {
 
     // call onCancel() on ESCAPE
     contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-        JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+            JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     pack();
     setLocationRelativeTo(null);

@@ -1,7 +1,5 @@
 package view.dialogs;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -16,6 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import view.IDialogView;
 
+/**
+ * This class represents the GUI representation of the Mosaic. When the Mosaic button is pushed,
+ * this class essentially should create a pop up panel that asks the user to input the number of
+ * seeds to create the mosaic image.This will be sent to get results in order to apply the mosaic
+ * image. This class extends JDialog and implements IDialogView.
+ */
 public class MosaicDetails extends JDialog implements IDialogView {
 
   private JPanel contentPane;
@@ -25,6 +29,10 @@ public class MosaicDetails extends JDialog implements IDialogView {
   private JTextArea enterNumberOfSeedsTextArea;
   private List<String> res;
 
+  /**
+   * Creates a MosaicDetails object which will render the window where the user inputs the number
+   * of seeds.
+   */
   public MosaicDetails() {
     setContentPane(contentPane);
     setModal(true);
@@ -46,7 +54,7 @@ public class MosaicDetails extends JDialog implements IDialogView {
 
     // call onCancel() on ESCAPE
     contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-        JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+            JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     pack();
     setLocationRelativeTo(null);

@@ -50,6 +50,11 @@ public interface IROLayer {
    */
   boolean hasCurrent();
 
+  /**
+   * Returns the image topmost visible image.
+   *
+   * @return IImage
+   */
   IImage getCurrentVisible();
 
 }

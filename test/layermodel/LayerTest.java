@@ -1,6 +1,7 @@
 package layermodel;
 
 import filter.Blur;
+import filter.DownScale;
 import imagemodel.IImage;
 import imagemodel.IPixel;
 import imagemodel.Image;
@@ -13,6 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This class tests the LayerModel class and determine if it was implemented correctly.
@@ -36,7 +39,9 @@ public class LayerTest {
   ILayer layer;
   String blurredImage;
   String blurredLayer;
+  String layersToString;
   String layers;
+  String layerDownScaled;
 
   @Before
   public void setUp() {
@@ -122,14 +127,48 @@ public class LayerTest {
     layers = "[3\n"
             + "3\n"
             + "255\n"
+            + "100 100 100  100 100 100  100 100 100  100 100 100  100 100 100 "
+            + " 100 100 100  100 100 100  100 100 100  100 100 100  \n"
+            + ", 3\n"
+            + "3\n"
+            + "255\n"
             + "0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100 "
             + " 0 100 100  0 100 100  0 100 100  \n"
-            + ", 3\n"
+            + "]";
+
+    layersToString = "LAYER\n"
+            + "2\n"
+            + "3\n"
+            + "3\n"
+            + "255\n"
+            + "true\n"
+            + "3\n"
             + "3\n"
             + "255\n"
             + "100 100 100  100 100 100  100 100 100  100 100 100  100 100 100 "
             + " 100 100 100  100 100 100  100 100 100  100 100 100  \n"
-            + "]";
+            + "true\n"
+            + "3\n"
+            + "3\n"
+            + "255\n"
+            + "0 100 100  0 100 100  0 100 100  0 100 100  0 100 100  0 100 100 "
+            + " 0 100 100  0 100 100  0 100 100  \n";
+
+    layerDownScaled = "LAYER\n"
+            + "2\n"
+            + "2\n"
+            + "2\n"
+            + "255\n"
+            + "true\n"
+            + "2\n"
+            + "2\n"
+            + "255\n"
+            + "100 100 100  100 100 100  100 100 100  100 100 100  \n"
+            + "true\n"
+            + "2\n"
+            + "2\n"
+            + "255\n"
+            + "0 100 100  0 100 100  0 100 100  0 100 100  \n";
 
   }
 
@@ -190,7 +229,7 @@ public class LayerTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testSetCurrentOutofBounds() {
+  public void testSetCurrentOutOfBounds() {
     layer.setCurrent(25);
   }
 
@@ -202,12 +241,12 @@ public class LayerTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testSetInvisibilityOutofBounds() {
+  public void testToggleVisibilityOutOfBounds() {
     layer.toggleVisibility(25);
   }
 
   @Test
-  public void testSetInvisibility() {
+  public void testToggleVisibility() {
     assertEquals(2, layer.getVisible().size());
     layer.toggleVisibility(1);
     assertEquals(1, layer.getVisible().size());
@@ -243,5 +282,48 @@ public class LayerTest {
     layer.setCurrent(2);
     props = new ArrayList<>(Arrays.asList(2, 3, 3, 255, 1));
     assertEquals(props.toString(), layer.getProps().toString());
+  }
+
+  @Test
+  public void testHasCurrent() {
+    ILayer layer = new Layer();
+    assertFalse(layer.hasCurrent());
+    layer.addLayer(img);
+    assertTrue(layer.hasCurrent());
+  }
+
+  @Test
+  public void testGetCurrentVisible() {
+    ILayer layer = new Layer();
+    assertEquals(null, layer.getCurrentVisible());
+    layer.addLayer(img);
+    assertEquals(img, layer.getCurrentVisible());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testAlterLayerInvalidWidth() {
+    layer.alterLayer(new DownScale(4, 3), 4, 3);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testAlterLayerInvalidHeight() {
+    layer.alterLayer(new DownScale(3, 5), 3, 5);
+  }
+
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testAlterLayerOnNoImage() {
+    ILayer layer = new Layer();
+    layer.alterLayer(new DownScale(2, 2), 2, 2);
+  }
+
+  @Test
+  public void testAlterLayer() {
+    assertEquals("[2, 3, 3, 255, 0]", layer.getProps().toString());
+    assertEquals(layersToString, layer.toString());
+    layer.alterLayer(new DownScale(2, 2), 2, 2);
+    System.out.println(layer);
+    assertEquals("[2, 2, 2, 255, 0]", layer.getProps().toString());
+    assertEquals(layerDownScaled, layer.toString());
   }
 }
