@@ -28,7 +28,7 @@ public class ToggleDetails extends JDialog implements IDialogView {
   private List<String> res;
 
   /**
-   * Creates a ToggleDetails object which will render the window that asks for the index
+   * Creates a ToggleDetails object which will render the window that asks for the index.
    */
   public ToggleDetails() {
     setContentPane(contentPane);
@@ -50,7 +50,8 @@ public class ToggleDetails extends JDialog implements IDialogView {
     });
 
     // call onCancel() on ESCAPE
-    contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+    contentPane.registerKeyboardAction(e -> onCancel(),
+            KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
             JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     pack();

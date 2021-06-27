@@ -5,8 +5,12 @@ import imagemodel.IImage;
 import imagemodel.IPixel;
 import imagemodel.Image;
 import imagemodel.Pixel;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -255,8 +259,9 @@ public class Layer implements ILayer {
     if (layers.size() == 0) {
       throw new IllegalArgumentException("No image to apply filter to.");
     } else {
-      for (IImage img : this.layers)
+      for (IImage img : this.layers) {
         img.applyFilter(modifier);
+      }
     }
     this.width = width;
     this.height = height;

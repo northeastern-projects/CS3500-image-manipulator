@@ -50,7 +50,7 @@ public interface IPixel {
   List<Integer> getCoords();
 
   /**
-   * Gets the color as (r, g, b) of the given pixel
+   * Gets the color as (r, g, b) of the given pixel.
    *
    * @return the color.
    */

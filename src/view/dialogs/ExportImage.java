@@ -44,9 +44,7 @@ public class ExportImage extends JDialog implements IDialogView {
     if (result == JFileChooser.APPROVE_OPTION) {
       res.add(fileChooser.getSelectedFile().getAbsolutePath());
       res.add(fileChooser.getFileFilter().getDescription());
-    } else if (result == JFileChooser.CANCEL_OPTION) {
     }
-
   }
 
 

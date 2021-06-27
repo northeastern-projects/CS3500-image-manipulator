@@ -2,12 +2,17 @@ package controller;
 
 import filecontroller.FileController;
 import filecontroller.IFileController;
-import filter.*;
-import layermodel.ILayer;
-import view.ITextView;
-
+import filter.Blur;
+import filter.DownScale;
+import filter.Greyscale;
+import filter.IModifier;
+import filter.Mosaic;
+import filter.Sepia;
+import filter.Sharpen;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import layermodel.ILayer;
+import view.ITextView;
 
 /**
  * This class represents an implementation of IController that allows delegation to the view and
@@ -39,7 +44,7 @@ public class TextController implements IController {
   }
 
   @Override
-  public void go() throws IOException {
+  public void start() throws IOException {
     while (this.running) {
       this.handleInput(this.view.getInput());
     }
@@ -65,7 +70,8 @@ public class TextController implements IController {
           if (modifier != null) {
             if (components[1].equalsIgnoreCase("downscale")) {
               try {
-                model.alterLayer(modifier, Integer.parseInt(components[2]), Integer.parseInt(components[3]));
+                model.alterLayer(modifier, Integer.parseInt(components[2]),
+                        Integer.parseInt(components[3]));
               } catch (IllegalArgumentException e) {
                 this.view.displayOutput(e.getMessage() + System.lineSeparator());
               }
@@ -154,20 +160,18 @@ public class TextController implements IController {
     } else {
       String[] subcomps = args[3].split("\\.");
       if (subcomps.length < 2) {
-        this.view.displayOutput("Invalid file extension on " + args[3] + "." + System.lineSeparator());
+        this.view.displayOutput("Invalid file extension on " + args[3] + "."
+                + System.lineSeparator());
       } else {
-        switch (args[2]) {
-          case "current":
-            this.fileController.writeImage(subcomps[0], subcomps[1], this.model.getCurrent());
-            break;
-          default:
-            try {
-              this.fileController.writeImage(subcomps[0], subcomps[1],
-                      this.model.getLayer(Integer.parseInt(args[2])));
-            } catch (IllegalArgumentException e) {
-              this.view.displayOutput("Layer at this index does not exist.\n");
-            }
-
+        if ("current".equals(args[2])) {
+          this.fileController.writeImage(subcomps[0], subcomps[1], this.model.getCurrent());
+        } else {
+          try {
+            this.fileController.writeImage(subcomps[0], subcomps[1],
+                    this.model.getLayer(Integer.parseInt(args[2])));
+          } catch (IllegalArgumentException e) {
+            this.view.displayOutput("Layer at this index does not exist.\n");
+          }
         }
       }
     }

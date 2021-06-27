@@ -2,12 +2,13 @@ package controller;
 
 import filecontroller.FileController;
 import filecontroller.IFileController;
-import filter.*;
+import filter.Blur;
+import filter.DownScale;
+import filter.Greyscale;
+import filter.Mosaic;
+import filter.Sepia;
+import filter.Sharpen;
 import imagemodel.IImage;
-import layermodel.ILayer;
-import layermodel.Layer;
-import view.IGraphicalView;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -15,6 +16,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import layermodel.ILayer;
+import layermodel.Layer;
+import view.IGraphicalView;
 
 /**
  * This class represents a visual rendering of an Image Processing server. It implements IController
@@ -42,7 +46,7 @@ public class GraphicalController implements IController, ActionListener {
   }
 
   @Override
-  public void go() {
+  public void start() {
     this.view.setListener(this);
     this.view.display();
   }

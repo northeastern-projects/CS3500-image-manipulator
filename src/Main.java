@@ -42,16 +42,16 @@ public class Main {
       }
       view = new TextView(new FileReader(args[1]), new StringBuffer());
       controller = new TextController(view, model);
-      controller.go();
+      controller.start();
     } else if (args[0].equalsIgnoreCase("-text")) {
       view = new TextView(new InputStreamReader(System.in), System.out);
       controller = new TextController(view, model);
-      controller.go();
+      controller.start();
     } else if (args[0].equalsIgnoreCase("-interactive")) {
       UIManager.setLookAndFeel(new NimbusLookAndFeel());
       view2 = new GraphicalView("Image manipulator!", model);
       controller = new GraphicalController(view2, model);
-      controller.go();
+      controller.start();
     } else {
       throw new IllegalArgumentException("Please enter \n'-script' followed by the txt file name "
               + "for file-based scripting or \n '-text' for user input or \n '-interactive' for "
