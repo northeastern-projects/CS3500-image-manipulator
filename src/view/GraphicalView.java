@@ -12,9 +12,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import layermodel.IROLayer;
 import view.dialogs.AlertBox;
+import view.dialogs.CurrentDetails;
 import view.dialogs.DownscaleDetails;
+import view.dialogs.ExportImage;
 import view.dialogs.LoadFile;
 import view.dialogs.MosaicDetails;
+import view.dialogs.SaveState;
+import view.dialogs.ToggleDetails;
 
 public class GraphicalView implements IGraphicalView {
 
@@ -28,16 +32,16 @@ public class GraphicalView implements IGraphicalView {
   private JButton loadButton;
   private JButton saveButton;
   private JButton exportButton;
-  private JScrollPane imageDisplay;
   private JButton setCurrentButton;
   private JButton toggleVisibilityButton;
   private JButton blendAllLayersButton;
   private JTextField layerToolsTextField;
   private JTextArea imageModifiersTextArea;
+  private JScrollPane imageDisplay;
   private JFrame frame;
   private ActionListener listener;
 
-  private final IROLayer roLayer;
+  private IROLayer roLayer;
 
   public GraphicalView(String title, IROLayer roLayer) {
     this.initialise(title);
@@ -50,12 +54,12 @@ public class GraphicalView implements IGraphicalView {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setResizable(false);
     frame.pack();
+    frame.setLocationRelativeTo(null);
   }
 
   @Override
   public void display() {
-    frame.setLocationRelativeTo(null);
-    frame.setVisible(true);
+    this.frame.setVisible(true);
   }
 
   @Override
@@ -65,35 +69,34 @@ public class GraphicalView implements IGraphicalView {
 
   @Override
   public void alert(String message) {
-    AlertBox dialog = new AlertBox(message);
-    dialog.pack();
-    dialog.setLocationRelativeTo(null);
-    dialog.setVisible(true);
+    new AlertBox(message);
   }
 
   @Override
-  public List<String> mosaicDetailsPane() {
-    MosaicDetails dialog = new MosaicDetails();
-    dialog.pack();
-    dialog.setLocationRelativeTo(null);
-    dialog.setVisible(true);
-    return dialog.getResults();
+  public void setModel(IROLayer model) {
+    this.roLayer = model;
   }
 
   @Override
-  public List<String> downscaleDetailsPane() {
-    DownscaleDetails dialog = new DownscaleDetails();
-    dialog.pack();
-    dialog.setLocationRelativeTo(null);
-    dialog.setVisible(true);
-    return dialog.getResults();
-  }
-
-  @Override
-  public List<String> loadFileDialog() {
-    LoadFile dialog = new LoadFile();
-    dialog.pack();
-    return dialog.getResults();
+  public List<String> dialogHandler(String identifier) {
+    switch (identifier) {
+      case "mosaic":
+        return new MosaicDetails().getResults();
+      case "downscale":
+        return new DownscaleDetails().getResults();
+      case "toggle":
+        return new ToggleDetails().getResults();
+      case "set":
+        return new CurrentDetails().getResults();
+      case "load":
+        return new LoadFile().getResults();
+      case "save":
+        return new SaveState().getResults();
+      case "export":
+        return new ExportImage().getResults();
+      default:
+        return null;
+    }
   }
 
   @Override
@@ -112,6 +115,9 @@ public class GraphicalView implements IGraphicalView {
     loadButton.addActionListener(listener);
     saveButton.addActionListener(listener);
     exportButton.addActionListener(listener);
+    setCurrentButton.addActionListener(listener);
+    toggleVisibilityButton.addActionListener(listener);
+    blendAllLayersButton.addActionListener(listener);
   }
 
   private void createUIComponents() {

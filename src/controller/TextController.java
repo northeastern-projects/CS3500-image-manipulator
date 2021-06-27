@@ -14,7 +14,7 @@ import java.io.IOException;
  * model as well as input and output control. This controller allows a models state to be saved
  * as a file as well as reading through an input file to delegate commands.
  */
-public class Controller implements IController {
+public class TextController implements IController {
 
   private final IFileController fileController;
   private final ITextView view;
@@ -28,7 +28,7 @@ public class Controller implements IController {
    * @param model An ILayer object.
    * @throws IllegalArgumentException if arguments are bull
    */
-  public Controller(ITextView view, ILayer model) {
+  public TextController(ITextView view, ILayer model) {
     if (view == null || model == null) {
       throw new IllegalArgumentException("Arguments are null.");
     }

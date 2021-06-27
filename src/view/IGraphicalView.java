@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.ActionListener;
 import java.util.List;
+import layermodel.IROLayer;
 
 public interface IGraphicalView {
 
@@ -11,11 +12,9 @@ public interface IGraphicalView {
 
   void alert(String message);
 
-  List<String> mosaicDetailsPane();
+  void setModel(IROLayer model);
 
-  List<String> downscaleDetailsPane();
-
-  List<String> loadFileDialog();
+  List<String> dialogHandler(String identifier);
 
   void setListener(ActionListener listener);
 
