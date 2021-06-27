@@ -23,7 +23,7 @@ public class MosaicDetails extends JDialog implements IDialogView {
   private JButton buttonCancel;
   private JTextField asTextField;
   private JTextArea enterNumberOfSeedsTextArea;
-  private final List<String> res;
+  private List<String> res;
 
   public MosaicDetails() {
     setContentPane(contentPane);
@@ -59,11 +59,15 @@ public class MosaicDetails extends JDialog implements IDialogView {
   }
 
   private void onCancel() {
+    this.res = null;
     dispose();
   }
 
   @Override
   public List<String> getResults() {
-    return new ArrayList<>(this.res);
+    if (this.res != null) {
+      return new ArrayList<>(this.res);
+    }
+    return null;
   }
 }

@@ -53,19 +53,28 @@ public class GraphicalController implements IController, ActionListener {
 
   private void loadHandler() {
     List<String> res = this.view.dialogHandler("load");
+
+    if (res == null) {
+      return;
+    }
+
     if (res.size() == 2) {
       if (res.get(0).equals("Image")) {
         try {
           this.model.addLayer(this.fileController.readImage(res.get(1)));
         } catch (IOException ioException) {
           this.view.alert("There was an error loading that image");
+          return;
         }
+        this.view.alert("Image loaded successfully!");
       } else {
         try {
           this.model = this.fileController.readState(res.get(1));
         } catch (FileNotFoundException e) {
           this.view.alert("There was an error loading the state");
+          return;
         }
+        this.view.alert("State loaded successfully!");
       }
     }
   }
@@ -82,11 +91,16 @@ public class GraphicalController implements IController, ActionListener {
   private void mosaicHandler() {
     List<String> res = this.view.dialogHandler("mosaic");
 
+    if (res == null) {
+      return;
+    }
+
     if (!res.get(0).equals("")) {
       String numSeed = res.get(0);
 
       if (this.isNumeric(numSeed)) {
         this.model.applyToCurrent(new Mosaic(Integer.parseInt(numSeed)));
+        this.view.alert("Mosaic created successfully!");
       } else {
         this.view.alert("Please only enter a number");
       }
@@ -98,11 +112,16 @@ public class GraphicalController implements IController, ActionListener {
   private void downscaleHandler() {
     List<String> res = this.view.dialogHandler("downscale");
 
+    if (res == null) {
+      return;
+    }
+
     if (!res.get(0).equals("") && !res.get(1).equals("")) {
       String width = res.get(0);
       String height = res.get(1);
       if (this.isNumeric(width) && this.isNumeric(height)) {
         this.model.applyToCurrent(new DownScale(Integer.parseInt(width), Integer.parseInt(height)));
+        this.view.alert("Image downscaled successfully!");
       } else {
         this.view.alert("Width and height can only be numbers!");
       }
@@ -114,6 +133,10 @@ public class GraphicalController implements IController, ActionListener {
   private void toggleVisHandler() {
     List<String> res = this.view.dialogHandler("toggle");
 
+    if (res == null) {
+      return;
+    }
+
     if (!res.get(0).equals("")) {
       String idx = res.get(0);
       if (this.isNumeric(idx)) {
@@ -122,6 +145,7 @@ public class GraphicalController implements IController, ActionListener {
           this.view.alert("That index is out of bounds!");
         } else {
           this.model.toggleVisibility(pIdx);
+          this.view.alert("Visibility was set");
         }
       } else {
         this.view.alert("The index must be a number");
@@ -134,6 +158,10 @@ public class GraphicalController implements IController, ActionListener {
   private void setCurrentHandler() {
     List<String> res = this.view.dialogHandler("set");
 
+    if (res == null) {
+      return;
+    }
+
     if (!res.get(0).equals("")) {
       String idx = res.get(0);
       if (this.isNumeric(idx)) {
@@ -142,6 +170,7 @@ public class GraphicalController implements IController, ActionListener {
           this.view.alert("That index is out of bounds!");
         } else {
           this.model.setCurrent(pIdx);
+          this.view.alert("Layer " + idx + " is now current");
         }
       } else {
         this.view.alert("The index must be a number");
@@ -153,9 +182,15 @@ public class GraphicalController implements IController, ActionListener {
 
   private void saveHandler() {
     List<String> res = this.view.dialogHandler("save");
+
+    if (res == null) {
+      return;
+    }
+
     String filePath = res.get(0);
     try {
       this.fileController.writeTextOrPPM(filePath, "txt", this.model.toString());
+      this.view.alert("State saved successfully!");
     } catch (IOException e) {
       this.view.alert("Could not save state!");
     }
@@ -163,10 +198,16 @@ public class GraphicalController implements IController, ActionListener {
 
   private void exportHandler() {
     List<String> res = this.view.dialogHandler("export");
+
+    if (res == null) {
+      return;
+    }
+
     String filePath = res.get(0);
     String fileExt = res.get(1);
     try {
       this.fileController.writeImage(filePath, fileExt, this.model.getCurrentVisible());
+      this.view.alert("Image exported successfully!");
     } catch (IOException e) {
       this.view.alert("Error exporting image!");
     }
@@ -183,15 +224,19 @@ public class GraphicalController implements IController, ActionListener {
         switch (command) {
           case "Blur":
             this.model.applyToCurrent(new Blur());
+            this.view.alert("Blur applied successfully!");
             break;
           case "Sepia":
             this.model.applyToCurrent(new Sepia());
+            this.view.alert("Sepia applied successfully!");
             break;
           case "Sharpen":
             this.model.applyToCurrent(new Sharpen());
+            this.view.alert("Sharpen applied successfully!");
             break;
           case "Greyscale":
             this.model.applyToCurrent(new Greyscale());
+            this.view.alert("Greyscale applied successfully!");
             break;
           case "Mosaic":
             this.mosaicHandler();

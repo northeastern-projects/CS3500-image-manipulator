@@ -49,4 +49,16 @@ public class Main {
               + "file-based scripting or enter 'interactive' for user input.\n");
     }
   }
+
+//  public static void main(String[] args) throws UnsupportedLookAndFeelException, IOException {
+//    ITextView view;
+//    IGraphicalView view2;
+//    IController controller;
+//    ILayer model = new Layer();
+//
+//    UIManager.setLookAndFeel(new NimbusLookAndFeel());
+//    view2 = new GraphicalView("Image manipulator!", model);
+//    controller = new GraphicalController(view2, model);
+//    controller.go();
+//  }
 }

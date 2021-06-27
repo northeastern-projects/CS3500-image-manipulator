@@ -26,7 +26,7 @@ public class DownscaleDetails extends JDialog implements IDialogView {
   private JTextArea enterTheWidthOfTextArea;
   private JTextField heightField;
 
-  private final List<String> res;
+  private List<String> res;
 
   public DownscaleDetails() {
     setContentPane(contentPane);
@@ -64,11 +64,15 @@ public class DownscaleDetails extends JDialog implements IDialogView {
   }
 
   private void onCancel() {
+    this.res = null;
     dispose();
   }
 
   @Override
   public List<String> getResults() {
-    return new ArrayList<>(this.res);
+    if (this.res != null) {
+      return new ArrayList<>(this.res);
+    }
+    return null;
   }
 }
