@@ -64,6 +64,7 @@
               </grid>
             </constraints>
             <properties>
+              <editable value="false"/>
               <text value="Enter the height of the new Image"/>
             </properties>
           </component>
@@ -82,6 +83,7 @@
               </grid>
             </constraints>
             <properties>
+              <editable value="false"/>
               <text value="Enter the width of the new Image"/>
             </properties>
           </component>

@@ -11,26 +11,24 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import view.IDialogView;
 
-public class MosaicDetails extends JDialog implements IDialogView {
+public class CurrentDetails extends JDialog implements IDialogView {
 
   private JPanel contentPane;
   private JButton buttonOK;
   private JButton buttonCancel;
-  private JTextField asTextField;
-  private JTextArea enterNumberOfSeedsTextArea;
+  private JTextPane textPane1;
   private List<String> res;
 
-  public MosaicDetails() {
+  public CurrentDetails() {
     setContentPane(contentPane);
     setModal(true);
     setResizable(false);
     getRootPane().setDefaultButton(buttonOK);
-    this.res = new ArrayList<>();
+    res = new ArrayList<>();
 
     buttonOK.addActionListener(e -> onOK());
 
@@ -54,7 +52,7 @@ public class MosaicDetails extends JDialog implements IDialogView {
   }
 
   private void onOK() {
-    res.add(asTextField.getText());
+    res.add(textPane1.getText());
     dispose();
   }
 

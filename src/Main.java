@@ -1,23 +1,13 @@
-import controller.Controller;
 import controller.IController;
 import layermodel.ILayer;
 import layermodel.Layer;
 import controller.GraphicalController;
-import controller.IController;
 import java.io.IOException;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
-import layermodel.ILayer;
-import layermodel.Layer;
 import view.GraphicalView;
 import view.IGraphicalView;
-import view.ITextView;
-import view.TextView;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 /**
  * This class allows a user to create, modify,and save images or print images to the console.

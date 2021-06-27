@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
  * This class tests the Controller class and ensures that it is working as it supposed to in
  * handling input and rendering output.
  */
-public class ControllerTest {
+public class TextControllerTest {
 
   public IFileController fileController;
   public Appendable ap;
@@ -32,7 +32,7 @@ public class ControllerTest {
   public ILayer model;
   public IImage img;
   public List<IImage> imgs;
-  public Controller controller;
+  public TextController textController;
 
   @Before
   public void setUp() {
@@ -49,12 +49,12 @@ public class ControllerTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testNullView() {
-    new Controller(null, model);
+    new TextController(null, model);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testNullModel() {
-    new Controller(view, null);
+    new TextController(view, null);
   }
 
   @Test
@@ -62,9 +62,9 @@ public class ControllerTest {
     input = "grow image 3 \nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Unable to perform that operation!\n"
             + "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -74,9 +74,9 @@ public class ControllerTest {
     input = "load notjf res/flower.ppm \nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Unknown asset to load.\n" +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -86,9 +86,9 @@ public class ControllerTest {
     input = "load image \nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Invalid number of arguments.\n" +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -98,9 +98,9 @@ public class ControllerTest {
     input = "load image fklgvdf \nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: We cannot read that file type." + System.lineSeparator() +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -110,9 +110,9 @@ public class ControllerTest {
     input = "load \nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Invalid number of arguments.\n" +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -122,9 +122,9 @@ public class ControllerTest {
     input = "exit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
 
@@ -133,9 +133,9 @@ public class ControllerTest {
     input = "apply sdjf\nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Cannot apply that modifier!\n" +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -145,9 +145,9 @@ public class ControllerTest {
     input = "apply mosaic a\nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Mosaic requires an integer input.\n" +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -157,9 +157,9 @@ public class ControllerTest {
     input = "apply downscale a 100\nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Downscale requires integers for width and height.\n" +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -169,9 +169,9 @@ public class ControllerTest {
     input = "apply downscale 100 a\nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Downscale requires integers for width and height.\n" +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -181,9 +181,9 @@ public class ControllerTest {
     input = "set a\nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Must enter integer.\n" +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -193,9 +193,9 @@ public class ControllerTest {
     input = "set 0 \nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Image at 0 does not exist." + System.lineSeparator() +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -206,9 +206,9 @@ public class ControllerTest {
     input = "save sfj not \nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Unable to perform that operation!\n" +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -218,9 +218,9 @@ public class ControllerTest {
     input = "save image fkvmf \nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Invalid number of arguments.\n" +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -230,9 +230,9 @@ public class ControllerTest {
     input = "save image current boot \nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Invalid file extension on boot." + System.lineSeparator() +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -242,9 +242,9 @@ public class ControllerTest {
     input = "save image 2 2.jpg \nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Layer at this index does not exist.\n" +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -255,9 +255,9 @@ public class ControllerTest {
     input = "toggle a \nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Must enter integer after toggle.\n" +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -267,9 +267,9 @@ public class ControllerTest {
     input = "toggle 0 \nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Image at 0 does not exist." + System.lineSeparator() +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }
@@ -279,9 +279,9 @@ public class ControllerTest {
     input = "export image.doc \nexit";
     rd = new StringReader(input);
     view = new TextView(rd, ap);
-    controller = new Controller(view, model);
+    textController = new TextController(view, model);
     assertEquals("", this.ap.toString());
-    controller.go();
+    textController.go();
     assertEquals("Enter input: Enter valid image file type." + System.lineSeparator() +
             "Enter input: All unsaved changes will be lost.\n", this.ap.toString());
   }

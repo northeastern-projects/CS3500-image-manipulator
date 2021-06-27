@@ -3,6 +3,7 @@ package controller;
 import filecontroller.FileController;
 import filecontroller.IFileController;
 import filter.DownScale;
+import imagemodel.IImage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -12,8 +13,12 @@ import filter.Greyscale;
 import filter.Mosaic;
 import filter.Sepia;
 import filter.Sharpen;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import layermodel.ILayer;
+import layermodel.Layer;
 import view.IGraphicalView;
 
 public class GraphicalController implements IController, ActionListener {
@@ -35,7 +40,7 @@ public class GraphicalController implements IController, ActionListener {
   }
 
   private void loadHandler() {
-    List<String> res = this.view.loadFileDialog();
+    List<String> res = this.view.dialogHandler("load");
     if (res.size() == 2) {
       if (res.get(0).equals("Image")) {
         try {
@@ -63,7 +68,7 @@ public class GraphicalController implements IController, ActionListener {
   }
 
   private void mosaicHandler() {
-    List<String> res = this.view.mosaicDetailsPane();
+    List<String> res = this.view.dialogHandler("mosaic");
 
     if (!res.get(0).equals("")) {
       String numSeed = res.get(0);
@@ -79,7 +84,7 @@ public class GraphicalController implements IController, ActionListener {
   }
 
   private void downscaleHandler() {
-    List<String> res = this.view.downscaleDetailsPane();
+    List<String> res = this.view.dialogHandler("downscale");
 
     if (!res.get(0).equals("") && !res.get(1).equals("")) {
       String width = res.get(0);
@@ -94,79 +99,108 @@ public class GraphicalController implements IController, ActionListener {
     }
   }
 
+  private void toggleVisHandler() {
+    List<String> res = this.view.dialogHandler("downscale");
+
+    if (!res.get(0).equals("")) {
+      String idx = res.get(0);
+      if (this.isNumeric(idx)) {
+        int pIdx = Integer.parseInt(idx);
+        if (this.model.getProps().get(0) > pIdx || pIdx < 0) {
+          this.model.toggleVisibility(pIdx);
+        } else {
+          this.view.alert("That index is out of bounds!");
+        }
+      } else {
+        this.view.alert("The index must be a number");
+      }
+    } else {
+      this.view.alert("Invalid layer index");
+    }
+  }
+
+  private void setCurrentHandler() {
+    List<String> res = this.view.dialogHandler("set");
+
+    if (!res.get(0).equals("")) {
+      String idx = res.get(0);
+      if (this.isNumeric(idx)) {
+        int pIdx = Integer.parseInt(idx);
+        if (this.model.getProps().get(0) > pIdx || pIdx < 0) {
+          this.model.setCurrent(pIdx);
+        } else {
+          this.view.alert("That index is out of bounds!");
+        }
+      } else {
+        this.view.alert("The index must be a number");
+      }
+    } else {
+      this.view.alert("Invalid layer index");
+    }
+  }
+
+  private void saveHandler() {
+    this.view.dialogHandler("save");
+  }
+
+  private void exportHandler() {
+    this.view.dialogHandler("export");
+  }
+
   @Override
   public void actionPerformed(ActionEvent e) {
-    switch (e.getActionCommand()) {
-      //TODO add toggle visibility and set current
-      case "Load":
-        this.loadHandler();
-        break;
-      case "Blur":
-        if (this.model.hasCurrent()) {
-          this.model.applyToCurrent(new Blur());
-        } else {
-          this.view.alert("There is no image to modify! Load an image first!");
+    String command = e.getActionCommand();
+
+    if (command.equals("Load")) {
+      this.loadHandler();
+    } else {
+      if (this.model.hasCurrent()) {
+        switch (command) {
+          case "Blur":
+            this.model.applyToCurrent(new Blur());
+            break;
+          case "Sepia":
+            this.model.applyToCurrent(new Sepia());
+            break;
+          case "Sharpen":
+            this.model.applyToCurrent(new Sharpen());
+            break;
+          case "Greyscale":
+            this.model.applyToCurrent(new Greyscale());
+            break;
+          case "Mosaic":
+            this.mosaicHandler();
+            break;
+          case "Downscale":
+            this.downscaleHandler();
+            break;
+          case "Toggle Visibility":
+            this.toggleVisHandler();
+            break;
+          case "Set":
+            this.setCurrentHandler();
+            break;
+          case "Save":
+            this.saveHandler();
+            break;
+          case "Export":
+            this.exportHandler();
+            break;
+          case "Blend":
+            IImage blended = this.model.blend();
+            this.model = new Layer(new ArrayList<>(Collections.singletonList(blended)), blended.getProps());
+            this.view.setModel(this.model); //they loose sync otherwise
+          default:
+            throw new IllegalStateException("Reached a point which should absolutely not have "
+                + "been reached");
         }
-        break;
-      case "Sepia":
-        if (this.model.hasCurrent()) {
-          this.model.applyToCurrent(new Sepia());
-        } else {
-          this.view.alert("There is no image to modify! Load an image first!");
-        }
-        break;
-      case "Sharpen":
-        if (this.model.hasCurrent()) {
-          this.model.applyToCurrent(new Sharpen());
-        } else {
-          this.view.alert("There is no image to modify! Load an image first!");
-        }
-        break;
-      case "Greyscale":
-        if (this.model.hasCurrent()) {
-          this.model.applyToCurrent(new Greyscale());
-        } else {
-          this.view.alert("There is no image to modify! Load an image first!");
-        }
-        break;
-      case "Mosaic":
-        if (this.model.hasCurrent()) {
-          this.mosaicHandler();
-        } else {
-          this.view.alert("There is no image to modify! Load an image first!");
-        }
-        break;
-      case "Downscale":
-        if (this.model.hasCurrent()) {
-          this.downscaleHandler();
-        } else {
-          this.view.alert("There is no image to modify! Load an image first!");
-        }
-        break;
-      case "Toggle":
-        if (this.model.hasCurrent()) {
-          
-        }
-        break;
-      case "Set":
-        break;
-      case "Save":
-        //needs file location and name
-        break;
-      case "Export":
-        //needs file location and name
-        break;
-      case "Blend":
-        this.model.blend();
-        break;
-      default:
-        throw new IllegalStateException("Reached a point which should absolutely not have "
-          + "been reached");
+      } else {
+        this.view.alert("There is no image to modify! Load an image first!");
+      }
     }
 
     if (this.model.hasCurrent()) {
       this.view.refresh();
     }
   }
-
 }

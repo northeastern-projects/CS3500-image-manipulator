@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * This class allows for the testing of the FileController which reads and parses, and writes image
  * and text files.
  */
-public class FileControllerTest {
+public class FileTextControllerTest {
   FileController ut;
   String flower;
 

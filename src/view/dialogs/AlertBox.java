@@ -17,6 +17,7 @@ public class AlertBox extends JDialog {
   private JPanel contentPane;
   private JButton buttonCancel;
   private JTextPane textPane1;
+  private JTextPane alertTextPane;
 
   public AlertBox(String message) {
     setContentPane(contentPane);
@@ -42,6 +43,10 @@ public class AlertBox extends JDialog {
                                          }
                                        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
         JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+    pack();
+    setLocationRelativeTo(null);
+    setVisible(true);
   }
 
   private void onCancel() {
