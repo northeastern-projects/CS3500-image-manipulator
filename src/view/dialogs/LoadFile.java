@@ -1,28 +1,27 @@
 package view.dialogs;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JComponent;
+import view.IDialogView;
+
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import view.IDialogView;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * This class represents the GUI representation to load a file. When the load button is pushed,
+ * this class should be called in order to create a file chooser pane that will allow the user to
+ * upload an image of their choosing. This class extends JDialog and implements IDialogView.
+ */
 public class LoadFile extends JDialog implements IDialogView {
-
   private JPanel contentPane;
   private final List<String> res = new ArrayList<>();
 
+  /**
+   * Creates a LoadFile object which initializes the GUI file chooser of a txt or img file.
+   */
   public LoadFile() {
     JFileChooser fileChooser = new JFileChooser();
 
@@ -35,7 +34,7 @@ public class LoadFile extends JDialog implements IDialogView {
     fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
     fileChooser.setAcceptAllFileFilterUsed(false);
     fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Image", "jpg", "png", "ppm",
-        "jpeg"));
+            "jpeg"));
     fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("State", "txt"));
     res.add(fileChooser.getFileFilter().getDescription());
 

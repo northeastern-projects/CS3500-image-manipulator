@@ -21,6 +21,13 @@ public interface IFileController {
    */
   IImage readImage(String filename) throws IOException;
 
+  /**
+   * Reads the text file into an ILayer.
+   *
+   * @param filename String
+   * @return an ILayer of the txt file
+   * @throws FileNotFoundException if file is not found
+   */
   ILayer readState(String filename) throws FileNotFoundException;
 
   /**

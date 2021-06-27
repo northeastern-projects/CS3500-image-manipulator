@@ -12,6 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 
+/**
+ * This class represents an AlertBox which displays an error message when something goes wrong.
+ * This class is the GUI representation of the error. This class extends JDialog and implements
+ * IDialogView.
+ */
 public class AlertBox extends JDialog {
 
   private JPanel contentPane;
@@ -19,6 +24,11 @@ public class AlertBox extends JDialog {
   private JTextPane textPane1;
   private JTextPane alertTextPane;
 
+  /**
+   * Creates an AlertBox object.
+   *
+   * @param message String error message.
+   */
   public AlertBox(String message) {
     setContentPane(contentPane);
     setModal(true);
@@ -42,7 +52,7 @@ public class AlertBox extends JDialog {
                                            onCancel();
                                          }
                                        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-        JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+            JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     pack();
     setLocationRelativeTo(null);

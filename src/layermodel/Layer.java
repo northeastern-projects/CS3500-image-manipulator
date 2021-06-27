@@ -205,22 +205,6 @@ public class Layer implements ILayer {
   }
 
   @Override
-  public void alterLayer(IModifier modifier, int width, int height) {
-    if (width > this.width || height > this.height) {
-      throw new IllegalArgumentException("\"Width and height must be less than current width "
-              + "and height.");
-    }
-    if (layers.size() == 0) {
-      throw new IllegalArgumentException("No image to apply filter to.");
-    } else {
-      for (IImage img : this.layers)
-        img.applyFilter(modifier);
-    }
-    this.width = width;
-    this.height = height;
-  }
-
-  @Override
   public String toString() {
     StringBuilder matrix = new StringBuilder("LAYER\n" + this.layers.size() + "\n"
             + width + "\n" + height + "\n" + depth + "\n");
@@ -243,19 +227,40 @@ public class Layer implements ILayer {
 
   @Override
   public IImage getCurrentVisible() {
-    IImage current = this.getCurrent();
-    if (this.visibility.get(current)) {
-      return current;
-    } else {
-      for (int i = 1; i < this.currentHistory.size() - 1; i++) {
-        current = this.layers.get(this.currentHistory.get(i));
-        if (this.visibility.get(current)) {
-          return current;
+    try {
+      IImage current = this.getCurrent();
+      if (this.visibility.get(current)) {
+        return current;
+      } else {
+        for (int i = 1; i < this.currentHistory.size() - 1; i++) {
+          current = this.layers.get(this.currentHistory.get(i));
+          if (this.visibility.get(current)) {
+            return current;
+          }
         }
       }
+      return null;
+    } catch (IllegalArgumentException e) {
+      return null;
     }
-
-    return null;
   }
+
+  @Override
+  public void alterLayer(IModifier modifier, int width, int height)
+          throws IllegalArgumentException {
+    if (width > this.width || height > this.height) {
+      throw new IllegalArgumentException("\"Width and height must be less than current width "
+              + "and height.");
+    }
+    if (layers.size() == 0) {
+      throw new IllegalArgumentException("No image to apply filter to.");
+    } else {
+      for (IImage img : this.layers)
+        img.applyFilter(modifier);
+    }
+    this.width = width;
+    this.height = height;
+  }
+
 
 }

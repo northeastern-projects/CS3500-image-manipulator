@@ -1,20 +1,29 @@
 package view.dialogs;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JButton;
+import view.IDialogView;
+
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import view.IDialogView;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * This class represents the visual way to export an image in the graphical view. This class
+ * creates a window that asks the user to input a file name for the current image they wish to save.
+ * The constructor for this class is what creates the file chooser popup. This class extends
+ * JDialog and implements IDialogView.
+ */
 public class ExportImage extends JDialog implements IDialogView {
 
   private JPanel contentPane;
   private final List<String> res;
 
+  /**
+   * Creates an export image object which creates the GUI visual of the file chooser.
+   */
   public ExportImage() {
     JFileChooser fileChooser = new JFileChooser();
 
@@ -33,11 +42,9 @@ public class ExportImage extends JDialog implements IDialogView {
     int result = fileChooser.showSaveDialog(this.contentPane);
 
     if (result == JFileChooser.APPROVE_OPTION) {
-      System.out.println("File saved...");
       res.add(fileChooser.getSelectedFile().getAbsolutePath());
       res.add(fileChooser.getFileFilter().getDescription());
     } else if (result == JFileChooser.CANCEL_OPTION) {
-      System.out.println("State not saved!");
     }
 
   }

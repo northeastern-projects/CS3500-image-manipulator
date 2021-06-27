@@ -8,7 +8,9 @@ import view.IGraphicalView;
 import view.ITextView;
 import view.TextView;
 
-import javax.swing.*;
+
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.io.FileReader;
 import java.io.IOException;
@@ -29,37 +31,31 @@ public class Main {
     ILayer model = new Layer();
 
     if (args.length < 1) {
-      throw new IllegalArgumentException("Please enter 'file' followed by the txt file name for"
-              + "file-based scripting or enter 'interactive' for user input.\n");
+      throw new IllegalArgumentException("Please enter \n'-script' followed by the txt file name "
+              + "for file-based scripting or \n '-text' for user input or \n '-interactive' for "
+              + "GUI image editor.");
     }
     if (args[0].equalsIgnoreCase("-script")) {
-      view = new TextView(new FileReader(args[1]), System.out);
+      if (args.length < 2) {
+        throw new IllegalArgumentException("Please enter txt file name after '-script' "
+                + "for file-based scripting");
+      }
+      view = new TextView(new FileReader(args[1]), new StringBuffer());
       controller = new TextController(view, model);
       controller.go();
     } else if (args[0].equalsIgnoreCase("-text")) {
       view = new TextView(new InputStreamReader(System.in), System.out);
       controller = new TextController(view, model);
       controller.go();
-    } else if (args[0].equalsIgnoreCase("-interactive")) { 
+    } else if (args[0].equalsIgnoreCase("-interactive")) {
       UIManager.setLookAndFeel(new NimbusLookAndFeel());
       view2 = new GraphicalView("Image manipulator!", model);
       controller = new GraphicalController(view2, model);
       controller.go();
     } else {
-      throw new IllegalArgumentException("Please enter 'file' followed by the txt file name for"
-              + "file-based scripting or enter 'interactive' for user input.\n");
+      throw new IllegalArgumentException("Please enter \n'-script' followed by the txt file name "
+              + "for file-based scripting or \n '-text' for user input or \n '-interactive' for "
+              + "GUI image editor.");
     }
   }
-
-//  public static void main(String[] args) throws UnsupportedLookAndFeelException, IOException {
-//    ITextView view;
-//    IGraphicalView view2;
-//    IController controller;
-//    ILayer model = new Layer();
-//
-//    UIManager.setLookAndFeel(new NimbusLookAndFeel());
-//    view2 = new GraphicalView("Image manipulator!", model);
-//    controller = new GraphicalController(view2, model);
-//    controller.go();
-//  }
 }

@@ -32,8 +32,8 @@ public class GraphicalController implements IController, ActionListener {
   /**
    * Creates a GraphicalController object with a view and model.
    *
-   * @param view  IGraphicalView obj
-   * @param model ILayer obj
+   * @param view  IGraphicalView view object
+   * @param model ILayer model obj
    */
   public GraphicalController(IGraphicalView view, ILayer model) {
     this.fileController = new FileController();

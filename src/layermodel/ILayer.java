@@ -1,7 +1,7 @@
 package layermodel;
 
-import imagemodel.IImage;
 import filter.IModifier;
+import imagemodel.IImage;
 
 import java.util.List;
 
@@ -57,8 +57,10 @@ public interface ILayer extends IROLayer {
    * Applies the IModifier to all layers and changes canvas size.
    *
    * @param modifier that one wants to apply to all layers
+   * @throws IllegalArgumentException if no images or if width and height are greater than current
+   *                                  width and height
    */
-  void alterLayer(IModifier modifier, int width, int height);
+  void alterLayer(IModifier modifier, int width, int height) throws IllegalArgumentException;
 
   /**
    * Creates a list of the number of layers, width, height, depth, and current index of the ILayer.

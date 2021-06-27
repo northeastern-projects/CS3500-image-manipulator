@@ -1,20 +1,25 @@
 package view.dialogs;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
+import view.IDialogView;
+
+
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
-import view.IDialogView;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * This class represents the GUI representation of set Current. Whenever this class is rendered, it
+ * creates a box asking for the index starting from one and when given an integer determines if it
+ * can be set to current. This class extends JDialog and implements IDialogView.
+ */
 public class CurrentDetails extends JDialog implements IDialogView {
 
   private JPanel contentPane;
@@ -23,6 +28,9 @@ public class CurrentDetails extends JDialog implements IDialogView {
   private JTextPane textPane1;
   private List<String> res;
 
+  /**
+   * Creates a CurrentDetails object which will render visually.
+   */
   public CurrentDetails() {
     setContentPane(contentPane);
     setModal(true);
@@ -44,7 +52,7 @@ public class CurrentDetails extends JDialog implements IDialogView {
 
     // call onCancel() on ESCAPE
     contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-        JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+            JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     pack();
     setLocationRelativeTo(null);

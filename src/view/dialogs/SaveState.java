@@ -1,27 +1,28 @@
 package view.dialogs;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import view.IDialogView;
 
+/**
+ * This class represents the visual representation of saving an ILayer file. This class creates
+ * a file chooser which will allow the user to choose where and to what name they wish to save the
+ * layer that is currently loaded. This class extends JDialog and implements IDialogView.
+ */
 public class SaveState extends JDialog implements IDialogView {
 
   private JPanel contentPane;
   private final List<String> res;
 
+  /**
+   * Creates a SaveState object which will render the file chooser for the user to folder to save
+   * the image in as well as enter a file name.
+   */
   public SaveState() {
     JFileChooser fileChooser = new JFileChooser();
 
