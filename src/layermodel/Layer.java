@@ -226,4 +226,9 @@ public class Layer implements ILayer {
             this.current));
   }
 
+  @Override
+  public boolean hasCurrent() {
+    return this.layers.size() > 0;
+  }
+
 }

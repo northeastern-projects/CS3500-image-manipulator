@@ -35,4 +35,6 @@ public interface IROLayer {
    */
   List<Integer> getProps();
 
+  boolean hasCurrent();
+
 }
