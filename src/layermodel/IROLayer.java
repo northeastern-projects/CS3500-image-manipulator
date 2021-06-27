@@ -1,8 +1,15 @@
 package layermodel;
 
 import imagemodel.IImage;
+
 import java.util.List;
 
+/**
+ * This interface was created in order to prevent the view from being able to manipulate a model.
+ * This Read-Only Layer allows one to get any layer image, get the current image, get the list of
+ * visible images, get the properties of the layer, and determine if the layer has a current. These
+ * methods will help the view render the model with a readable instance of the model.
+ */
 public interface IROLayer {
 
   /**
@@ -24,6 +31,7 @@ public interface IROLayer {
 
   /**
    * An observer for all visible images in this ILayer.
+   *
    * @return A list of IImage
    */
   List<IImage> getVisible();
@@ -35,6 +43,11 @@ public interface IROLayer {
    */
   List<Integer> getProps();
 
+  /**
+   * Determines if a Layer has a current image.
+   *
+   * @return boolean
+   */
   boolean hasCurrent();
 
   IImage getCurrentVisible();

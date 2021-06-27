@@ -4,12 +4,7 @@ import imagemodel.IImage;
 import imagemodel.IPixel;
 import imagemodel.Pixel;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -24,7 +19,15 @@ public class Mosaic implements IModifier {
   private final Map<IPixel, List<IPixel>> centroidToPixels;
   private final Map<IPixel, List<Double>> centroidToColor;
 
+  /**
+   * Creates a Mosaic object.
+   *
+   * @param seeds an int that determines the number of clusters that will appear on the image.
+   */
   public Mosaic(int seeds) {
+    if (seeds <= 0) {
+      throw new IllegalArgumentException("Please enter seeds greater than 0.");
+    }
     this.seeds = seeds;
     this.centroids = new ArrayList<>();
     this.centroidToPixels = new HashMap<>();
@@ -38,42 +41,33 @@ public class Mosaic implements IModifier {
 
   @Override
   public List<IPixel> modify(IImage image) {
-    /*
-    LOOP: generate random seeds based on this.seeds
-    LOOP: go through every pixel => find closest seed
-          associate pixel with seed = cluster
-    LOOP: find average color for each cluster
-    LOOP: go through every pixel => set color to average color for cluster
-     */
-
     List<IPixel> pixels = image.getPixels();
     List<IPixel> newPixels = new ArrayList<>();
     int searchDist =
             Math.min(image.getProps().get(0), image.getProps().get(1)) / (int) Math.sqrt(this.seeds);
 
-    System.out.println("Search dist:" + searchDist);
-    System.out.println("Sowing...");
+    //generate random centroids based on this.seeds
     this.sowSeeds(image.getPixels());
-    System.out.println("Clustering...");
+    //go through every pixel => find closest seed
+    //associate pixel with seed = cluster
     this.cluster(pixels, searchDist);
-    System.out.println("Averaging...");
+    //find average color for each cluster
     this.getAverage();
 
-    System.out.println("Generating...");
+    //go through every pixel => set color to average color for cluster
     for (Map.Entry<IPixel, List<IPixel>> centroid : centroidToPixels.entrySet()) {
       for (IPixel pixel : centroid.getValue()) {
         newPixels.add(new Pixel(pixel.getCoords(), this.centroidToColor.get(centroid.getKey())));
       }
     }
 
-    System.out.println("Sorting...");
+    //Sort pixels for the new image
     newPixels.sort((o1, o2) -> {
       if (o1.getCoords().get(1).equals(o2.getCoords().get(1))) {
         return o1.getCoords().get(0) - o2.getCoords().get(0);
       }
       return o1.getCoords().get(1) - o2.getCoords().get(1);
     });
-
     return newPixels;
   }
 
