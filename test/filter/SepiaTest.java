@@ -72,12 +72,12 @@ public class SepiaTest extends ATransformTest {
     return new Sepia();
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidKernelWithEvenRows() {
     new Sepia(kernelEvenRows);
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidKernelWithEvenColumns() {
     new Sepia(kernelEvenColumns);
   }

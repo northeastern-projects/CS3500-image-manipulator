@@ -61,7 +61,11 @@ public class Image implements IImage {
   }
 
   @Override
-  public void changeCanvasSize(int width, int height) {
+  public void changeCanvasSize(int width, int height) throws IllegalArgumentException {
+    if (width > this.width || height > this.height) {
+      throw new IllegalArgumentException("Width and height must be less than current width and "
+              + "height.");
+    }
     this.width = width;
     this.height = height;
   }

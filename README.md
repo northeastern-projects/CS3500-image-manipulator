@@ -114,7 +114,7 @@ k-means clustering algorithm in order to create an image that is the mosaic vers
 Methods:
 
 * `toString()` - returns "mosaic"
-* `modify()` - returns updated list of pixels
+* `modify()` - returns updated list of pixels that has the mosaic scheme
 * `sowSeeds()` - randomly generates clusters based on the number of seeds
 * `findDistance()` - finds the distance between two pixels
 * `clamp()` - finds centroids within a certain x and y range of the pixel
@@ -133,7 +133,8 @@ parameters for this very purpose.
 Methods:
 
 * `toString()` - returns "downscale"
-* `modify()` - returns updated list of pixels
+* `modify()` - returns updated list of pixels that represents a smaller version of the current
+  IImage if the input width and height are less than the current width and height.
 
 ---
 
@@ -242,6 +243,7 @@ Methods:
 * `applyToCurrent()` - applies the IModifier to the current layer.
 * `getProps()` - returns a list of the number of layers, width, height, depth, and current index of
   the ILayer.
+* `alterLayer()` - Applies the IModifier to all layers and changes canvas size.
 
 ---
 
@@ -258,13 +260,14 @@ Methods:
 * `getCurrent()` - returns the IImage at the current index.
 * `toggleVisibility()` - Sets the layer at the index to invisible.
 * `getVisible()` - an observer for all visible images in this ILayer.
-* `applyToCurrent()` - appliesthe IModifier to the current layer.
+* `applyToCurrent()` - applies the IModifier to the current layer.
 * `getProps()` - returns a list of the number of layers, width, height, depth, and current index of
   the ILayer.
 * `createMappedInvsibility()` - creates default Map for the layers where all are visible
 * `canAcceptImage()` -determines if image matches layer properties
 * `isValidImages()` - determines if list has zero elements
 * `toString()` - returns the layer as a String
+* `alterLayer()` - Applies the IModifier to all layers and changes canvas size.
 
 ---
 
@@ -300,18 +303,23 @@ Methods:
 ---
 
 ## Interface IController
-This is the main controller that delegates what it needs to the view and to the model.
-This controller handles user input and displays messages when errors occur.
+
+This is the main controller that delegates what it needs to the view and to the model. This
+controller handles user input and displays messages when errors occur.
 
 Methods:
+
 * `go()` - Starts the controller.
 
 ---
+
 ### Class Controller implements IController
-This is the main controller that delegates what it needs to the view and to the model.
-This controller handles user input and displays messages when errors occur.
+
+This is the main controller that delegates what it needs to the view and to the model. This
+controller handles user input and displays messages when errors occur.
 
 Methods:
+
 * `go()` - Starts the controller.
 * `handleInput()` - delegates user input and updates program based on input.
 * `saveInputHandler()` - determines whether to save image or state and delegates
@@ -319,28 +327,31 @@ Methods:
 * `loadInputHandler()` - determines if the argument after 'load' is correct and delegates.
 * `getModifier()` - returns the IModifier based on the inputted name.
 * `saveState()` - exports the ILayer as a txt file
+
 ---
 
-##Interface ITextView 
-This interface outlines the basic things that the view should. ITextView allows for
-interactive and file-based textual scripting as well as displaying output.
+## Interface ITextView
+
+This interface outlines the basic things that the view should. ITextView allows for interactive and
+file-based textual scripting as well as displaying output.
 
 Methods:
+
 * `getInput()` - scans the scanner for user input
 * `displayOutput()` - appends given string to appendable
 
 ---
 
-###Class TextView implements ITextView
-This class implements the basic things that the view should. TextView allows for
-interactive and file-based textual scripting as well as displaying output.
-The constructor takes in a readable and appendable.
+### Class TextView implements ITextView
+
+This class implements the basic things that the view should. TextView allows for interactive and
+file-based textual scripting as well as displaying output. The constructor takes in a readable and
+appendable.
 
 Methods:
-* `getInput()` - scans the scanner for user input
-* `displayOutput()` - appends given string to appendable
---
 
+* `getInput()` - scans the scanner for user input
+* `displayOutput()` - appends given string to appendable --
 
 ### Changes to initial design
 
@@ -355,15 +366,18 @@ create a new method in IImage that allows the creation of a Buffered image from 
 Also had to add changeCanvasSize in order to create the downscaling option for an IImage. In ILayer,
 we added a getCurrent method which would allow a user to get the image at the current index. The
 IFileController was updated to incorporate the reading and writing of layer text files as well as
-jpg,jpeg, and png image files. This was directly implemented into FileCOntroller.
+jpg,jpeg, and png image files. This was directly implemented into FileController.
 
 ---
 EXTRACREDIT
 
 1. DownScale - We made this into a class that implements IModifier. This in itself worked but there
-   was one problem, we were unable to update the width and height of the IImage to match the new
-   size. To fix this problem, we added a method to the IImage interface changeCanvasSize that takes
-   in a width and height and allows you to set a new width and height.
+   was one problem, we were unable to update the width and height of the IImage and ILayer to match
+   the new size. To fix this problem, we added a method to the IImage interface changeCanvasSize
+   that takes in a width and height and allows you to set a new width and height. Also in ILayer, we
+   created a method alterLayer which took in the IModifier, width and height, and applied the
+   IModifier to every IImage in the ILayer. We also updated the width and height of the ILayer at
+   the end.
 
 2. Mosaic - This one was also simple as all we needed to do was implement IModifier. We used the
    k-means clustering algorithm for this. The only issue with this that we had was that the bigger
@@ -383,3 +397,6 @@ www.freeimages.com/photo/sunflowers-6-1392951.
 Road Image:
 Libert, Christophe. “Free Road to nowhere Stock Photo” FreeImages,
 https://www.freeimages.com/photo/road-to-nowhere-1383109
+
+Land Image: Romashkin, Maksim. “Ridge against Icy Sea under Blue Sky.” Pexels, 11 Mar. 2021,
+www.pexels.com/photo/ridge-against-icy-sea-under-blue-sky-7108213/. 

@@ -2,6 +2,7 @@ package filter;
 
 import imagemodel.IImage;
 import imagemodel.IPixel;
+
 import java.util.List;
 
 /**

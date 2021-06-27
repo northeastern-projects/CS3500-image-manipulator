@@ -3,6 +3,7 @@ package filter;
 import imagemodel.IImage;
 import imagemodel.IPixel;
 import imagemodel.Pixel;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -48,7 +49,7 @@ public class Mosaic implements IModifier {
     List<IPixel> pixels = image.getPixels();
     List<IPixel> newPixels = new ArrayList<>();
     int searchDist =
-        Math.min(image.getProps().get(0), image.getProps().get(1)) / (int)Math.sqrt(this.seeds);
+            Math.min(image.getProps().get(0), image.getProps().get(1)) / (int) Math.sqrt(this.seeds);
 
     System.out.println("Search dist:" + searchDist);
     System.out.println("Sowing...");
@@ -59,8 +60,8 @@ public class Mosaic implements IModifier {
     this.getAverage();
 
     System.out.println("Generating...");
-    for (Map.Entry<IPixel, List<IPixel>> centroid: centroidToPixels.entrySet()) {
-      for (IPixel pixel: centroid.getValue()) {
+    for (Map.Entry<IPixel, List<IPixel>> centroid : centroidToPixels.entrySet()) {
+      for (IPixel pixel : centroid.getValue()) {
         newPixels.add(new Pixel(pixel.getCoords(), this.centroidToColor.get(centroid.getKey())));
       }
     }
@@ -77,9 +78,9 @@ public class Mosaic implements IModifier {
   }
 
   private void getAverage() {
-    for (Map.Entry<IPixel, List<IPixel>> centroid: centroidToPixels.entrySet()) {
+    for (Map.Entry<IPixel, List<IPixel>> centroid : centroidToPixels.entrySet()) {
       List<Double> finalRGB = new ArrayList<>(Arrays.asList(0.0, 0.0, 0.0));
-      for (IPixel pixel: centroid.getValue()) {
+      for (IPixel pixel : centroid.getValue()) {
         finalRGB.set(0, finalRGB.get(0) + pixel.getColor().get(0));
         finalRGB.set(1, finalRGB.get(1) + pixel.getColor().get(1));
         finalRGB.set(2, finalRGB.get(2) + pixel.getColor().get(2));
@@ -92,7 +93,7 @@ public class Mosaic implements IModifier {
   }
 
   private void cluster(List<IPixel> pixels, int searchDist) {
-    for (IPixel pixel: pixels) {
+    for (IPixel pixel : pixels) {
       /*
       set arbitrary distance
       try and get centroid within that distance
@@ -111,9 +112,9 @@ public class Mosaic implements IModifier {
 
       while (closest == null) {
         closest = this.getClosestCentroid(this.clamp(minX - incr, maxX + incr,
-            minY - incr,
-            maxY + incr),
-            pixel);
+                minY - incr,
+                maxY + incr),
+                pixel);
       }
 
       centroidToPixels.get(closest).add(pixel);
@@ -148,9 +149,9 @@ public class Mosaic implements IModifier {
 
   private List<IPixel> clamp(int minX, int maxX, int minY, int maxY) {
     return this.centroids.stream().filter(pixel -> pixel.getCoords().get(0) > minX
-        && pixel.getCoords().get(0) < maxX
-        && pixel.getCoords().get(1) > minY
-        && pixel.getCoords().get(1) < maxY).collect(Collectors.toList());
+            && pixel.getCoords().get(0) < maxX
+            && pixel.getCoords().get(1) > minY
+            && pixel.getCoords().get(1) < maxY).collect(Collectors.toList());
   }
 
   private double findDistance(List<Integer> p1, List<Integer> p2) {

@@ -1,6 +1,7 @@
 package filter;
 
 import imagemodel.IPixel;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +38,7 @@ public abstract class AFilter extends AModifier {
    * @return A new list of RBG values that is the result of the kernel math
    */
   private List<Double> generateNewRGB(List<IPixel> origPixels, IPixel pixel, int width,
-      int height) {
+                                      int height) {
     List<Double> newRGB = new ArrayList<>(Arrays.asList(0.0, 0.0, 0.0));
     int x = pixel.getCoords().get(0);
     int y = pixel.getCoords().get(1);

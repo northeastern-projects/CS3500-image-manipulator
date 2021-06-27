@@ -1,7 +1,7 @@
 package filter;
 
-import imagemodel.IPixel;
 import imagemodel.IImage;
+import imagemodel.IPixel;
 import imagemodel.Image;
 import imagemodel.Pixel;
 import org.junit.Before;

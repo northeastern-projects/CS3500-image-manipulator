@@ -63,12 +63,12 @@ public class CheckerboardTest {
     new Checkerboard(width, height, depthInvalid, 1);
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidSize() {
     new Checkerboard(width, height, depth, 0);
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidSizeWithHeight() {
     new Checkerboard(width, height, depth, 2);
   }
