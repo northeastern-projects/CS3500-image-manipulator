@@ -1,12 +1,11 @@
 package imagemodel;
 
-import java.awt.*;
+import filter.IModifier;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import filter.IModifier;
 
 /**
  * The Image class that contains methods to print Image as a ppm file, modify an image, and create a

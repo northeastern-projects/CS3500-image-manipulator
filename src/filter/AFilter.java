@@ -47,8 +47,8 @@ public abstract class AFilter extends AModifier {
     for (int i = -1 * key; i <= key; i++) {
       for (int j = -1 * key; j <= key; j++) {
         int index = ((y + i) * width) + (x + j);
-        if (!(index < 0 || index >= origPixels.size() || (x + j < 0) || (y + i < 0) ||
-                (x + j) > width - 1 || (y + i) > height - 1)) {
+        if (!(index < 0 || index >= origPixels.size() || (x + j < 0) || (y + i < 0)
+                || (x + j) > width - 1 || (y + i) > height - 1)) {
           List<Double> thisRGB = origPixels.get(index).applyToAllChannels(
                   crushedKernel.get(kIndex));
           for (int k = 0; k < newRGB.size(); k++) {

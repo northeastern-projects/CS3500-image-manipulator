@@ -3,8 +3,12 @@ package filter;
 import imagemodel.IImage;
 import imagemodel.IPixel;
 import imagemodel.Pixel;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -44,7 +48,8 @@ public class Mosaic implements IModifier {
     List<IPixel> pixels = image.getPixels();
     List<IPixel> newPixels = new ArrayList<>();
     int searchDist =
-            Math.min(image.getProps().get(0), image.getProps().get(1)) / (int) Math.sqrt(this.seeds);
+            Math.min(image.getProps().get(0), image.getProps().get(1))
+                    / (int) Math.sqrt(this.seeds);
 
     //generate random centroids based on this.seeds
     this.sowSeeds(image.getPixels());

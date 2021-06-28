@@ -10,9 +10,8 @@ import java.util.Scanner;
 
 public class TextView implements ITextView {
 
-  private Scanner sc;
-  private Readable rd;
-  private Appendable ap;
+  private final Scanner sc;
+  private final Appendable ap;
 
   /**
    * creates a TextView object.
@@ -25,7 +24,6 @@ public class TextView implements ITextView {
     if (rd == null || ap == null) {
       throw new IllegalArgumentException("Arguments are invalid.");
     }
-    this.rd = rd;
     this.ap = ap;
     sc = new Scanner(rd);
   }
